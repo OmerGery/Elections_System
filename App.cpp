@@ -20,7 +20,14 @@ namespace votes
 	}
 	void App::PrintAllParties() const
 	{
-		partyList.PrintAllList();
+		int partiesSize = partyList.getData(1)->getPartyCounter();
+		int countiesSize = CountyArray.getSize();
+		for (int i = 1; i < partiesSize; i++)
+		{
+			partyList.PrintaParty(i);
+			for(int j=1;j<countiesSize;j++)
+			CountyArray.printDelegatesOfAParty(j,i);
+		}
 	}
 	void App::PrintAllCounties ()const
 	{
@@ -50,7 +57,7 @@ namespace votes
 	void App::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		Citizen* delegate = CountyArray.getCitizen(id);
-		partyList.addDelegateToParty(delegate, partynum);
+//		partyList.addDelegateToParty(delegate, partynum);
 		Party* party = partyList.getData(partynum);
 		CountyDelegate Delegate(delegate, party);
 		CountyArray.addCDToCounty(Delegate, countynum);
@@ -58,11 +65,15 @@ namespace votes
 	void App::Vote(int id, int partyNum)
 	{
 		Citizen* citizen = CountyArray.getCitizen(id);
-		if (citizen->vote(partyNum) == false)
+		Party* PartyVote = partyList.getData(partyNum);
+		if (citizen->vote(PartyVote) == false)
 			cout << "Don't cheat - you already voted!" << endl;
 	}
+	void App::Stop()
+	{
 
-	//Imagine all of this section is VotesCalc functions
+	}
+	// CALCs:
 
 	void App::initVotesMatrix() 
 	{

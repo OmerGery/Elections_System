@@ -46,9 +46,14 @@ namespace votes
 	{
 		CzListNode* current = _head;
 		int currentVote;
+		const Party* PartyVotedTo;
 		while (current != nullptr)
 		{
-			currentVote = current->_data->getVote();
+			PartyVotedTo = current->_data->getVote();
+			if (PartyVotedTo)
+				currentVote = PartyVotedTo->getPartySerial();
+			else
+				currentVote = -1;
 			if (currentVote != -1)
 			{
 				voteArr[currentVote]++;

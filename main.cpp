@@ -18,7 +18,7 @@ int main()
     ifstream inFile;
     inFile.open("test1.txt");
     char name[MAX_SIZE];    
-    int option, delegatesNum, id, year, countyNum,partyNum;
+    int option, delegatesNum, id=-1, year, countyNum,partyNum;
     Date date(23, 11, 2020);
     App MyApplication(date);
     bool exit = false;
@@ -58,8 +58,13 @@ int main()
         case 3: 
             cout << "Enter the party name" << endl;
             inFile >> name;
-            cout << "Enter ID number of candidate for presidence" << endl;
-            inFile >> id;
+            while (id < 0)
+            {
+                cout << "Enter ID number of candidate for presidence" << endl;
+                inFile >> id;
+                if (id < 0)
+                    cout << " Please enter a correct ID." <<endl;
+            }
             MyApplication.AddParty(name, id);
             break;
         case 4: 
@@ -91,7 +96,8 @@ int main()
             MyApplication.printVotes();
             break;
         case 10:
-            cout << "EXIT" <<endl;
+            MyApplication.Stop();
+            cout << "You have exited the program. " <<endl;
             exit = true;
             break;
         case 11:

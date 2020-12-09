@@ -29,7 +29,7 @@ namespace votes
 		bool Add(Party* party);
 		void addDelegateToParty(Citizen* delegate, int partynum);
 		Party* getData(int index) const;
-		void PrintAllList() const;
+		void PrintaParty(int partyserial) const;
 		void PrintLeader(int partySerial) const;
 		
 	};

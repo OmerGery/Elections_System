@@ -30,7 +30,7 @@ namespace votes
 		CountyDelegate getDelgate(int delgatePlace)const;
 		const char* getCountyName() const { return _countyName; }
 		int getCountySerial() const { return _countySerial; }
-		const int getdelegatesNum() { return this->_numdelegates; }
+		const int getdelegatesNum() const { return this->_numdelegates; }
 		countyDelegateArr getDelgatesArr() const { return CDArr; };
 	};
 }

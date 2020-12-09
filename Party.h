@@ -1,5 +1,6 @@
 #pragma once
 #include "CitizenList.h"
+#include "Citizen.h"
 namespace votes
 {
 	class Party
@@ -7,7 +8,7 @@ namespace votes
 	private:
 		char* _partyName;
 		Citizen* _leader;
-		CitizenList _delegateslist;
+//		CitizenList _delegateslist;
 		int _partySerial;
 		static int partyCounter;
 	public:
@@ -18,12 +19,12 @@ namespace votes
 		//	delete[] _leaderName;
 			//delete[]  _delegatesArr;
 		};
-		bool AddDelegate(Citizen* newdelegate);
+//		bool AddDelegate(Citizen* newdelegate);
 		const char* getPartyName() const { return _partyName; }
 		const Citizen* getLeader() const { return _leader; }
 		const int getPartySerial() const { return _partySerial; }
 		const int getPartyCounter() const { return partyCounter; }
-		CitizenList getDelegatesList() const { return _delegateslist; }
+	//	CitizenList getDelegatesList() const { return _delegateslist; }
 
 	};
 }

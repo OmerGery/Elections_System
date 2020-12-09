@@ -25,6 +25,7 @@ namespace votes
       void getCitizensVotes(int** votesMatrix, int counties, int parties)const;
       void printCountyName(int countyNum) const;
       void printDelegatesNum(int countyNum) const;
+      void printDelegatesOfAParty(int countynum, int partynum) const;
       const int getDelegatesNum(int countyNum) const;
       County getCounty(int i) const  { return countyArray[i]; }
     };

@@ -14,13 +14,13 @@ namespace votes
 		strcpy(_name, name);
 		_id = id;
 		_year = year;
-		_PartyVotedToSerial = -1;
+		_PartyVotedTo = NULL;
 	}	
-	bool Citizen::vote(int partyserial)
+	bool Citizen::vote(Party * party)
 	{
-		if (_PartyVotedToSerial!=-1)
+		if (_PartyVotedTo!=NULL)
 			return false;
-		_PartyVotedToSerial =  partyserial;
+		_PartyVotedTo = party;
 		return true;
 	}
 }

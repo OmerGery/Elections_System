@@ -29,20 +29,10 @@ namespace votes
 		}
 		return true;
 	}
-	void PartyList::addDelegateToParty(Citizen* delegate, int partynum)
+	void PartyList::PrintaParty(int partyserial) const
 	{
-		Party* party = getData(partynum);
-		party->AddDelegate(delegate);
-	}
-	void PartyList::PrintAllList() const
-	{
-		PListNode* current = _head;
-		while (current != nullptr)
-		{
-			cout << current->_data->getPartySerial() << " " << current->_data->getPartyName() << " " << current->_data->getLeader()->getName() << endl;
-			(current->_data->getDelegatesList()).PrintList();
-			current = current->_next;
-		}
+		Party* party = this->getData(partyserial);
+		cout << party->getPartySerial() << " " << party->getPartyName() << " " << party->getLeader()->getName() << endl;
 	}
 	void  PartyList::PrintLeader(int partySerial) const
 	{

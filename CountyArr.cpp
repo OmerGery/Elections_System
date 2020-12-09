@@ -95,4 +95,25 @@ namespace votes
         }
         return nullptr;
     }
+    void countyArr::printDelegatesOfAParty(int countynum, int partynum) const
+    {
+        countyDelegateArr DelegatesArrofCounty= countyArray[countynum].getDelgatesArr();
+        int totalDeligatesinCounty = DelegatesArrofCounty.getSize();
+        int counter=0;
+        for (int i = 0; i < totalDeligatesinCounty; i++)
+        {
+            const CountyDelegate current = DelegatesArrofCounty.getDel(i);
+            if (current.GetPartySerialOfDeligate() == partynum)
+            {
+                counter++;
+                if (counter > 1)
+                    cout << ",";
+                if (counter == 1)
+                    cout << "The Delegates from this Party in The County " << this->countyArray[countynum].getCountyName() << " are: ";
+                cout << current.getName();
+            }
+        }
+        if(counter>0)
+        cout << "." << endl;
+    }
 };

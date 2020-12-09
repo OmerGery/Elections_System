@@ -52,5 +52,6 @@ namespace votes
 		void AddCitizenAsDelegate(int id, int partynum, int countynum);
 		void Vote(int id, int partyNum);
 		void printVotes();
+		void Stop();
 	};
 }
