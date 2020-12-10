@@ -1,5 +1,7 @@
 #pragma once
 #include "Party.h"
+#include <iostream>
+using namespace std;
 namespace votes
 {
 	class Party;
@@ -20,5 +22,6 @@ namespace votes
 		const int getID() const { return _id; }
 		const int getYear() const { return _year; }
 		const Party* getVote()const { return _PartyVotedTo; } ;
+		friend ostream& operator<<(ostream& os, const Citizen& citizen);
 	};
 }

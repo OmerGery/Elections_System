@@ -1,6 +1,8 @@
 #pragma once
 #include "CitizenList.h"
 #include "Citizen.h"
+#include <iostream>
+using namespace std;
 namespace votes
 {
 	class Party
@@ -24,6 +26,7 @@ namespace votes
 		const Citizen* getLeader() const { return _leader; }
 		const int getPartySerial() const { return _partySerial; }
 		const int getPartyCounter() const { return partyCounter; }
+		friend ostream& operator<<(ostream& os, const Party& party);
 	//	CitizenList getDelegatesList() const { return _delegateslist; }
 
 	};

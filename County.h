@@ -1,10 +1,11 @@
 #pragma once
-
 #include "Party.h"
 #include "CitizenList.h"
 #include "Citizen.h"
 #include "CountyDelegateArr.h"
 #include "CountyDelegate.h"
+#include <iostream>
+using namespace std;
 namespace votes
 {
 	class County
@@ -32,5 +33,6 @@ namespace votes
 		int getCountySerial() const { return _countySerial; }
 		const int getdelegatesNum() const { return this->_numdelegates; }
 		countyDelegateArr getDelgatesArr() const { return CDArr; };
+		friend ostream& operator<<(ostream& os, const County& county);
 	};
 }

@@ -24,21 +24,22 @@ namespace votes
 		_size++;
 		return true;
 	}
-	void CitizenList::PrintList(County const& county) const
-	{
-		CzListNode* current = _head;
-		while (current != nullptr)
-		{
-			cout << current->_data->getName() << " " << current->_data->getID() << " " << current->_data->getYear() << " " << county.getCountyName() << endl;
-			current = current->_next;
-		}
-	}
+	//void CitizenList::PrintList(County const& county) const
+	//{
+	//	CzListNode* current = _head;
+	//	while (current != nullptr)
+	//	{
+	//		cout << current;//>_data->getName() << " " << current->_data->getID() << " " << current->_data->getYear() << " " << county.getCountyName() << endl;
+	//		current = current->_next;
+	//	}
+	//}
 	void CitizenList::PrintList() const
 	{
 		CzListNode* current = _head;
 		while (current != nullptr)
 		{
-			cout << current->_data->getName() << " " << current->_data->getID() << " " << current->_data->getYear() << " " << endl;
+			Citizen * C_Citizen = current->_data;
+			cout << *(C_Citizen);
 			current = current->_next;
 		}
 	}

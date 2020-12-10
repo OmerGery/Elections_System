@@ -23,6 +23,11 @@ namespace votes
 	{
 		return this->CDArr.getDel(delgatePlace);
 	}
+	ostream& operator<<(ostream& os, const County& county)
+	{
+		os<< "County Number:"<<county._countySerial << " County Name:" << county._countyName << " Amount of Delegates:" << county._numdelegates << endl;
+		return os;
+	}
 	County::~County()
 	{
 	//	delete[] _countyName;

@@ -15,6 +15,7 @@ using namespace votes;
 static const int MAX_SIZE = 100;
 int main()
 { 
+    // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
     ifstream inFile;
     inFile.open("test1.txt");
     char name[MAX_SIZE];    
@@ -38,6 +39,7 @@ int main()
         {
         case 1:
             cout << "Enter the County name" << endl;
+            
             inFile >> name;
             cout << "Enter number of delegates" << endl;
             inFile >> delegatesNum;
@@ -45,6 +47,7 @@ int main()
             break;
         case 2: 
             cout << "Enter the citizen name" << endl;
+            
             inFile >> name;
             cout << "Enter ID number" << endl;
             inFile >> id;
@@ -58,20 +61,26 @@ int main()
         case 3: 
             cout << "Enter the party name" << endl;
             inFile >> name;
-            while (id < 0)
-            {
-                cout << "Enter ID number of candidate for presidence" << endl;
-                inFile >> id;
-                if (id < 0)
-                    cout << " Please enter a correct ID." <<endl;
-            }
+            cout << "Enter ID number of candidate for presidence" << endl;
+            inFile >> id;    
+            cout << " Please enter a correct ID." <<endl;
             MyApplication.AddParty(name, id);
             break;
         case 4: 
             cout << "Enter the citizen ID" << endl;
             inFile >> id;
+            while (id < 0)
+            {
+                cout << "Please enter a correct ID." <<endl;
+                inFile >> id;   
+            }
             cout << "Enter Party Serial number" << endl;
             inFile >> partyNum;
+            while (partyNum < 0)
+            {
+                cout << "Please enter a correct Party Number." << endl;
+                inFile >> partyNum;
+            }
             cout << "Enter serial number of county" << endl;
             inFile >> countyNum;
             MyApplication.AddCitizenAsDelegate(id,partyNum,countyNum);

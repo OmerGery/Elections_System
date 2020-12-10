@@ -22,7 +22,7 @@ namespace votes
         for (int i = 1; i < _size; i++)
         {
             County current = countyArray[i];
-            cout << current.getCountySerial() << " " << current.getCountyName() << " " << current.getdelegatesNum() << endl;
+            cout << current;
         }
     }
     void countyArr::printCountyName(int countyNum) const
@@ -42,7 +42,7 @@ namespace votes
         for (int i = 1; i < _size; i++)
         {
             County current = countyArray[i];
-            (current.GetCitizens()).PrintList(current);
+            (current.GetCitizens()).PrintList();
         }
     }
     void countyArr::getCitizensVotes(int** votesMatrix, int counties, int parties)const

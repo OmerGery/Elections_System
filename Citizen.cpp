@@ -23,4 +23,9 @@ namespace votes
 		_PartyVotedTo = party;
 		return true;
 	}
+	ostream& operator<<(ostream& os, const Citizen& citizen)
+	{
+		os << "Name:" << citizen._name << " ID:" << citizen._id << " Born in:" << citizen._year << " " << endl;
+		return os;
+	}
 }

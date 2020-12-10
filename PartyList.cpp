@@ -32,7 +32,7 @@ namespace votes
 	void PartyList::PrintaParty(int partyserial) const
 	{
 		Party* party = this->getData(partyserial);
-		cout << party->getPartySerial() << " " << party->getPartyName() << " " << party->getLeader()->getName() << endl;
+		cout << *party;
 	}
 	void  PartyList::PrintLeader(int partySerial) const
 	{
