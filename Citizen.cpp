@@ -6,6 +6,11 @@
 using namespace std;
 namespace votes
 {
+	Citizen::~Citizen()
+	{
+		delete[] _name;
+	}
+
 	Citizen::Citizen(char* name, int id, int year)
 	{
 		

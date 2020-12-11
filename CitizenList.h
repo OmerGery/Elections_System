@@ -29,7 +29,7 @@ namespace votes
 		CzListNode* _tail;
 	public:
 		CitizenList() :_head(nullptr), _tail(nullptr), _size(0){}
-		~CitizenList() {};
+		~CitizenList();
 		bool AddCitizen(Citizen * toadd);
 		void PrintList(County const& county) const;
 		void PrintList() const;

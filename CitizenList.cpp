@@ -8,6 +8,26 @@ using namespace std;
 
 namespace votes
 {
+	CitizenList::~CitizenList()
+	{
+		CzListNode* deleter = this->_head;
+		if (deleter == nullptr)
+			return;
+		if (deleter->_next == nullptr)
+		{
+			delete deleter->_data;
+			delete deleter;
+			return;
+		}
+		CzListNode* runner = deleter;
+		while (runner != nullptr)
+		{
+			deleter = runner;
+			runner = runner->_next;
+ 			delete deleter->_data;
+			delete deleter;
+		}
+	}
 	bool CitizenList::AddCitizen(Citizen * toadd)
 	{
 		CzListNode* newTail = new CzListNode(toadd, nullptr, _tail);
@@ -24,15 +44,6 @@ namespace votes
 		_size++;
 		return true;
 	}
-	//void CitizenList::PrintList(County const& county) const
-	//{
-	//	CzListNode* current = _head;
-	//	while (current != nullptr)
-	//	{
-	//		cout << current;//>_data->getName() << " " << current->_data->getID() << " " << current->_data->getYear() << " " << county.getCountyName() << endl;
-	//		current = current->_next;
-	//	}
-	//}
 	void CitizenList::PrintList() const
 	{
 		CzListNode* current = _head;
@@ -43,6 +54,7 @@ namespace votes
 			current = current->_next;
 		}
 	}
+	
 	void CitizenList::getVotes(int* voteArr) const
 	{
 		CzListNode* current = _head;

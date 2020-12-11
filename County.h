@@ -22,17 +22,19 @@ namespace votes
 	public:
 		County(char* countyName, int numdelegates);
 		County();
-		//County(County const& tocopyfrom);
-		
 		~County();
 		void AddCitizen(Citizen* citizen);
-		void AddCD(CountyDelegate& delegate);
-		CitizenList GetCitizens() const;
-		CountyDelegate getDelgate(int delgatePlace)const;
+		void AddCD(CountyDelegate* delegate);
+		CountyDelegate* getDelgate(int delgatePlace)const;
 		const char* getCountyName() const { return _countyName; }
 		int getCountySerial() const { return _countySerial; }
 		const int getdelegatesNum() const { return this->_numdelegates; }
 		countyDelegateArr getDelgatesArr() const { return CDArr; };
+		const int getDelgatesarrSize()const { return CDArr.getSize(); }
+		const int getCountySize()const { return _citizenAllowed.getSize(); };
 		friend ostream& operator<<(ostream& os, const County& county);
+		Citizen* searchCitizen(int id)const;
+		void PrintCitizenList() const;
+		void getCountyVotes(int* votearr);
 	};
 }

@@ -34,6 +34,26 @@ namespace votes
 		Party* party = this->getData(partyserial);
 		cout << *party;
 	}
+	PartyList::~PartyList()
+	{
+		PListNode* deleter = this->_head;
+		if (deleter == nullptr)
+			return;
+		if (deleter->_next == nullptr)
+		{
+			delete deleter->_data;
+			delete deleter;
+			return;
+		}
+		PListNode* runner = deleter;
+		while (runner!=nullptr)
+		{
+			deleter = runner;
+			runner = runner->_next;
+			delete deleter->_data;
+			delete deleter;
+		}
+	}
 	void  PartyList::PrintLeader(int partySerial) const
 	{
 		cout << this->getData(partySerial)->getLeader()->getName() << endl;
@@ -42,7 +62,11 @@ namespace votes
 	{
 		PListNode* toReturn = _head;
 		for (int i = 1; i < index; i++)
+		{
+			if (toReturn == NULL)
+				return nullptr;
 			toReturn = toReturn->_next;
+		}
 
 		return toReturn->_data;
 	}

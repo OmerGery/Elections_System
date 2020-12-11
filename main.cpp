@@ -63,7 +63,6 @@ int main()
             inFile >> name;
             cout << "Enter ID number of candidate for presidence" << endl;
             inFile >> id;    
-            cout << " Please enter a correct ID." <<endl;
             MyApplication.AddParty(name, id);
             break;
         case 4: 
@@ -105,7 +104,6 @@ int main()
             MyApplication.printVotes();
             break;
         case 10:
-            MyApplication.Stop();
             cout << "You have exited the program. " <<endl;
             exit = true;
             break;

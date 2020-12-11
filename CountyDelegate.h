@@ -12,7 +12,7 @@ namespace votes
 	public:
 		CountyDelegate(Citizen* delegate,Party* party);
 		CountyDelegate() { _delegate = nullptr; _party = nullptr; };
-		~CountyDelegate() {};// { delete _delegates; };
+		~CountyDelegate() {};
 		const int GetPartySerialOfDeligate()const { return _party->getPartySerial(); }
 		const char* getName() const { return _delegate->getName(); }
 		//int getID() const { return _id; }

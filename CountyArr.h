@@ -7,18 +7,18 @@ namespace votes
     class countyArr
     {
     private:
-        County* countyArray;
+        County** countyArray;
         int physical = 1;
         int _size;
 
     public:
       countyArr();
       ~countyArr();
-      void insert(County & county);
+      void insert(County * county);
       const int getSize()const;
       void resize();
       void addCitizenToCounty(Citizen * citizen, int countynum);
-      void addCDToCounty(CountyDelegate& delegate,int countynum);
+      void addCDToCounty(CountyDelegate * delegate,int countynum);
       void printAllCounties()const;
       void printAllCitizens()const;
       Citizen* getCitizen(int id);
@@ -27,6 +27,8 @@ namespace votes
       void printDelegatesNum(int countyNum) const;
       void printDelegatesOfAParty(int countynum, int partynum) const;
       const int getDelegatesNum(int countyNum) const;
-      County getCounty(int i) const  { return countyArray[i]; }
+      County * getCounty(int i) const  { return countyArray[i]; }
+      const int getCountySize(int county) const;
+      const int getDelegatesArrSize(int countyNum) const;
     };
 }

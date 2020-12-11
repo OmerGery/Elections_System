@@ -10,22 +10,22 @@ namespace votes
 {
     countyDelegateArr::countyDelegateArr()
     {
-        CDArray= new CountyDelegate[physical];
+        CDArray= new CountyDelegate*[physical];
         _size = 0;
     }
     countyDelegateArr::~countyDelegateArr()
     {
-       // delete[] CDArray;
+        delete[] CDArray;
     }
     void countyDelegateArr::printPartyCDs(Party& party)const
     {
         // to implent
     }
-    void countyDelegateArr::insert(CountyDelegate& CD)
+    void countyDelegateArr::insert(CountyDelegate* CD)
     {
         if (_size == physical)
             resize();
-        CDArray[_size] = CountyDelegate(CD);
+        CDArray[_size] = CD;
         _size++;
     }
     int countyDelegateArr::getSize()const { return _size; }
@@ -33,7 +33,7 @@ namespace votes
     void countyDelegateArr::resize()
     {
         physical *= 2;
-        CountyDelegate* temp = new CountyDelegate[physical];
+        CountyDelegate** temp = new CountyDelegate*[physical];
         std::copy(CDArray, CDArray + _size, temp);
         delete[] CDArray;
         CDArray = temp;

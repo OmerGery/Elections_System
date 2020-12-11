@@ -16,10 +16,7 @@ namespace votes
 		Date _electionday;
 		countyArr CountyArray;
 		PartyList partyList;
-
 		// calcing
-
-		
 		int _partiesSize;
 		int _countiesSize;
 		int** _voteCountMatrix;
@@ -30,6 +27,7 @@ namespace votes
 			int sumElectors;
 			Party* party;
 		};
+		// Internal Calc FUNCS - Private.
 		Elector* Electors;
 		void initVotesMatrix();
 		void initDeligatesMatrix();
@@ -42,7 +40,7 @@ namespace votes
 		
 	public:
 		App(Date& electionday);
-		~App() {};
+		~App();
 		void AddCounty(char* name, int delegatesNum);
 		void AddCitizen(char* name, int id, int year, int countynum);
 		void PrintAllCounties() const;
@@ -52,6 +50,5 @@ namespace votes
 		void AddCitizenAsDelegate(int id, int partynum, int countynum);
 		void Vote(int id, int partyNum);
 		void printVotes();
-		void Stop();
 	};
 }

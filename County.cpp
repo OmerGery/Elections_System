@@ -12,16 +12,14 @@ namespace votes
 	int County::countyCounter=0;
 	County::County(char* countyName, int numdelegates)
 	{
-		CDArr = countyDelegateArr();
-		_citizenAllowed = CitizenList();
 		_countyName = new char[strlen(countyName)+1];
 		strcpy(_countyName,countyName);
 		_numdelegates = numdelegates;
 		_countySerial=++countyCounter;
 	}
-	CountyDelegate County::getDelgate(int delgatePlace)const
+	CountyDelegate* County::getDelgate(int delgatePlace)const
 	{
-		return this->CDArr.getDel(delgatePlace);
+		return CDArr.getDel(delgatePlace);
 	}
 	ostream& operator<<(ostream& os, const County& county)
 	{
@@ -30,18 +28,8 @@ namespace votes
 	}
 	County::~County()
 	{
-	//	delete[] _countyName;
+		delete[] _countyName;
 	}
-	//County::County(County const&  tocopyfrom)
-	//{
-	//	this->_citizenAllowed = tocopyfrom._citizenAllowed;
-	//	this->_countySerial = tocopyfrom._countySerial;
-	//	this->_numdelegates = tocopyfrom._numdelegates;
-	//	int len = strlen(tocopyfrom._countyName+1);
-	//	this->_countyName = new char[len];
-	//	strcpy(_countyName, tocopyfrom._countyName);
-	//	delete[] tocopyfrom._countyName;
-	//}
 	County::County()
 	{
 		_countyName = nullptr;
@@ -52,12 +40,20 @@ namespace votes
 	{
 		_citizenAllowed.AddCitizen(citizen);
 	}
-	void County::AddCD(CountyDelegate& delegate)
+	void County::AddCD(CountyDelegate* delegate)
 	{
 		(this->CDArr).insert(delegate);
 	}
-	CitizenList County::GetCitizens() const
+	Citizen* County::searchCitizen(int id)const
 	{
-		return _citizenAllowed;
+		return _citizenAllowed.findCitizen(id);
+	}
+	void County::getCountyVotes(int* votearr)
+	{
+		_citizenAllowed.getVotes(votearr);
+	}
+	void County::PrintCitizenList() const
+	{
+		this->_citizenAllowed.PrintList();
 	}
 }

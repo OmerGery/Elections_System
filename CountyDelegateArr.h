@@ -8,17 +8,17 @@ namespace votes
     class countyDelegateArr
     {
     private:
-        CountyDelegate* CDArray;
+        CountyDelegate** CDArray;
         int physical = 1;
         int _size;
 
     public:
         countyDelegateArr();
         ~countyDelegateArr();
-        void insert(CountyDelegate& cd);
+        void insert(CountyDelegate* cd);
         int getSize()const;
         void resize();
         void printPartyCDs(Party & party)const;
-        CountyDelegate getDel(int place)const { return CDArray[place]; }
+        CountyDelegate* getDel(int place)const { return CDArray[place]; }
     };
 }

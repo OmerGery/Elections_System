@@ -16,7 +16,7 @@ namespace votes
 	public:
 	//	Citizen();
 		Citizen(char* name, int id, int year);
-		~Citizen() {}; //delete [] _name; 
+		~Citizen(); 
 		bool vote(Party* party);
 		const char* getName() const { return _name; }
 		const int getID() const { return _id; }

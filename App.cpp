@@ -16,13 +16,26 @@ namespace votes
 
 	App::App(Date & electionday)
 	{
+		Electors = nullptr;
+		_delegatesMatrix = nullptr;
+		_statisticsMatrix = nullptr;
+		_voteCountMatrix = nullptr;
+		_partiesSize = 0;
+		_countiesSize = 0;
 		_electionday = electionday;
+	}
+	App::~App()
+	{
+		delete[] Electors;
+		delete[] this->_delegatesMatrix;
+		delete[] this->_voteCountMatrix;
+		delete[] this->_statisticsMatrix;
 	}
 	void App::PrintAllParties() const
 	{
 		int partiesSize = partyList.getData(1)->getPartyCounter();
 		int countiesSize = CountyArray.getSize();
-		for (int i = 1; i < partiesSize; i++)
+		for (int i = 1; i <= partiesSize; i++)
 		{
 			partyList.PrintaParty(i);
 			for(int j=1;j<countiesSize;j++)
@@ -46,7 +59,7 @@ namespace votes
 	}
 	void App::AddCounty(char* name, int delegatesNum)
 	{
-		County county(name, delegatesNum);
+		County * county = new County(name, delegatesNum);
 		CountyArray.insert(county);
 	}
 	void App::AddCitizen(char* name, int id, int year, int countynum)
@@ -57,9 +70,8 @@ namespace votes
 	void App::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		Citizen* delegate = CountyArray.getCitizen(id);
-//		partyList.addDelegateToParty(delegate, partynum);
 		Party* party = partyList.getData(partynum);
-		CountyDelegate Delegate(delegate, party);
+		CountyDelegate * Delegate = new CountyDelegate(delegate, party);
 		CountyArray.addCDToCounty(Delegate, countynum);
 	}
 	void App::Vote(int id, int partyNum)
@@ -68,10 +80,6 @@ namespace votes
 		Party* PartyVote = partyList.getData(partyNum);
 		if (citizen->vote(PartyVote) == false)
 			cout << "Don't cheat - you already voted!" << endl;
-	}
-	void App::Stop()
-	{
-
 	}
 	// CALCs:
 
@@ -132,7 +140,7 @@ namespace votes
 		CountyArray.getCitizensVotes(_voteCountMatrix, _countiesSize, _partiesSize);
 		for (i = 1; i <= _countiesSize; i++)
 		{
-			int totalCitizensInCounty = CountyArray.getCounty(i).GetCitizens().getSize();
+			int totalCitizensInCounty = CountyArray.getCountySize(i);
 			_statisticsMatrix[i][0] = static_cast<float>(_voteCountMatrix[i][0]) / static_cast<float>(totalCitizensInCounty);
 			for (j = 1; j <= _partiesSize; j++)
 				_statisticsMatrix[i][j] = static_cast<float>(_voteCountMatrix[i][j]) / static_cast<float>(_voteCountMatrix[i][0]);
@@ -167,7 +175,7 @@ namespace votes
 			for (j = 1; j <= _partiesSize; j++)
 			{
 				DeligatesPrinted = 0;
-				int numdeligates = CountyArray.getCounty(i).getDelgatesArr().getSize();
+				int numdeligates = CountyArray.getDelegatesArrSize(i);//getCounty(i).getDelgatesArr().getSize()
 				if (max < _voteCountMatrix[i][j])
 				{
 					max = _voteCountMatrix[i][j];
@@ -184,16 +192,13 @@ namespace votes
 						cout << "No chosen Delegates from the party '" << partyList.getData(j)->getPartyName() << "' for this county " << endl;
 						break;
 					}
-					CountyDelegate currentDelgate = this->CountyArray.getCounty(i).getDelgate(k);
-
-		
-
-					if (currentDelgate.GetPartySerialOfDeligate() == j)// if the delegate is from the current party , print him
+					CountyDelegate* currentDelgate = this->CountyArray.getCounty(i)->getDelgate(k);
+					if (currentDelgate->GetPartySerialOfDeligate() == j)// if the delegate is from the current party , print him
 					{
 						DeligatesPrinted++;
 						if (DeligatesPrinted==1)
 							cout << "The chosen Delegates from the party '" << partyList.getData(j)->getPartyName() << "' are: ";
-						cout << currentDelgate.getName();
+						cout << currentDelgate->getName();
 						if (DeligatesPrinted != 0 && DeligatesPrinted != _delegatesMatrix[i][j]) cout << ", ";
 					}
 					if (DeligatesPrinted == _delegatesMatrix[i][j] && DeligatesPrinted>=1) // check how many delegates were actually printed from each party
