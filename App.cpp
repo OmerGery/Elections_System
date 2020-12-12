@@ -33,17 +33,27 @@ namespace votes
 	}
 	void App::PrintAllParties() const
 	{
+		if (partyList.getData(1)==nullptr)
+		{
+			cout << "You haven't entered any parties." << endl;
+			return;
+		}
 		int partiesSize = partyList.getData(1)->getPartyCounter();
 		int countiesSize = CountyArray.getSize();
 		for (int i = 1; i <= partiesSize; i++)
 		{
 			partyList.PrintaParty(i);
-			for(int j=1;j<countiesSize;j++)
+			for(int j=1;j<=countiesSize;j++)
 			CountyArray.printDelegatesOfAParty(j,i);
 		}
 	}
 	void App::PrintAllCounties ()const
 	{
+		if (CountyArray.getSize() == 0)
+		{
+			cout << "You haven't entered any counties." << endl;
+			return;
+		}
 		CountyArray.printAllCounties();
 	}
 	void App::PrintAllCitizens()const
@@ -86,21 +96,12 @@ namespace votes
 	{
 		Citizen* delegate = CountyArray.getCitizen(id);
 		if (delegate == nullptr)
-		{
-			cout << "A citizen with this ID doesn't exist." << endl;
 			return false;
-		}
 		Party* party = partyList.getData(partynum);
 		if (party == nullptr)
-		{
-			cout << "A party with this party serial number doesn't exist." << endl;
 			return false;
-		}
 		if (countynum <= 0 || countynum > CountyArray.getSize())
-		{
-			cout << "This County Doesn't exist" <<endl;
 				return false;
-		}
 		CountyDelegate * Delegate = new CountyDelegate(delegate, party);
 		CountyArray.addCDToCounty(Delegate, countynum);
 		return true;
@@ -109,19 +110,13 @@ namespace votes
 	{
 		Citizen* citizen = CountyArray.getCitizen(id);
 		if (citizen == nullptr)
-		{
-			cout << "A citizen with this ID doesn't exist." << endl;
 			return false;
-		}
 		Party* PartyVote = partyList.getData(partyNum);
 		if (PartyVote == nullptr)
-		{
-			cout << "A party with this party number doesn't exist." << endl;
 			return false;
-		}
 		if (citizen->vote(PartyVote) == false)
 		{
-			cout << "Don't cheat - you already voted!" << endl;
+			cout << "Don't cheat - this citizen had already voted!" << endl;
 			return false;
 		}
 		return true;
@@ -188,9 +183,13 @@ namespace votes
 		for (i = 1; i <= _countiesSize; i++)
 		{
 			int totalCitizensInCounty = CountyArray.getCountySize(i);
+			if(totalCitizensInCounty!=0)
 			_statisticsMatrix[i][0] = static_cast<float>(_voteCountMatrix[i][0]) / static_cast<float>(totalCitizensInCounty);
 			for (j = 1; j <= _partiesSize; j++)
+			{
+				if(_voteCountMatrix[i][0]!=0)
 				_statisticsMatrix[i][j] = static_cast<float>(_voteCountMatrix[i][j]) / static_cast<float>(_voteCountMatrix[i][0]);
+			}
 		}
 		for (i = 1; i <= _countiesSize; i++)
 		{
