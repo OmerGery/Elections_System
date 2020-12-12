@@ -13,7 +13,7 @@ using namespace std;
 namespace votes
 {
 	int Party::partyCounter = 0;
-	Party::Party(char* partyName, Citizen * leader)
+	Party::Party(char* partyName, Citizen* leader)
 	{
 		int len = strlen(partyName) + 1;
 		_partyName = new char[len];

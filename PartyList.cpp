@@ -14,7 +14,7 @@ using namespace std;
 
 namespace votes
 {
-	bool PartyList::Add(Party * party)
+	bool PartyList::Add(Party* party)
 	{
 		PListNode* newTail = new PListNode(party, nullptr, _tail);
 		if (_head == nullptr)

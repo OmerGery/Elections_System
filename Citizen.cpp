@@ -21,7 +21,7 @@ namespace votes
 		_year = year;
 		_PartyVotedTo = NULL;
 	}	
-	bool Citizen::vote(Party * party)
+	bool Citizen::vote(Party* party)
 	{
 		if (_PartyVotedTo!=NULL)
 			return false;

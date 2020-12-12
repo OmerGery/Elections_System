@@ -28,7 +28,7 @@ namespace votes
 			delete deleter;
 		}
 	}
-	bool CitizenList::AddCitizen(Citizen * toadd)
+	bool CitizenList::AddCitizen(Citizen* toadd)
 	{
 		CzListNode* newTail = new CzListNode(toadd, nullptr, _tail);
 		if (_head == nullptr)
@@ -49,7 +49,7 @@ namespace votes
 		CzListNode* current = _head;
 		while (current != nullptr)
 		{
-			Citizen * C_Citizen = current->_data;
+			Citizen* C_Citizen = current->_data;
 			cout << *(C_Citizen);
 			current = current->_next;
 		}

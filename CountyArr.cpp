@@ -70,14 +70,14 @@ namespace votes
         County* tofind = countyArray[county];
         return tofind->getCountySize();
     }
-    void countyArr::insert(County * county)
+    void countyArr::insert(County* county)
     {
         if (_size == physical)
             resize();
         countyArray[_size]=county;
         _size++;
     }
-    void countyArr::addCitizenToCounty(Citizen * citizen, int countynum)
+    void countyArr::addCitizenToCounty(Citizen* citizen, int countynum)
     {
         (*(countyArray[countynum])).AddCitizen(citizen);
     }
@@ -127,5 +127,20 @@ namespace votes
         }
         if(counter>0)
         cout << "." << endl;
+    }
+    bool countyArr::searchDelegate(int id) const
+    {
+        for (int k = 1; k < _size; k++)
+        {
+            County* current_C = countyArray[k];
+            int totalDeligatesinCounty = countyArray[k]->getDelgatesarrSize();
+            for (int i = 0; i < totalDeligatesinCounty; i++)
+            {
+                CountyDelegate* current = current_C->getDelgate(i);
+                if (current->getID() == id)
+                    return true;
+            }
+        }
+        return false;
     }
 };

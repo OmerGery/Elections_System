@@ -15,9 +15,6 @@ namespace votes
 		~CountyDelegate() {};
 		const int GetPartySerialOfDeligate()const { return _party->getPartySerial(); }
 		const char* getName() const { return _delegate->getName(); }
-		//int getID() const { return _id; }
-		//int getYear() const { return _year; }
-		//int getcountyNum() const { return _countyNum; }
-
+		const int getID() const { return _delegate->getID(); }
 	};
 }

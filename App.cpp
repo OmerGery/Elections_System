@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string.h>
 using namespace std;
-
 namespace votes
 {
 
@@ -63,16 +62,16 @@ namespace votes
 	bool App::AddParty(char* partyname, int idCandidate)
 	{
 
-		Citizen * leader=CountyArray.getCitizen(idCandidate);
+		Citizen* leader=CountyArray.getCitizen(idCandidate);
 		if (leader == nullptr)
 			return false;
-		Party * newparty=new Party(partyname, leader);
+		Party* newparty=new Party(partyname, leader);
 		partyList.Add(newparty);
 		return true;
 	}
 	void App::AddCounty(char* name, int delegatesNum)
 	{
-		County * county = new County(name, delegatesNum);
+		County* county = new County(name, delegatesNum);
 		CountyArray.insert(county);
 	}
 	bool App::AddCitizen(char* name, int id, int year, int countynum)
@@ -94,6 +93,11 @@ namespace votes
 	}
 	bool App::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
+		if (CountyArray.searchDelegate(id))
+		{
+			cout << "This citizen is already a delegate." <<endl;
+			return false;
+		}
 		Citizen* delegate = CountyArray.getCitizen(id);
 		if (delegate == nullptr)
 			return false;
@@ -102,7 +106,7 @@ namespace votes
 			return false;
 		if (countynum <= 0 || countynum > CountyArray.getSize())
 				return false;
-		CountyDelegate * Delegate = new CountyDelegate(delegate, party);
+		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
 		CountyArray.addCDToCounty(Delegate, countynum);
 		return true;
 	}
