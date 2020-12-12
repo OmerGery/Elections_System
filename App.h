@@ -42,13 +42,13 @@ namespace votes
 		App(Date& electionday);
 		~App();
 		void AddCounty(char* name, int delegatesNum);
-		void AddCitizen(char* name, int id, int year, int countynum);
+		bool AddCitizen(char* name, int id, int year, int countynum);
 		void PrintAllCounties() const;
 		void PrintAllCitizens()const;
 		void PrintAllParties() const;
-		void AddParty(char* partyname, int idCandidate);
-		void AddCitizenAsDelegate(int id, int partynum, int countynum);
-		void Vote(int id, int partyNum);
+		bool AddParty(char* partyname, int idCandidate);
+		bool AddCitizenAsDelegate(int id, int partynum, int countynum);
+		bool Vote(int id, int partyNum);
 		void printVotes();
 	};
 }

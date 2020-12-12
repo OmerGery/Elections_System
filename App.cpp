@@ -50,38 +50,85 @@ namespace votes
 	{
 		CountyArray.printAllCitizens();
 	}
-	void App::AddParty(char* partyname, int idCandidate)
+	bool App::AddParty(char* partyname, int idCandidate)
 	{
 
 		Citizen * leader=CountyArray.getCitizen(idCandidate);
+		if (leader == nullptr)
+			return false;
 		Party * newparty=new Party(partyname, leader);
 		partyList.Add(newparty);
+		return true;
 	}
 	void App::AddCounty(char* name, int delegatesNum)
 	{
 		County * county = new County(name, delegatesNum);
 		CountyArray.insert(county);
 	}
-	void App::AddCitizen(char* name, int id, int year, int countynum)
+	bool App::AddCitizen(char* name, int id, int year, int countynum)
 	{
+		if (countynum > CountyArray.getSize() || countynum <= 0)
+		{
+			cout << "This County doesn't exist." << endl;
+			return false;
+		}
+		Citizen* citizen = CountyArray.getCitizen(id);
+		if (citizen != nullptr)
+		{
+			cout << "A Citizen with this ID already exist." << endl;
+			return false;
+		}
 		Citizen* newCitizen= new Citizen(name, id, year);
 		CountyArray.addCitizenToCounty(newCitizen, countynum);
+		return true;
 	}
-	void App::AddCitizenAsDelegate(int id, int partynum, int countynum)
+	bool App::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		Citizen* delegate = CountyArray.getCitizen(id);
+		if (delegate == nullptr)
+		{
+			cout << "A citizen with this ID doesn't exist." << endl;
+			return false;
+		}
 		Party* party = partyList.getData(partynum);
+		if (party == nullptr)
+		{
+			cout << "A party with this party serial number doesn't exist." << endl;
+			return false;
+		}
+		if (countynum <= 0 || countynum > CountyArray.getSize())
+		{
+			cout << "This County Doesn't exist" <<endl;
+				return false;
+		}
 		CountyDelegate * Delegate = new CountyDelegate(delegate, party);
 		CountyArray.addCDToCounty(Delegate, countynum);
+		return true;
 	}
-	void App::Vote(int id, int partyNum)
+	bool App::Vote(int id, int partyNum)
 	{
 		Citizen* citizen = CountyArray.getCitizen(id);
+		if (citizen == nullptr)
+		{
+			cout << "A citizen with this ID doesn't exist." << endl;
+			return false;
+		}
 		Party* PartyVote = partyList.getData(partyNum);
+		if (PartyVote == nullptr)
+		{
+			cout << "A party with this party number doesn't exist." << endl;
+			return false;
+		}
 		if (citizen->vote(PartyVote) == false)
+		{
 			cout << "Don't cheat - you already voted!" << endl;
+			return false;
+		}
+		return true;
 	}
-	// CALCs:
+
+
+	// CALCS: 
 
 	void App::initVotesMatrix() 
 	{
@@ -175,7 +222,7 @@ namespace votes
 			for (j = 1; j <= _partiesSize; j++)
 			{
 				DeligatesPrinted = 0;
-				int numdeligates = CountyArray.getDelegatesArrSize(i);//getCounty(i).getDelgatesArr().getSize()
+				int numdeligates = CountyArray.getDelegatesArrSize(i);
 				if (max < _voteCountMatrix[i][j])
 				{
 					max = _voteCountMatrix[i][j];

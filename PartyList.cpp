@@ -67,7 +67,6 @@ namespace votes
 				return nullptr;
 			toReturn = toReturn->_next;
 		}
-
 		return toReturn->_data;
 	}
 }

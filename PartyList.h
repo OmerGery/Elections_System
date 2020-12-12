@@ -27,7 +27,6 @@ namespace votes
 		PartyList() :_head(nullptr), _tail(nullptr) {}
 		~PartyList();
 		bool Add(Party* party);
-		void addDelegateToParty(Citizen* delegate, int partynum);
 		Party* getData(int index) const;
 		void PrintaParty(int partyserial) const;
 		void PrintLeader(int partySerial) const;
