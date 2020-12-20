@@ -25,7 +25,9 @@ static const int ElectionMonth = 11;
 static const int ElectionYear = 2020;
 int main()
 { 
-    // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
+    // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) .
+    ifstream inFile;
+    inFile.open("votes.txt");
     char name[MAX_SIZE];    
     int option, delegatesNum, id, year, countyNum,partyNum;
     bool correctInput; // used for input checks 
@@ -39,88 +41,88 @@ int main()
     while (!exit)
     {
         cout << "Choose an option" << endl; 
-        cin >> option;
+        inFile >> option;
         switch (option)
         {
         case 1:
             cout << "Enter the County name" << endl;
-            cin >> name;
+            inFile >> name;
             cout << "Enter number of delegates" << endl;
-            cin >> delegatesNum;
+            inFile >> delegatesNum;
             while (delegatesNum <= 0)
             {
                 cout << "please enter a positive number of delegates" <<endl;
-                cin >> delegatesNum;
+                inFile >> delegatesNum;
             }
             MyApplication.AddCounty(name, delegatesNum);
             break;
         case 2: 
             cout << "Enter the citizen name" << endl;
-            cin >> name;
+            inFile >> name;
             cout << "Please Enter ID number" << endl;
-            cin >> id;
+            inFile >> id;
             while (id <= 0)
             {
                 cout << "please enter a positive ID number" << endl;
-                cin >> id;
+                inFile >> id;
             }
             cout << "Please Enter year of birth" << endl;
-            cin >> year;
+            inFile >> year;
             while (year < MIN_YEAR_TO_VOTE || year > MAX_YEAR_TO_VOTE)
             {
                 cout << "In order to vote ,the citizen age must be valid." << endl;
                 cout << "Please Enter year of birth" << endl;
-                cin >> year;    
+                inFile >> year;    
             }
             cout << "Please Enter serial number of county" << endl;
-            cin >> countyNum;
+            inFile >> countyNum;
             correctInput = MyApplication.AddCitizen(name, id, year, countyNum);
             while (!correctInput)
             {
                 cout << "The county number or ID number was invalid." << endl;
                 cout << "Please Enter serial number of county" << endl;          
-                cin >> countyNum;
+                inFile >> countyNum;
                 cout << "Please Enter ID number" << endl;
-                cin >> id;
+                inFile >> id;
                 while (id <= 0)
                 {
                     cout << "please enter a positive ID number" << endl;
-                    cin >> id;
+                    inFile >> id;
                 }
                 correctInput = MyApplication.AddCitizen(name, id, year, countyNum);
             }
             break;
         case 3: 
             cout << "Enter the party name" << endl;
-            cin >> name;
+            inFile >> name;
             cout << "Enter ID number of candidate for presidence" << endl;
-            cin >> id;    
+            inFile >> id;    
             correctInput=MyApplication.AddParty(name, id);
             while (!correctInput)
             {
                 cout << "This citizen doesn't exist,therefore he can't be a candidate."<<endl << 
                 "please enter a correct ID of an existing citizen." << endl;
-                cin >> id;
+                inFile >> id;
                 correctInput = MyApplication.AddParty(name, id);
             }
             break;
         case 4: 
             cout << "Enter the citizen ID" << endl;
-            cin >> id;
+            inFile >> id;
             cout << "Enter party serial number" << endl;
-            cin >> partyNum;
+            inFile >> partyNum;
             cout << "Enter serial number of county" << endl;
-            cin >> countyNum;
+            inFile >> countyNum;
             correctInput=MyApplication.AddCitizenAsDelegate(id,partyNum,countyNum);
             while (!correctInput)
             {
                 cout << "Please enter a correct: citizen ID , party serial number and county number." <<endl;
                 cout << "Enter the citizen ID" << endl;
-                cin >> id;
+                inFile >> id;
                 cout << "Enter party serial number" << endl;
-                cin >> partyNum;
+                inFile >> partyNum;
                 cout << "Enter serial number of county" << endl;
-                cin >> countyNum;
+                inFile >> countyNum;
                 correctInput = MyApplication.AddCitizenAsDelegate(id, partyNum, countyNum);
             }
             break;
@@ -135,17 +137,17 @@ int main()
             break;
         case 8:
             cout << "Enter the citizen ID" << endl;
-            cin >> id;
+            inFile >> id;
             cout << "Enter Party Serial number" << endl;
-            cin >> partyNum;
+            inFile >> partyNum;
             correctInput=MyApplication.Vote(id, partyNum);
             while (!correctInput)
             {
                 cout << "The Citizen ID or Party Serial number was invalid. please enter them again." << endl;
                 cout << "Enter the citizen ID" << endl;
-                cin >> id;
+                inFile >> id;
                 cout << "Enter Party Serial number" << endl;
-                cin >> partyNum;
+                inFile >> partyNum;
                 correctInput = MyApplication.Vote(id, partyNum);
             }
             break;
