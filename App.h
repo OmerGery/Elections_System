@@ -16,18 +16,19 @@ namespace votes
 		Date _electionday;
 		countyArr CountyArray;
 		PartyList partyList;
-		// calcing
+
+		// Calcing:
 		int _partiesSize;
 		int _countiesSize;
 		int** _voteCountMatrix;
 		float** _statisticsMatrix;
 		int** _delegatesMatrix;
-		struct Elector
+		struct Elector // internal usage in order to sort the candidates.
 		{
 			int sumElectors;
 			Party* party;
 		};
-		// Internal Calc FUNCS - Private.
+		// Internal usage Calc FUNCS - Private.
 		Elector* Electors;
 		void initVotesMatrix();
 		void initDeligatesMatrix();
@@ -37,7 +38,6 @@ namespace votes
 		void calcVotes();
 		void swap(Elector& a, Elector& b);
 		void bubbleSort(Elector Electors[], int size);
-		
 	public:
 		App(Date& electionday);
 		~App();

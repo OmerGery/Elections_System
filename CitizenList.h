@@ -30,8 +30,7 @@ namespace votes
 	public:
 		CitizenList() :_head(nullptr), _tail(nullptr), _size(0){}
 		~CitizenList();
-		bool AddCitizen(Citizen * toadd);
-		void PrintList(County const& county) const;
+		bool AddCitizen(Citizen* toadd);
 		void PrintList() const;
 		Citizen* findCitizen(int id) const;
 		void getVotes(int* voteArr) const;

@@ -17,10 +17,6 @@ namespace votes
     {
         delete[] CDArray;
     }
-    void countyDelegateArr::printPartyCDs(Party& party)const
-    {
-        // to implent
-    }
     void countyDelegateArr::insert(CountyDelegate* CD)
     {
         if (_size == physical)

@@ -12,7 +12,7 @@ namespace votes
 	{
 	
 	private:
-		int _countySerial;//id 
+		int _countySerial;
 		char* _countyName;
 		int _numdelegates;
 		CitizenList _citizenAllowed;

@@ -18,7 +18,6 @@ namespace votes
         void insert(CountyDelegate* cd);
         int getSize()const;
         void resize();
-        void printPartyCDs(Party & party)const;
         CountyDelegate* getDel(int place)const { return CDArray[place]; }
     };
 }

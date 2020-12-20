@@ -14,7 +14,6 @@ namespace votes
 		Party* _PartyVotedTo;
 
 	public:
-	//	Citizen();
 		Citizen(char* name, int id, int year);
 		~Citizen(); 
 		bool vote(Party* party);
