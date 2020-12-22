@@ -77,16 +77,10 @@ namespace votes
 	bool App::AddCitizen(char* name, int id, int year, int countynum)
 	{
 		if (countynum > CountyArray.getSize() || countynum <= 0)
-		{
-			cout << "This County doesn't exist." << endl;
 			return false;
-		}
 		Citizen* citizen = CountyArray.getCitizen(id);
 		if (citizen != nullptr)
-		{
-			cout << "A Citizen with this ID already exist." << endl;
 			return false;
-		}
 		Citizen* newCitizen= new Citizen(name, id, year);
 		CountyArray.addCitizenToCounty(newCitizen, countynum);
 		return true;
@@ -94,10 +88,7 @@ namespace votes
 	bool App::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		if (CountyArray.searchDelegate(id))
-		{
-			cout << "This citizen is already a delegate." <<endl;
 			return false;
-		}
 		Citizen* delegate = CountyArray.getCitizen(id);
 		if (delegate == nullptr)
 			return false;
@@ -119,10 +110,7 @@ namespace votes
 		if (PartyVote == nullptr)
 			return false;
 		if (citizen->vote(PartyVote) == false)
-		{
-			cout << "Don't cheat - this citizen had already voted!" << endl;
 			return false;
-		}
 		return true;
 	}
 

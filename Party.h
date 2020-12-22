@@ -13,7 +13,7 @@ namespace votes
 		int _partySerial;
 		static int partyCounter;
 	public:
-		Party(char* partyName, Citizen* leader);
+		Party(const char* partyName, Citizen* leader);
 		~Party();
 		const char* getPartyName() const { return _partyName; }
 		const Citizen* getLeader() const { return _leader; }

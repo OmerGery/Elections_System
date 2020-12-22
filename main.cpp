@@ -12,6 +12,10 @@
 #include <fstream>
 using namespace std;
 using namespace votes;
+static const int first_option = 1;
+enum options {
+    AddCounty=first_option, AddCitizen, AddParty, AddDelegate, DisplayCounties, DisplayCitizens, DisplayParties, Vote, ShowRes,Exit
+}option;
 //Maximum string size:
 static const int MAX_SIZE = 100;
 
@@ -32,17 +36,18 @@ int main()
     Date date(ElectionDay, ElectionMonth, ElectionYear);
     App MyApplication(date);
     bool exit = false;
-    cout << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
-        << "4 - Add a Citizen as a party delegate" << endl << "5 - Display all Counties" << endl << "6 - Display all Citizens" << endl
-        << "7 - Display all Parties" << endl << "8 - Vote for a Party" << endl << "9 - Display elections results" << endl
-        << "10 - EXIT" << endl;
+    
     while (!exit)
     {
+        cout << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
+            << "4 - Add a Citizen as a party delegate" << endl << "5 - Display all Counties" << endl << "6 - Display all Citizens" << endl
+            << "7 - Display all Parties" << endl << "8 - Vote for a Party" << endl << "9 - Display elections results" << endl
+            << "10 - EXIT" << endl;
         cout << "Choose an option" << endl; 
         cin >> option;
         switch (option)
         {
-        case 1:
+        case options::AddCounty:
             cout << "Enter the County name" << endl;
             cin >> name;
             cout << "Enter number of delegates" << endl;
@@ -54,7 +59,7 @@ int main()
             }
             MyApplication.AddCounty(name, delegatesNum);
             break;
-        case 2: 
+        case options::AddCitizen:
             cout << "Enter the citizen name" << endl;
             cin >> name;
             cout << "Please Enter ID number" << endl;
@@ -90,7 +95,7 @@ int main()
                 correctInput = MyApplication.AddCitizen(name, id, year, countyNum);
             }
             break;
-        case 3: 
+        case options::AddParty:
             cout << "Enter the party name" << endl;
             cin >> name;
             cout << "Enter ID number of candidate for presidence" << endl;
@@ -104,7 +109,7 @@ int main()
                 correctInput = MyApplication.AddParty(name, id);
             }
             break;
-        case 4: 
+        case options::AddDelegate:
             cout << "Enter the citizen ID" << endl;
             cin >> id;
             cout << "Enter party serial number" << endl;
@@ -124,16 +129,16 @@ int main()
                 correctInput = MyApplication.AddCitizenAsDelegate(id, partyNum, countyNum);
             }
             break;
-        case 5:
+        case options::DisplayCounties:
             MyApplication.PrintAllCounties();
             break;
-        case 6: 
+        case options::DisplayCitizens:
             MyApplication.PrintAllCitizens();
             break;
-        case 7:
+        case options::DisplayParties:
             MyApplication.PrintAllParties();
             break;
-        case 8:
+        case options::Vote:
             cout << "Enter the citizen ID" << endl;
             cin >> id;
             cout << "Enter Party Serial number" << endl;
@@ -141,7 +146,7 @@ int main()
             correctInput=MyApplication.Vote(id, partyNum);
             while (!correctInput)
             {
-                cout << "The Citizen ID or Party Serial number was invalid. please enter them again." << endl;
+                cout << "This citizen has already voted / Citizen ID or Party Serial number was invalid. please enter them again." << endl;
                 cout << "Enter the citizen ID" << endl;
                 cin >> id;
                 cout << "Enter Party Serial number" << endl;
@@ -149,10 +154,10 @@ int main()
                 correctInput = MyApplication.Vote(id, partyNum);
             }
             break;
-        case 9:
+        case options::ShowRes:
             MyApplication.printVotes();
             break;
-        case 10:
+        case options::Exit:
             cout << "You have exited the program. " <<endl;
             exit = true;
             break;
