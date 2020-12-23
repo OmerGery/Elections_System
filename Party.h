@@ -14,6 +14,8 @@ namespace votes
 		static int partyCounter;
 	public:
 		Party(const char* partyName, Citizen* leader);
+		Party(const Party& other)=delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
+		Party& operator=(const Party& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.
 		~Party();
 		const char* getPartyName() const { return _partyName; }
 		const Citizen* getLeader() const { return _leader; }

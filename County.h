@@ -23,6 +23,8 @@ namespace votes
 		County(char* countyName, int numdelegates);
 		County();
 		~County();
+		County(const County& other) = delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
+		County& operator=(const County& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.
 		void AddCitizen(Citizen* citizen);
 		void AddCD(CountyDelegate* delegate);
 		CountyDelegate* getDelgate(int delgatePlace)const;

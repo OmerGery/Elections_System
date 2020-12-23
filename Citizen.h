@@ -16,6 +16,8 @@ namespace votes
 	public:
 		Citizen(char* name, int id, int year);
 		~Citizen(); 
+		Citizen(const Citizen& other) = delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
+		Citizen& operator=(const Citizen& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.
 		bool vote(Party* party);
 		const char* getName() const { return _name; }
 		const int getID() const { return _id; }

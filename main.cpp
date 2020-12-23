@@ -35,6 +35,7 @@ int main()
     bool correctInput; // used for input checks 
     Date date(ElectionDay, ElectionMonth, ElectionYear);
     App MyApplication(date);
+    
     bool exit = false;
     
     while (!exit)
