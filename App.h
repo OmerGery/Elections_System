@@ -42,14 +42,22 @@ namespace votes
 	public:
 		App(Date& electionday);
 		~App();
-		void AddCounty(char* name, int delegatesNum);
-		bool AddCitizen(char* name, int id, int year, int countynum);
-		void PrintAllCounties() const;
+		virtual void AddCounty(char* name, int delegatesNum);
+		virtual bool AddCitizen(char* name, int id, int year, int countynum);
+		virtual void PrintAllCounties() const;
 		void PrintAllCitizens()const;
 		void PrintAllParties() const;
 		bool AddParty(char* partyname, int idCandidate);
 		bool AddCitizenAsDelegate(int id, int partynum, int countynum);
 		bool Vote(int id, int partyNum);
 		void printVotes();
+	};
+
+	class SimpleApp :public App
+	{
+		SimpleApp(Date& electionDay, int numOfDelegates):App(electionDay)
+		{
+			 // initalize single-size array of counties and initalize 1 county with size of numOfDelegates
+		}
 	};
 }

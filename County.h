@@ -10,13 +10,13 @@ namespace votes
 {
 	class County
 	{
-	
+
 	private:
 		int _countySerial;
 		char* _countyName;
 		int _numdelegates;
 		CitizenList _citizenAllowed;
-     	countyDelegateArr CDArr;
+		countyDelegateArr CDArr;
 		static int countyCounter;
 
 	public:
@@ -38,5 +38,20 @@ namespace votes
 		Citizen* searchCitizen(int id)const;
 		void PrintCitizenList() const;
 		void getCountyVotes(int* votearr);
+		virtual int* GetPartiesElectors(int* partiesVotes);
+		virtual char* GetCountyType();
+	};
+
+
+	class SimpleCounty :public County
+	{
+		int* GetPartiesElectors(int* partiesVotes);
+		char* GetCountyType();
+	};
+
+	class ComplexCounty :public County
+	{
+		int* GetPartiesElectors(int* partiesVotes);
+		char* GetCountyType();
 	};
 }

@@ -36,6 +36,8 @@ int main()
     Date date(ElectionDay, ElectionMonth, ElectionYear);
     App MyApplication(date);
     
+
+    return 0;
     bool exit = false;
     
     while (!exit)
