@@ -17,13 +17,16 @@ namespace votes
       void insert(County* county);
       const int getSize()const;
       void resize();
+      
       void addCitizenToCounty(Citizen* citizen, int countynum);
       void addCDToCounty(CountyDelegate* delegate,int countynum);
       void printAllCounties()const;
       void printAllCitizens()const;
       Citizen* getCitizen(int id);
       void getCitizensVotes(int** votesMatrix, int counties, int parties)const;
+      void getElectors(int** electorsMatrix,int** voteCountMatrix,int partiesSize);
       void printCountyName(int countyNum) const;
+      void printWinnersOfCounty(int* electors, int countyNum, int partiesSize, PartyList* partylist) const;
       void printDelegatesNum(int countyNum) const;
       void printDelegatesOfAParty(int countynum, int partynum) const;
       const int getDelegatesNum(int countyNum) const;

@@ -10,6 +10,7 @@
 
 namespace votes
 {
+	
 	class App
 	{
 	private:
@@ -23,17 +24,14 @@ namespace votes
 		int** _voteCountMatrix;
 		float** _statisticsMatrix;
 		int** _delegatesMatrix;
-		struct Elector // internal usage in order to sort the candidates.
-		{
-			int sumElectors;
-			Party* party;
-		};
+		int** _electorsMatrix;
 		// Internal usage Calc FUNCS - Private.
-		Elector* Electors;
+//		Elector* Electors;
 		void initVotesMatrix();
 		void initDeligatesMatrix();
 		void initStatisticsMatrix();
-		void initElectors();
+	//	void initElectors();
+		void initElectorsMatrix();
 		void initMatrices();
 		void calcVotes();
 		void swap(Elector& a, Elector& b);
@@ -42,9 +40,9 @@ namespace votes
 	public:
 		App(Date& electionday);
 		~App();
-		virtual void AddCounty(char* name, int delegatesNum);
-		virtual bool AddCitizen(char* name, int id, int year, int countynum);
-		virtual void PrintAllCounties() const;
+		void AddCounty(char* name, int delegatesNum,bool simple);//virtual 
+		bool AddCitizen(char* name, int id, int year, int countynum);//virtual 
+		void PrintAllCounties() const;//virtual 
 		void PrintAllCitizens()const;
 		void PrintAllParties() const;
 		bool AddParty(char* partyname, int idCandidate);
@@ -53,11 +51,11 @@ namespace votes
 		void printVotes();
 	};
 
-	class SimpleApp :public App
-	{
-		SimpleApp(Date& electionDay, int numOfDelegates):App(electionDay)
-		{
+//	class SimpleApp :public App
+//	{
+//		SimpleApp(Date& electionDay, int numOfDelegates):App(electionDay)
+//		{
 			 // initalize single-size array of counties and initalize 1 county with size of numOfDelegates
-		}
-	};
+//		}
+//	};
 }

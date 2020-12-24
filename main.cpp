@@ -30,14 +30,11 @@ static const int ElectionYear = 2020;
 int main()
 { 
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
-    char name[MAX_SIZE];    
-    int option, delegatesNum, id, year, countyNum,partyNum;
+    char name[MAX_SIZE];        
+    int option, delegatesNum, id, year, countyNum,partyNum,simple;
     bool correctInput; // used for input checks 
     Date date(ElectionDay, ElectionMonth, ElectionYear);
     App MyApplication(date);
-    
-
-    return 0;
     bool exit = false;
     
     while (!exit)
@@ -51,6 +48,13 @@ int main()
         switch (option)
         {
         case options::AddCounty:
+            cout << "Please Enter 1 for simple county or 0 for complex county" <<endl;
+            cin >> simple;
+            while (simple != 1 && simple != 0)
+            {
+                cout << "Please enter 0 or 1 ." << endl;
+                cin >> simple;
+            }
             cout << "Enter the County name" << endl;
             cin >> name;
             cout << "Enter number of delegates" << endl;
@@ -60,7 +64,7 @@ int main()
                 cout << "please enter a positive number of delegates" <<endl;
                 cin >> delegatesNum;
             }
-            MyApplication.AddCounty(name, delegatesNum);
+            MyApplication.AddCounty(name, delegatesNum,simple);
             break;
         case options::AddCitizen:
             cout << "Enter the citizen name" << endl;

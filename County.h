@@ -1,6 +1,7 @@
 #pragma once
 #include "Party.h"
 #include "CitizenList.h"
+#include "PartyList.h"
 #include "Citizen.h"
 #include "CountyDelegateArr.h"
 #include "CountyDelegate.h"
@@ -8,10 +9,15 @@
 using namespace std;
 namespace votes
 {
+	struct Elector
+	{
+		int sumElectors;
+		Party* party;
+	};
 	class County
 	{
 
-	private:
+	protected:
 		int _countySerial;
 		char* _countyName;
 		int _numdelegates;
@@ -38,20 +44,64 @@ namespace votes
 		Citizen* searchCitizen(int id)const;
 		void PrintCitizenList() const;
 		void getCountyVotes(int* votearr);
-		virtual int* GetPartiesElectors(int* partiesVotes);
-		virtual char* GetCountyType();
+		virtual void GetPartiesElectors (int* partiesVotes,int* countyElectors,int partiesSize)const=0;
+		virtual void printWinners(int* Electors,int partiesSize,PartyList* partylist)const = 0;
+		//virtual char* GetCountyType();
 	};
 
 
 	class SimpleCounty :public County
-	{
-		int* GetPartiesElectors(int* partiesVotes);
-		char* GetCountyType();
+	{	
+	public:
+		SimpleCounty(char* countyName, int numdelegates) : County(countyName, numdelegates) {}
+		virtual void GetPartiesElectors (int* partiesVotes,int* countyElectors,int partiesSize)const override
+		{
+			int max = -1;
+			int winningParty = 0;
+			for (int i = 1; i <= partiesSize; i++)
+			{
+				if (max < partiesVotes[i])
+				{
+					max = partiesVotes[i];
+					winningParty = i;
+				}
+			}
+			countyElectors[winningParty] = this->_numdelegates;
+		}
+		virtual void printWinners(int* Electors, int partiesSize,PartyList* partylist)const override
+		{
+			for (int i = 1; i < partiesSize; i++)
+			{
+				if (Electors[i] > 0)
+				{
+					cout << "The winner is:"; partylist->PrintLeader(i);
+					break;
+				}
+			}
+		}
+	//	char* GetCountyType();
 	};
 
 	class ComplexCounty :public County
 	{
-		int* GetPartiesElectors(int* partiesVotes);
-		char* GetCountyType();
+	public:
+		ComplexCounty(char* countyName, int numdelegates) : County(countyName, numdelegates) {}
+		virtual void GetPartiesElectors (int* partiesVotes,int* countyElectors,int partiesSize)const override
+		{
+			
+			
+		}
+		virtual void printWinners(int* Electors, int partiesSize, PartyList* partylist)const override
+		{
+
+			Elector* electorsArray = new Elector[partiesSize + 1];
+			for (int i = 1; i <= partiesSize; i++)
+			{
+				electorsArray[i].sumElectors = Electors[i];
+				electorsArray[i].party = partylist->getData(i);
+			}
+
+		}
+	//	char* GetCountyType();
 	};
 }
