@@ -56,4 +56,18 @@ namespace votes
 	{
 		this->_citizenAllowed.PrintList();
 	}
+	void County::swap(Elector& a, Elector& b)const
+	{
+		Elector c = a;
+		a = b;
+		b = c;
+	}
+	void County::bubbleSort(Elector* Electors, int size)const
+	{
+		int i, j;
+		for (i = 0; i < size - 1; i++)
+			for (j = 0; j < size - i - 1; j++)
+				if (Electors[j].sumElectors > Electors[j + 1].sumElectors)
+					swap(Electors[j], Electors[j + 1]);
+	}
 }

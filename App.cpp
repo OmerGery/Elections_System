@@ -189,7 +189,6 @@ namespace votes
 		initMatrices();
 		// fill the matrices with the citizen votes 
 		CountyArray.getCitizensVotes(_voteCountMatrix, _countiesSize, _partiesSize);
-		CountyArray.getElectors(_electorsMatrix, _voteCountMatrix, _partiesSize);
 		for (i = 1; i <= _countiesSize; i++)
 		{
 			int totalCitizensInCounty = CountyArray.getCountySize(i);
@@ -216,6 +215,7 @@ namespace votes
 			remainingDelegates = countyDelegatesNum - tempDelegatesNum;
 			_delegatesMatrix[i][place] += remainingDelegates;
 		}
+		CountyArray.getElectors(_electorsMatrix, _statisticsMatrix, _partiesSize);
 	}
 		// print for each county : name , amount of Delegates that the county gives , leader name of the winning party.
 	void App::printVotes()
@@ -246,41 +246,42 @@ namespace votes
 					if (currentDelgate->GetPartySerialOfDeligate() == j)// if the delegate is from the current party , print him
 					{
 						DeligatesPrinted++;
-						if (DeligatesPrinted==1)
+						if (DeligatesPrinted == 1)
 							cout << "The chosen Delegates from the party '" << partyList.getData(j)->getPartyName() << "' are: ";
 						cout << currentDelgate->getName();
 						if (DeligatesPrinted != 0 && DeligatesPrinted != _delegatesMatrix[i][j]) cout << ", ";
 					}
-					if (DeligatesPrinted == _delegatesMatrix[i][j] && DeligatesPrinted>=1) // check how many delegates were actually printed from each party
+					if (DeligatesPrinted == _delegatesMatrix[i][j] && DeligatesPrinted >= 1) // check how many delegates were actually printed from each party
 					{
 						cout << "." << endl;
 						break;
 					}
 				}
 			}
-			CountyArray.printWinnersOfCounty(_electorsMatrix[i],i,_partiesSize,&partyList);
-	//		cout << "The winner in this county is: "; partyList.PrintLeader(partyNum); cout << endl
+			CountyArray.printWinnersOfCounty(_voteCountMatrix[i],_electorsMatrix[i], i, _partiesSize, &partyList);
+			//		cout << "The winner in this county is: "; partyList.PrintLeader(partyNum); cout << endl
 		}
+
+
+	/*	bubbleSort(Electors, _partiesSize + 1)
 	
-		
-	//	bubbleSort(Electors, _partiesSize + 1);
-	/*	for (int i = _partiesSize; i > 0; i--)
+		for (int i = _partiesSize; i > 0; i--)
 			cout << "#" << _partiesSize - i+1 << ". " << Electors[i].party->getLeader()->getName() << " Has got: "
 			<< Electors[i].sumElectors << " Electors and his party got " <<
 			this->_voteCountMatrix[0][Electors[i].party->getPartySerial()] << " votes" << endl;*/
 	}
-	void App::swap(Elector& a, Elector& b)
-	{
-		Elector c = a;
-		a = b;
-		b = c;
-	}
-	/*void App::bubbleSort(Elector Electors[], int size)
-	{
-		int i, j;
-		for (i = 0; i < size - 1; i++)
-			for (j = 0; j < size - i - 1; j++)
-				if (Electors[j].sumElectors > Electors[j + 1].sumElectors)
-					swap(Electors[j], Electors[j+1]);
-	}*/
+	//void App::swap(Elector& a, Elector& b)
+	//{
+	//	Elector c = a;
+	//	a = b;
+	//	b = c;
+	//}
+	//void App::bubbleSort(Elector Electors[], int size)
+	//{
+	//	int i, j;
+	//	for (i = 0; i < size - 1; i++)
+	//		for (j = 0; j < size - i - 1; j++)
+	//			if (Electors[j].sumElectors > Electors[j + 1].sumElectors)
+	//				swap(Electors[j], Electors[j + 1]);
+	//}
 }

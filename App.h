@@ -34,8 +34,8 @@ namespace votes
 		void initElectorsMatrix();
 		void initMatrices();
 		void calcVotes();
-		void swap(Elector& a, Elector& b);
-		void bubbleSort(Elector Electors[], int size);
+	/*	void swap(Elector& a, Elector& b);
+		void bubbleSort(Elector Electors[], int size);*/
 		
 	public:
 		App(Date& electionday);
