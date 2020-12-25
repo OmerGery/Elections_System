@@ -10,7 +10,7 @@ namespace votes
 {
 	
 	int County::countyCounter=0;
-	County::County(char* countyName, int numdelegates)
+	County::County(const char* countyName, int numdelegates)
 	{
 		_countyName = new char[strlen(countyName)+1];
 		strcpy(_countyName,countyName);
@@ -23,7 +23,7 @@ namespace votes
 	}
 	ostream& operator<<(ostream& os, const County& county)
 	{
-		os<< "County Number:"<<county._countySerial << " County Name:" << county._countyName << " Amount of Delegates:" << county._numdelegates << endl;
+		os<< "County Number:"<<county._countySerial << " County Name:" << county._countyName << " Amount of Delegates:" << county._numdelegates;
 		return os;
 	}
 	County::~County()
@@ -55,19 +55,5 @@ namespace votes
 	void County::PrintCitizenList() const
 	{
 		this->_citizenAllowed.PrintList();
-	}
-	void County::swap(Elector& a, Elector& b)const
-	{
-		Elector c = a;
-		a = b;
-		b = c;
-	}
-	void County::bubbleSort(Elector* Electors, int size)const
-	{
-		int i, j;
-		for (i = 0; i < size - 1; i++)
-			for (j = 0; j < size - i - 1; j++)
-				if (Electors[j].sumElectors > Electors[j + 1].sumElectors)
-					swap(Electors[j], Electors[j + 1]);
 	}
 }

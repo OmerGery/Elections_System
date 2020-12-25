@@ -10,10 +10,9 @@
 
 namespace votes
 {
-	
 	class App
 	{
-	private:
+	protected:
 		Date _electionday;
 		countyArr CountyArray;
 		PartyList partyList;

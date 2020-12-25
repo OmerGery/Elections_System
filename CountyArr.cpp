@@ -24,7 +24,8 @@ namespace votes
         for (int i = 1; i < _size; i++)
         {
             County* current = countyArray[i];
-            cout << (*current);
+            cout << (*current) ;
+            current->printCountyType();
         }
     }
     void countyArr::printCountyName(int countyNum) const

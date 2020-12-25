@@ -5,16 +5,11 @@
 #include "Citizen.h"
 #include "CountyDelegateArr.h"
 #include "CountyDelegate.h"
-#include "App.h"
+#include "Sort.h"
 #include <iostream>
 using namespace std;
 namespace votes
 {
-	struct Elector
-	{
-		int sumElectors;
-		Party* party;
-	};
 	class County
 	{
 	protected:
@@ -26,7 +21,7 @@ namespace votes
 		static int countyCounter;
 
 	public:
-		County(char* countyName, int numdelegates);
+		County(const char* countyName, int numdelegates);
 		County();
 		~County();
 		County(const County& other) = delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
@@ -46,16 +41,15 @@ namespace votes
 		void getCountyVotes(int* votearr);
 		virtual void GetPartiesElectors(float* statisticsArray, int* countyElectors, int partiesSize)const=0;
 		virtual void sortAndPrintWinners(int* voteCount,int* Electors,int partiesSize,PartyList* partylist)const = 0;
-		void swap(Elector& a, Elector& b)const;
-		void bubbleSort(Elector* Electors, int size)const;
-		//virtual char* GetCountyType();
+		virtual void printCountyType() const=0;
 	};
 
+	
 
 	class SimpleCounty :public County
 	{	
 	public:
-		SimpleCounty(char* countyName, int numdelegates) : County(countyName, numdelegates) {}
+		SimpleCounty(const char* countyName, int numdelegates) : County(countyName, numdelegates) {}
 		virtual void GetPartiesElectors (float* statisticsArray,int* countyElectors,int partiesSize)const override
 		{
 			float max = -1;
@@ -81,13 +75,16 @@ namespace votes
 				}
 			}
 		}
-	//	char* GetCountyType();
+		virtual void printCountyType() const override
+		{
+			cout << " County Type: Simple " << endl;
+		}
 	};
 
 	class ComplexCounty :public County
 	{
 	public:
-		ComplexCounty(char* countyName, int numdelegates) : County(countyName, numdelegates) {}
+		ComplexCounty(const char* countyName, int numdelegates) : County(countyName, numdelegates) {}
 		virtual void GetPartiesElectors (float* statisticsArray,int* countyElectors,int partiesSize)const override
 		{
 			int place = 0, tempElectorsNum = 0, remainingDelegates=0, max=0;
@@ -114,14 +111,16 @@ namespace votes
 				electorsArray[i].party = partylist->getData(i);
 			}
 			
-			bubbleSort(electorsArray, partiesSize);
+			bubbleSort(electorsArray, size);
 			for (int i = partiesSize; i > 0; i--)
 				cout << "#" << partiesSize - i + 1 << ". " << electorsArray[i].party->getLeader()->getName() << " Has got: "
 					<< electorsArray[i].sumElectors << " Electors and his party got " <<
 					voteCount[electorsArray[i].party->getPartySerial()] << " votes" << endl; 
 		}
-	//	char* GetCountyType();
-
+		virtual void printCountyType() const override
+		{
+			cout << " County Type: Split " << endl;
+		}
 	};
 
 }

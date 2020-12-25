@@ -7,6 +7,7 @@
 #include "CountyDelegate.h"
 #include "PartyList.h"
 #include "App.h"
+#include "Sort.h"
 #include <iostream>
 #include <string.h>
 using namespace std;
@@ -259,29 +260,21 @@ namespace votes
 				}
 			}
 			CountyArray.printWinnersOfCounty(_voteCountMatrix[i],_electorsMatrix[i], i, _partiesSize, &partyList);
-			//		cout << "The winner in this county is: "; partyList.PrintLeader(partyNum); cout << endl
 		}
-
-
-	/*	bubbleSort(Electors, _partiesSize + 1)
+		Elector* electorsArray = new Elector[_partiesSize+1];
+		electorsArray[0].sumElectors = -1;
+		for (int j = 1; j <= _partiesSize; j++)
+		{
+			electorsArray[j].sumElectors = _electorsMatrix[0][j];
+			electorsArray[j].party = partyList.getData(j);
+		}
+		bubbleSort(electorsArray, _partiesSize + 1);
+		cout << endl << "The final election results are: " << endl;
 	
 		for (int i = _partiesSize; i > 0; i--)
-			cout << "#" << _partiesSize - i+1 << ". " << Electors[i].party->getLeader()->getName() << " Has got: "
-			<< Electors[i].sumElectors << " Electors and his party got " <<
-			this->_voteCountMatrix[0][Electors[i].party->getPartySerial()] << " votes" << endl;*/
+			cout << "#" << _partiesSize - i+1 << ". " << electorsArray[i].party->getLeader()->getName() << " Has got: "
+			<< electorsArray[i].sumElectors << " Electors and his party got " <<
+			this->_voteCountMatrix[0][electorsArray[i].party->getPartySerial()] << " votes" << endl;
 	}
-	//void App::swap(Elector& a, Elector& b)
-	//{
-	//	Elector c = a;
-	//	a = b;
-	//	b = c;
-	//}
-	//void App::bubbleSort(Elector Electors[], int size)
-	//{
-	//	int i, j;
-	//	for (i = 0; i < size - 1; i++)
-	//		for (j = 0; j < size - i - 1; j++)
-	//			if (Electors[j].sumElectors > Electors[j + 1].sumElectors)
-	//				swap(Electors[j], Electors[j + 1]);
-	//}
+
 }
