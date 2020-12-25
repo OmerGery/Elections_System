@@ -25,36 +25,24 @@ namespace votes
 		int** _delegatesMatrix;
 		int** _electorsMatrix;
 		// Internal usage Calc FUNCS - Private.
-//		Elector* Electors;
 		void initVotesMatrix();
 		void initDeligatesMatrix();
 		void initStatisticsMatrix();
-	//	void initElectors();
 		void initElectorsMatrix();
 		void initMatrices();
 		void calcVotes();
-	/*	void swap(Elector& a, Elector& b);
-		void bubbleSort(Elector Electors[], int size);*/
 		
 	public:
 		App(Date& electionday);
-		~App();
-		void AddCounty(char* name, int delegatesNum,bool simple);//virtual 
-		bool AddCitizen(char* name, int id, int year, int countynum);//virtual 
-		void PrintAllCounties() const;//virtual 
+		virtual ~App();
 		void PrintAllCitizens()const;
 		void PrintAllParties() const;
 		bool AddParty(char* partyname, int idCandidate);
-		bool AddCitizenAsDelegate(int id, int partynum, int countynum);
 		bool Vote(int id, int partyNum);
-		void printVotes();
+		virtual void AddCounty(char* name, int delegatesNum, bool simple) = 0;
+		virtual bool AddCitizen(char* name, int id, int year, int countynum) = 0;
+		virtual void PrintAllCounties() const = 0;
+		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;
+		virtual void printVotes() = 0;
 	};
-
-//	class SimpleApp :public App
-//	{
-//		SimpleApp(Date& electionDay, int numOfDelegates):App(electionDay)
-//		{
-			 // initalize single-size array of counties and initalize 1 county with size of numOfDelegates
-//		}
-//	};
 }

@@ -150,6 +150,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Party.cpp" />
     <ClCompile Include="PartyList.cpp" />
+    <ClCompile Include="RegularApp.cpp" />
     <ClCompile Include="SimpleApp.cpp" />
     <ClCompile Include="Sort.cpp" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="Party.h" />
     <ClInclude Include="PartyList.h" />
+    <ClInclude Include="RegularApp.h" />
     <ClInclude Include="SimpleApp.h" />
     <ClInclude Include="Sort.h" />
   </ItemGroup>

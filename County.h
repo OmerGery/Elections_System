@@ -24,6 +24,7 @@ namespace votes
 		County(const char* countyName, int numdelegates);
 		County();
 		~County();
+		void resetCounter() { countyCounter = 0; }
 		County(const County& other) = delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
 		County& operator=(const County& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.
 		void AddCitizen(Citizen* citizen);
@@ -87,12 +88,15 @@ namespace votes
 		ComplexCounty(const char* countyName, int numdelegates) : County(countyName, numdelegates) {}
 		virtual void GetPartiesElectors (float* statisticsArray,int* countyElectors,int partiesSize)const override
 		{
-			int place = 0, tempElectorsNum = 0, remainingDelegates=0, max=0;
+			int place = 0, tempElectorsNum = 0, remainingDelegates=0, max=-1;
 			for (int i = 1; i <= partiesSize; i++)
 			{
 				countyElectors[i] = static_cast<int>(_numdelegates * statisticsArray[i]);
 				if (countyElectors[i] > max)
+				{
+					max = countyElectors[i];
 					place = i;
+				}
 				tempElectorsNum += countyElectors[i];
 			}
 			remainingDelegates = _numdelegates - tempElectorsNum;

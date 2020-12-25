@@ -15,6 +15,7 @@ namespace votes
     }
     countyArr::~countyArr()
     {
+        countyArray[1]->resetCounter();
         for (int i = 1; i < _size; i++)
             delete countyArray[i];
         delete[] countyArray;

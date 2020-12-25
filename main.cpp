@@ -7,14 +7,17 @@
 #include "CountyArr.h"
 #include "CountyDelegate.h"
 #include "PartyList.h"
-#include <iostream>
 #include "App.h"
+#include "SimpleApp.h"
+#include "RegularApp.h"
+#include <iostream>
 #include <fstream>
+
 using namespace std;
 using namespace votes;
 static const int first_option = 1;
 enum options {
-    AddCounty=first_option, AddCitizen, AddParty, AddDelegate, DisplayCounties, DisplayCitizens, DisplayParties, Vote, ShowRes,Exit
+    AddCounty=first_option, AddCitizen, AddParty, AddDelegate, DisplayCounties, DisplayCitizens, DisplayParties, Vote, ShowRes, Exit, Save, Load
 }option;
 enum preOptions {
     NewRound = first_option, LoadVotes, PreExit
@@ -26,19 +29,16 @@ static const int MAX_SIZE = 100;
 static const int MIN_YEAR_TO_VOTE = 1700;
 static const int MAX_YEAR_TO_VOTE = 2020;
 
-// Modify the rellevant election date:
-static const int ElectionDay = 23; 
-static const int ElectionMonth = 11;
-static const int ElectionYear = 2020;
 int main()
 { 
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
     char name[MAX_SIZE];        
-    int option, delegatesNum, id, year, countyNum,partyNum,simple;
+    int option, delegatesNum, id, day, month, year, countyNum, partyNum, simple;
     bool correctInput; // used for input checks 
-    Date date(ElectionDay, ElectionMonth, ElectionYear);
-    App MyApplication(date);
     bool exit, prexit=false;
+    bool round2=false;
+    App* mainApp = nullptr;
+    Date* date = nullptr;
     
     while (!prexit)
     {
@@ -49,6 +49,33 @@ int main()
         {
         case preOptions::NewRound:
             // maybe need fopen or something like that
+            cout << "Please enter the Elections type - 1 for simple or 0 for regular " << endl;
+            cin >> simple;
+            while (simple != 1 && simple != 0)
+            {
+                cout << "Please enter 0 or 1 ." << endl;
+                cin >> simple;
+            }
+            cout << "Please enter election day" << endl;
+            cin >> day;
+            cout << "Please enter election month" << endl;
+            cin >> month;
+            cout << "Please enter election year" << endl;
+            cin >> year;
+            date = new Date(day, month, year);
+            if (simple)
+            {
+                cout << "Enter number of delegates" << endl;
+                cin >> delegatesNum;
+                while (delegatesNum <= 0)
+                {
+                    cout << "please enter a positive number of delegates" << endl;
+                    cin >> delegatesNum;
+                }
+                mainApp = new SimpleApp(*date, delegatesNum);
+            }
+            else
+                mainApp = new RegularApp(*date);
             exit = false;
             break;
         case preOptions::LoadVotes:
@@ -66,8 +93,8 @@ int main()
             {
                 cout << endl << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
                     << "4 - Add a Citizen as a party delegate" << endl << "5 - Display all Counties" << endl << "6 - Display all Citizens" << endl
-                    << "7 - Display all Parties" << endl << "8 - Vote for a Party" << endl << "9 - Display elections results" << endl
-                    << "10 - EXIT" << endl;
+                    << "7 - Display all Parties" << endl << "8 - Vote for a Party" << endl << "9 - Display Election Results" << endl
+                    << "10 - EXIT" << endl << "11 - Save Election Round" << endl << "12 - Load Election Round" << endl;
                 cout << "Choose an option" << endl;
                 cin >> option;
                 switch (option)
@@ -89,7 +116,7 @@ int main()
                         cout << "please enter a positive number of delegates" << endl;
                         cin >> delegatesNum;
                     }
-                    MyApplication.AddCounty(name, delegatesNum, simple);
+                    mainApp->AddCounty(name, delegatesNum, simple);
                     break;
                 case options::AddCitizen:
                     cout << "Enter the citizen name" << endl;
@@ -111,7 +138,7 @@ int main()
                     }
                     cout << "Please Enter serial number of county" << endl;
                     cin >> countyNum;
-                    correctInput = MyApplication.AddCitizen(name, id, year, countyNum);
+                    correctInput = mainApp->AddCitizen(name, id, year, countyNum);
                     while (!correctInput)
                     {
                         cout << "The county number or ID number was invalid." << endl;
@@ -124,7 +151,7 @@ int main()
                             cout << "please enter a positive ID number" << endl;
                             cin >> id;
                         }
-                        correctInput = MyApplication.AddCitizen(name, id, year, countyNum);
+                        correctInput = mainApp->AddCitizen(name, id, year, countyNum);
                     }
                     break;
                 case options::AddParty:
@@ -132,13 +159,13 @@ int main()
                     cin >> name;
                     cout << "Enter ID number of candidate for presidence" << endl;
                     cin >> id;
-                    correctInput = MyApplication.AddParty(name, id);
+                    correctInput = mainApp->AddParty(name, id);
                     while (!correctInput)
                     {
                         cout << "This citizen doesn't exist,therefore he can't be a candidate." << endl <<
                             "please enter a correct ID of an existing citizen." << endl;
                         cin >> id;
-                        correctInput = MyApplication.AddParty(name, id);
+                        correctInput = mainApp->AddParty(name, id);
                     }
                     break;
                 case options::AddDelegate:
@@ -148,7 +175,7 @@ int main()
                     cin >> partyNum;
                     cout << "Enter serial number of county" << endl;
                     cin >> countyNum;
-                    correctInput = MyApplication.AddCitizenAsDelegate(id, partyNum, countyNum);
+                    correctInput = mainApp->AddCitizenAsDelegate(id, partyNum, countyNum);
                     while (!correctInput)
                     {
                         cout << "Please enter a correct: citizen ID , party serial number and county number." << endl;
@@ -158,24 +185,24 @@ int main()
                         cin >> partyNum;
                         cout << "Enter serial number of county" << endl;
                         cin >> countyNum;
-                        correctInput = MyApplication.AddCitizenAsDelegate(id, partyNum, countyNum);
+                        correctInput = mainApp->AddCitizenAsDelegate(id, partyNum, countyNum);
                     }
                     break;
                 case options::DisplayCounties:
-                    MyApplication.PrintAllCounties();
+                    mainApp->PrintAllCounties();
                     break;
                 case options::DisplayCitizens:
-                    MyApplication.PrintAllCitizens();
+                    mainApp->PrintAllCitizens();
                     break;
                 case options::DisplayParties:
-                    MyApplication.PrintAllParties();
+                    mainApp->PrintAllParties();
                     break;
                 case options::Vote:
                     cout << "Enter the citizen ID" << endl;
                     cin >> id;
                     cout << "Enter Party Serial number" << endl;
                     cin >> partyNum;
-                    correctInput = MyApplication.Vote(id, partyNum);
+                    correctInput = mainApp->Vote(id, partyNum);
                     while (!correctInput)
                     {
                         cout << "This citizen has already voted / Citizen ID or Party Serial number was invalid. please enter them again." << endl;
@@ -183,18 +210,31 @@ int main()
                         cin >> id;
                         cout << "Enter Party Serial number" << endl;
                         cin >> partyNum;
-                        correctInput = MyApplication.Vote(id, partyNum);
+                        correctInput = mainApp->Vote(id, partyNum);
                     }
                     break;
                 case options::ShowRes:
-                    MyApplication.printVotes();
+                    if (round2)
+                        int x = 0;
+                    mainApp->printVotes();
                     break;
                 case options::Exit:
                     cout << "You have exited the Election round. " << endl;
+                    delete mainApp;
+                    delete date;
+                    round2 = true;
+                    exit = true;
+                    break;
+                case options::Save:
+                    cout << "Save. " << endl;
+                    exit = true;
+                    break;
+                case options::Load:
+                    cout << "Load. " << endl;
                     exit = true;
                     break;
                 default:
-                    cout << "Please select an option between 1-10." << endl;
+                    cout << "Please select an option between 1-12." << endl;
                     break;
                 }
             }

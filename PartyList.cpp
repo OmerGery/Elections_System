@@ -39,6 +39,7 @@ namespace votes
 		PListNode* deleter = this->_head;
 		if (deleter == nullptr)
 			return;
+		deleter->_data->resetCounter();
 		if (deleter->_next == nullptr)
 		{
 			delete deleter->_data;

@@ -17,6 +17,7 @@ namespace votes
 		Party(const Party& other)=delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
 		Party& operator=(const Party& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.
 		~Party();
+		void resetCounter() { partyCounter = 0; }
 		const char* getPartyName() const { return _partyName; }
 		const Citizen* getLeader() const { return _leader; }
 		const int getPartySerial() const { return _partySerial; }

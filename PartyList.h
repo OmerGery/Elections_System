@@ -25,7 +25,7 @@ namespace votes
 		PListNode* _tail;
 	public:
 		PartyList() :_head(nullptr), _tail(nullptr) {}
-		~PartyList();
+		~PartyList() ;
 		bool Add(Party* party);
 		Party* getData(int index) const;
 		void PrintaParty(int partyserial) const;
