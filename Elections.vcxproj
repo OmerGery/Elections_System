@@ -142,6 +142,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Citizen.cpp" />
     <ClCompile Include="CitizenList.cpp" />
+    <ClCompile Include="ComplexCounty.cpp" />
     <ClCompile Include="County.cpp" />
     <ClCompile Include="CountyArr.cpp" />
     <ClCompile Include="CountyDelegate.cpp" />
@@ -152,12 +153,14 @@
     <ClCompile Include="PartyList.cpp" />
     <ClCompile Include="RegularApp.cpp" />
     <ClCompile Include="SimpleApp.cpp" />
+    <ClCompile Include="SimpleCounty.cpp" />
     <ClCompile Include="Sort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Citizen.h" />
     <ClInclude Include="CitizenList.h" />
+    <ClInclude Include="ComplexCounty.h" />
     <ClInclude Include="County.h" />
     <ClInclude Include="CountyArr.h" />
     <ClInclude Include="CountyDelegate.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="PartyList.h" />
     <ClInclude Include="RegularApp.h" />
     <ClInclude Include="SimpleApp.h" />
+    <ClInclude Include="SimpleCounty.h" />
     <ClInclude Include="Sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -15,7 +15,7 @@ namespace votes
 	int Party::partyCounter = 0;
 	Party::Party(const char* partyName, Citizen* leader)
 	{
-		int len = strlen(partyName) + 1;
+		int len = static_cast<int>(strlen(partyName) + 1);
 		_partyName = new char[len];
 		strcpy(_partyName, partyName);
 		_partySerial = ++partyCounter;

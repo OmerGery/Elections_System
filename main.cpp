@@ -6,7 +6,7 @@
 #include "County.h"
 #include "CountyArr.h"
 #include "CountyDelegate.h"
-#include "PartyList.h"
+#include "PartyList.h"  
 #include "App.h"
 #include "SimpleApp.h"
 #include "RegularApp.h"
@@ -100,7 +100,7 @@ int main()
                 switch (option)
                 {
                 case options::AddCounty:
-                    cout << "Please Enter 1 for simple county or 0 for complex county" << endl;
+                    cout << "Please Enter 1 for simple county or 0 for split county" << endl;
                     cin >> simple;
                     while (simple != 1 && simple != 0)
                     {

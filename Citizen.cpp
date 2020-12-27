@@ -14,7 +14,7 @@ namespace votes
 	Citizen::Citizen(char* name, int id, int year)
 	{
 		
-		int len = strlen(name)+1;
+		int len = static_cast<int>(strlen(name)+1);
 		_name = new char[len];
 		strcpy(_name, name);
 		_id = id;

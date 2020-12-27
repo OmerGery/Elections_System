@@ -7,7 +7,8 @@
 #include "CountyArr.h"
 #include "CountyDelegate.h"
 #include "PartyList.h"
-
+#include "SimpleCounty.h"
+#include "ComplexCounty.h"
 namespace votes
 {
 	class App
