@@ -1,6 +1,10 @@
 #pragma once
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
 #include "Citizen.h"
-
+#include <iostream>
+#include <fstream>
+using namespace std;
 namespace votes
 {
 	class Citizen;
@@ -13,6 +17,8 @@ namespace votes
 		CzListNode* _next;
 		CzListNode* _prev;
 	public:
+		void save(ostream& out) const;
+		void load(istream& in);
 		CzListNode(Citizen* citizen, CzListNode* next, CzListNode* prev)
 		{
 			_data = citizen;
@@ -35,5 +41,7 @@ namespace votes
 		Citizen* findCitizen(int id) const;
 		void getVotes(int* voteArr) const;
 		const int getSize() const { return _size; }
+		void load(istream& in);
+		void save(ostream& out) const;
 	};
 }

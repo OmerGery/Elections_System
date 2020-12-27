@@ -11,7 +11,7 @@ namespace votes
 		delete[] _name;
 	}
 
-	Citizen::Citizen(char* name, int id, int year)
+	Citizen::Citizen(const char* name, int id, int year)
 	{
 		
 		int len = static_cast<int>(strlen(name)+1);
@@ -32,5 +32,25 @@ namespace votes
 	{
 		os << "Name:" << citizen._name << " ID:" << citizen._id << " Born in:" << citizen._year << " " << endl;
 		return os;
+	}
+	void Citizen::save(ostream& out) const
+	{
+		
+		out.write(rcastcc(&_id), sizeof(_id));
+		out.write(rcastcc(&_year), sizeof(_year));
+		int sizename =static_cast<int>(strlen(_name));
+		out.write(rcastcc(&sizename), sizeof(sizename));
+		out.write(rcastcc(&_name),sizename);
+		//party?
+	}
+	void Citizen::load(istream& in)
+	{
+		in.read(rcastc(&_id), sizeof(int));
+		in.read(rcastc(&_year), sizeof(int));
+		int sizename;
+		in.read(rcastc(&sizename), sizeof(sizename));
+		_name = new char[sizename];
+		in.read(rcastc(&_name), sizename);
+		
 	}
 }

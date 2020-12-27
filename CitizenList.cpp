@@ -86,5 +86,33 @@ namespace votes
 		}
 		return nullptr;
 	}
+	void CitizenList::save(ostream& out) const
+	{
+		CzListNode* saver =_head;
+		out.write(rcastcc(&_size), sizeof(_size));
+		while(saver!=nullptr)
+		{
+			//saver.save(out);
+			saver = saver->_next;
+		}
+	}
+	void CitizenList::load(istream& in)
+	{
+		CzListNode* loader = _head;
+		in.read(rcastc(&_size), sizeof(_size));
+		while(loader!=nullptr)
+		{
+			//loader.load(in);
+			loader = loader->_next;
+		}
+	}
+	void CzListNode::save(ostream& out) const
+	{
+	//	_data->save();
+	}
+	void CzListNode::load(istream& in)
+	{
+	//	_data->load();
+	}
 
 }

@@ -1,6 +1,9 @@
 #pragma once
 #include "Party.h"
 #include <iostream>
+#include <fstream>
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
 using namespace std;
 namespace votes
 {
@@ -14,8 +17,9 @@ namespace votes
 		Party* _PartyVotedTo;
 
 	public:
-		Citizen(char* name, int id, int year);
-		~Citizen(); 
+		Citizen(const char* name, int id, int year);
+		Citizen() {};
+		~Citizen();
 		Citizen(const Citizen& other) = delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
 		Citizen& operator=(const Citizen& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.
 		bool vote(Party* party);
@@ -24,5 +28,7 @@ namespace votes
 		const int getYear() const { return _year; }
 		const Party* getVote()const { return _PartyVotedTo; } ;
 		friend ostream& operator<<(ostream& os, const Citizen& citizen);
+		void load(istream& in);
+		void save(ostream& out) const;
 	};
 }

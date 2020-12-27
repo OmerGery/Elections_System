@@ -31,6 +31,15 @@ static const int MAX_YEAR_TO_VOTE = 2020;
 
 int main()
 { 
+    ofstream outfile("test.bin", ios::binary);
+    ifstream infile("test.bin", ios::binary);
+
+    Citizen h("omer", 1, 12);
+    h.save(outfile);
+    Citizen k;
+    k.load(infile);
+    cout << h;
+    return 0;
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
     char name[MAX_SIZE];        
     int option, delegatesNum, id, day, month, year, countyNum, partyNum, simple;
