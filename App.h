@@ -13,7 +13,7 @@ namespace votes
 	class App
 	{
 	protected:
-		Date _electionday;
+		Date* _electionday;
 		countyArr CountyArray;
 		PartyList partyList;
 
@@ -33,7 +33,7 @@ namespace votes
 		void calcVotes();
 		
 	public:
-		App(Date& electionday);
+		App(Date* electionday);
 		virtual ~App();
 		void PrintAllCitizens()const;
 		void PrintAllParties() const;

@@ -13,7 +13,7 @@
 using namespace std;
 namespace votes
 {
-	App::App(Date & electionday)
+	App::App(Date* electionday)
 	{
 	//	Electors = nullptr;
 		_electorsMatrix=nullptr;

@@ -14,7 +14,7 @@ namespace votes
 	class RegularApp : public App
 	{
 	public:
-		RegularApp(Date& electionday) :App(electionday) {};
+		RegularApp(Date* electionday) :App(electionday) {};
 		virtual void AddCounty(char* name, int delegatesNum, bool simple) override;
 		virtual bool AddCitizen(char* name, int id, int year, int countynum) override;
 		virtual void PrintAllCounties() const override;

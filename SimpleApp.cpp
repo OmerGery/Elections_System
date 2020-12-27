@@ -6,7 +6,7 @@
 using namespace std;
 namespace votes
 {
-	SimpleApp::SimpleApp(Date& electionday, int delegatesNum):App(electionday)
+	SimpleApp::SimpleApp(Date* electionday, int delegatesNum):App(electionday)
 	{	
 		_countiesSize = 1;
 		County* county = new ComplexCounty("default", delegatesNum);

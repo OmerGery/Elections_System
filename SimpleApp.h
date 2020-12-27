@@ -14,7 +14,7 @@ namespace votes
 	class SimpleApp: public App
 	{
 	public:
-		SimpleApp(Date& electionday, int delegatesNum);
+		SimpleApp(Date* electionday, int delegatesNum);
 		virtual void AddCounty(char* name, int delegatesNum, bool simple) override;
 		virtual bool AddCitizen(char* name, int id, int year, int countynum) override;
 		virtual void PrintAllCounties() const override;

@@ -72,10 +72,10 @@ int main()
                     cout << "please enter a positive number of delegates" << endl;
                     cin >> delegatesNum;
                 }
-                mainApp = new SimpleApp(*date, delegatesNum);
+                mainApp = new SimpleApp(date, delegatesNum);
             }
             else
-                mainApp = new RegularApp(*date);
+                mainApp = new RegularApp(date);
             exit = false;
             break;
         case preOptions::LoadVotes:
