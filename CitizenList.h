@@ -17,7 +17,7 @@ namespace votes
 		CzListNode* _next;
 		CzListNode* _prev;
 	public:
-		void save(ostream& out) const;
+		void saveCitizen(ostream& out) const;
 		void load(istream& in);
 		CzListNode(Citizen* citizen, CzListNode* next, CzListNode* prev)
 		{
@@ -41,7 +41,7 @@ namespace votes
 		Citizen* findCitizen(int id) const;
 		void getVotes(int* voteArr) const;
 		const int getSize() const { return _size; }
+		void saveCitizensList(ostream& out) const;
 		void load(istream& in);
-		void save(ostream& out) const;
 	};
 }

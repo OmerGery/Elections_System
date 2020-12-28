@@ -15,7 +15,7 @@ namespace votes
     }
     countyArr::~countyArr()
     {
-        countyArray[1]->resetCounter();
+        countyArray[0]->resetCounter();
         for (int i = 1; i < _size; i++)
             delete countyArray[i];
         delete[] countyArray;
@@ -162,5 +162,11 @@ namespace votes
             }
         }
         return false;
+    }
+    void countyArr::saveCountyArray(ostream& out) const
+    {
+        out.write(rcastcc(_size), sizeof(_size));
+        for (int i = 0; i < _size; ++i) 
+            countyArray[i]->saveCounty(out);
     }
 };

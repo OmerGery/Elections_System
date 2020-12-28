@@ -35,13 +35,11 @@ int main()
 { 
     ifstream infile;
     ofstream outfile;
-    outfile.open("test.bin", ios::binary | ios::out);
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
-    char name[MAX_SIZE];        
+    char name[MAX_SIZE], fname[MAX_SIZE];        
     int option, delegatesNum, id, day, month, year, countyNum, partyNum, simple;
     bool correctInput; // used for input checks 
-    bool exit, prexit=false;
-    bool round2=false;
+    bool exit=false, prexit=false;
     App* mainApp = nullptr;
     Date* date = nullptr;
     
@@ -80,10 +78,22 @@ int main()
             }
             else
                 mainApp = new RegularApp(date);
-            exit = false;
+            prexit = true;
             break;
         case preOptions::LoadVotes:
-            cout << "2" << endl;
+            cout << "Please enter the file name you want to load" << endl;
+            cin >> fname;
+            infile.open(fname, ios::binary | ios::in);
+            date = new Date();
+            int simple;
+            infile.read(rcastc(&simple), sizeof(simple));
+            if (simple)
+                mainApp = new SimpleApp(date,0);
+            else
+                mainApp = new RegularApp(date);
+            mainApp->loadApp(infile);
+            infile.close();
+            prexit = true;
         case preOptions::PreExit:
             cout << "You have exited the program. " << endl;
             prexit = true;
@@ -93,6 +103,8 @@ int main()
             cout << "Please select an option between 1-3." << endl;
             break;
         }
+    }
+        
             while (!exit)
             {
                 cout << endl << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
@@ -218,31 +230,39 @@ int main()
                     }
                     break;
                 case options::ShowRes:
-                    if (round2)
-                        int x = 0;
                     mainApp->printVotes();
                     break;
                 case options::Exit:
                     cout << "You have exited the Election round. " << endl;
                     delete mainApp;
                     delete date;
-                    round2 = true;
                     exit = true;
                     break;
                 case options::Save:
+                    cout << "Please enter the file name you want to save into" << endl;
+                    cin >> fname;
+                    outfile.open(fname, ios::binary | ios::out);
                     mainApp->saveApp(outfile);
                     outfile.close();
                     break;
                 case options::Load:
-                    infile.open("test.bin", ios::binary | ios::in);
+                    cout << "Please enter the file name you want to load" << endl;
+                    cin >> fname;
+                    infile.open(fname, ios::binary | ios::in);
+                    date = new Date();
+                    int simple;
+                    infile.read(rcastc(&simple), sizeof(simple));
+                    if (simple)
+                        mainApp = new SimpleApp(date,0);
+                    else
+                        mainApp = new RegularApp(date);
                     mainApp->loadApp(infile);
+                    infile.close();
                     break;
                 default:
                     cout << "Please select an option between 1-12." << endl;
                     break;
                 }
             }
-    }
-    infile.close();
     return 0;
 }

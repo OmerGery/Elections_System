@@ -86,13 +86,13 @@ namespace votes
 		}
 		return nullptr;
 	}
-	void CitizenList::save(ostream& out) const
+	void CitizenList::saveCitizensList(ostream& out) const
 	{
 		CzListNode* saver =_head;
 		out.write(rcastcc(&_size), sizeof(_size));
 		while(saver!=nullptr)
 		{
-			//saver.save(out);
+			saver->_data->saveCitizen(out);
 			saver = saver->_next;
 		}
 	}
@@ -105,10 +105,6 @@ namespace votes
 			//loader.load(in);
 			loader = loader->_next;
 		}
-	}
-	void CzListNode::save(ostream& out) const
-	{
-	//	_data->save();
 	}
 	void CzListNode::load(istream& in)
 	{

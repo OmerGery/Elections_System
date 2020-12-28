@@ -33,14 +33,13 @@ namespace votes
 		os << "Name:" << citizen._name << " ID:" << citizen._id << " Born in:" << citizen._year << " " << endl;
 		return os;
 	}
-	void Citizen::save(ostream& out) const
+	void Citizen::saveCitizen(ostream& out) const
 	{
-		
 		out.write(rcastcc(&_id), sizeof(int));
 		out.write(rcastcc(&_year), sizeof(int));
-		/*int sizename =static_cast<int>(strlen(_name));
+		int sizename =static_cast<int>(strlen(_name));
 		out.write(rcastcc(&sizename), sizeof(sizename));
-		out.write(rcastcc(&_name),sizename);*/
+		out.write(rcastcc(&_name),sizename);
 		//party?
 	}
 	void Citizen::load(istream& in)

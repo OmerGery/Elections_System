@@ -29,6 +29,6 @@ namespace votes
 		const Party* getVote()const { return _PartyVotedTo; } ;
 		friend ostream& operator<<(ostream& os, const Citizen& citizen);
 		void load(istream& in);
-		void save(ostream& out) const;
+		void saveCitizen(ostream& out) const;
 	};
 }

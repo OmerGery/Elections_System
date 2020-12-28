@@ -56,4 +56,19 @@ namespace votes
 	{
 		this->_citizenAllowed.PrintList();
 	}
+	void County::saveCounty(ostream& out) const
+	{
+
+		//CitizenList _citizenAllowed;
+		//countyDelegateArr CDArr;
+		out.write(rcastcc(&_countySerial), sizeof(_countySerial));
+		out.write(rcastcc(&_numdelegates), sizeof(_numdelegates));
+		out.write(rcastcc(&countyCounter), sizeof(countyCounter));
+		int countyNamelen = static_cast<int> (strlen(_countyName));
+		out.write(rcastcc(&countyNamelen), sizeof(countyNamelen));
+		for (int i = 0; i <countyNamelen; i++)
+			out.write(rcastcc(&_countyName[i]), sizeof(char));
+		_citizenAllowed.saveCitizensList(out);
+
+	}
 }

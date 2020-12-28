@@ -38,6 +38,7 @@ namespace votes
 		void calcVotes();
 		
 	public:
+		App();
 		App(Date* electionday);
 		virtual ~App();
 		void PrintAllCitizens()const;

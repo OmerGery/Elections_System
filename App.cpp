@@ -13,9 +13,18 @@
 using namespace std;
 namespace votes
 {
+	App::App()
+	{
+		_electorsMatrix = nullptr;
+		_delegatesMatrix = nullptr;
+		_statisticsMatrix = nullptr;
+		_voteCountMatrix = nullptr;
+		_partiesSize = 0;
+		_countiesSize = 0;
+		_electionday = nullptr;
+	}
 	App::App(Date* electionday)
 	{
-	//	Electors = nullptr;
 		_electorsMatrix=nullptr;
 		_delegatesMatrix = nullptr;
 		_statisticsMatrix = nullptr;
@@ -164,10 +173,12 @@ namespace votes
 	}
 	void App::saveApp(ostream& out)const
 	{	
+		int simple = 1;
+		out.write(rcastcc(&simple), sizeof(simple));
 		out.write(rcastcc(&_partiesSize), sizeof(_partiesSize));
 		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
 		_electionday->saveDate(out); 
-		//CountyArray.saveCountyArray()
+		CountyArray.saveCountyArray(out);
 		//partyList.savePartyList()
 
 		// save matrices::
@@ -178,8 +189,6 @@ namespace votes
 	}
 	void App::loadApp(istream& in)
 	{
-		_partiesSize = 800;
-		_countiesSize = 900;
 		in.read(rcastc(&_partiesSize), sizeof(_partiesSize));
 		in.read(rcastc(&_countiesSize), sizeof(_countiesSize));
 		_electionday->loadDate(in);
