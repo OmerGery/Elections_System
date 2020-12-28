@@ -110,4 +110,5 @@ namespace votes
 			this->_voteCountMatrix[0][electorsArray[i].party->getPartySerial()] << " votes" << endl;
 	}
 
+
 }

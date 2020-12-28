@@ -36,21 +36,21 @@ namespace votes
 	void Citizen::save(ostream& out) const
 	{
 		
-		out.write(rcastcc(&_id), sizeof(_id));
-		out.write(rcastcc(&_year), sizeof(_year));
-		int sizename =static_cast<int>(strlen(_name));
+		out.write(rcastcc(&_id), sizeof(int));
+		out.write(rcastcc(&_year), sizeof(int));
+		/*int sizename =static_cast<int>(strlen(_name));
 		out.write(rcastcc(&sizename), sizeof(sizename));
-		out.write(rcastcc(&_name),sizename);
+		out.write(rcastcc(&_name),sizename);*/
 		//party?
 	}
 	void Citizen::load(istream& in)
 	{
 		in.read(rcastc(&_id), sizeof(int));
 		in.read(rcastc(&_year), sizeof(int));
-		int sizename;
-		in.read(rcastc(&sizename), sizeof(sizename));
-		_name = new char[sizename];
-		in.read(rcastc(&_name), sizename);
+		//int sizename;
+		//in.read(rcastc(&sizename), sizeof(sizename));
+		//_name = new char[sizename];
+		//in.read(rcastc(&_name), sizename);
 		
 	}
 }

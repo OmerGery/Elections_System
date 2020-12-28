@@ -9,6 +9,10 @@
 #include "PartyList.h"
 #include "SimpleCounty.h"
 #include "ComplexCounty.h"
+#include <fstream>
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
+using namespace std;
 namespace votes
 {
 	class App
@@ -40,6 +44,8 @@ namespace votes
 		void PrintAllParties() const;
 		bool AddParty(char* partyname, int idCandidate);
 		bool Vote(int id, int partyNum);
+		void loadApp(istream& in);
+		void saveApp(ostream& out) const;
 		virtual void AddCounty(char* name, int delegatesNum, bool simple) = 0;
 		virtual bool AddCitizen(char* name, int id, int year, int countynum) = 0;
 		virtual void PrintAllCounties() const = 0;

@@ -12,6 +12,8 @@
 #include "RegularApp.h"
 #include <iostream>
 #include <fstream>
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
 
 using namespace std;
 using namespace votes;
@@ -31,15 +33,9 @@ static const int MAX_YEAR_TO_VOTE = 2020;
 
 int main()
 { 
-    ofstream outfile("test.bin", ios::binary);
-    ifstream infile("test.bin", ios::binary);
-
-    Citizen h("omer", 1, 12);
-    h.save(outfile);
-    Citizen k;
-    k.load(infile);
-    cout << h;
-    return 0;
+    ifstream infile;
+    ofstream outfile;
+    outfile.open("test.bin", ios::binary | ios::out);
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
     char name[MAX_SIZE];        
     int option, delegatesNum, id, day, month, year, countyNum, partyNum, simple;
@@ -57,7 +53,6 @@ int main()
         switch (option)
         {
         case preOptions::NewRound:
-            // maybe need fopen or something like that
             cout << "Please enter the Elections type - 1 for simple or 0 for regular " << endl;
             cin >> simple;
             while (simple != 1 && simple != 0)
@@ -235,12 +230,12 @@ int main()
                     exit = true;
                     break;
                 case options::Save:
-                    cout << "Save. " << endl;
-                    exit = true;
+                    mainApp->saveApp(outfile);
+                    outfile.close();
                     break;
                 case options::Load:
-                    cout << "Load. " << endl;
-                    exit = true;
+                    infile.open("test.bin", ios::binary | ios::in);
+                    mainApp->loadApp(infile);
                     break;
                 default:
                     cout << "Please select an option between 1-12." << endl;
@@ -248,5 +243,6 @@ int main()
                 }
             }
     }
+    infile.close();
     return 0;
 }

@@ -130,19 +130,19 @@ namespace votes
 	}
 	void App::calcVotes()
 	{
-		int i, j, max=1, partyNum = -1, place=1, tempDelegatesNum=0, remainingDelegates;
+		int i, j, max = 1, partyNum = -1, place = 1, tempDelegatesNum = 0, remainingDelegates;
 		initMatrices();
 		// fill the matrices with the citizen votes 
 		CountyArray.getCitizensVotes(_voteCountMatrix, _countiesSize, _partiesSize);
 		for (i = 1; i <= _countiesSize; i++)
 		{
 			int totalCitizensInCounty = CountyArray.getCountySize(i);
-			if(totalCitizensInCounty!=0)
-			_statisticsMatrix[i][0] = static_cast<float>(_voteCountMatrix[i][0]) / static_cast<float>(totalCitizensInCounty);
+			if (totalCitizensInCounty != 0)
+				_statisticsMatrix[i][0] = static_cast<float>(_voteCountMatrix[i][0]) / static_cast<float>(totalCitizensInCounty);
 			for (j = 1; j <= _partiesSize; j++)
 			{
-				if(_voteCountMatrix[i][0]!=0)
-				_statisticsMatrix[i][j] = static_cast<float>(_voteCountMatrix[i][j]) / static_cast<float>(_voteCountMatrix[i][0]);
+				if (_voteCountMatrix[i][0] != 0)
+					_statisticsMatrix[i][j] = static_cast<float>(_voteCountMatrix[i][j]) / static_cast<float>(_voteCountMatrix[i][0]);
 			}
 		}
 		for (i = 1; i <= _countiesSize; i++)
@@ -161,5 +161,27 @@ namespace votes
 			_delegatesMatrix[i][place] += remainingDelegates;
 		}
 		CountyArray.getElectors(_electorsMatrix, _statisticsMatrix, _partiesSize);
+	}
+	void App::saveApp(ostream& out)const
+	{	
+		out.write(rcastcc(&_partiesSize), sizeof(_partiesSize));
+		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
+		_electionday->saveDate(out); 
+		//CountyArray.saveCountyArray()
+		//partyList.savePartyList()
+
+		// save matrices::
+		//int** _voteCountMatrix;
+		//float** _statisticsMatrix;
+		//int** _delegatesMatrix;
+		//int** _electorsMatrix;
+	}
+	void App::loadApp(istream& in)
+	{
+		_partiesSize = 800;
+		_countiesSize = 900;
+		in.read(rcastc(&_partiesSize), sizeof(_partiesSize));
+		in.read(rcastc(&_countiesSize), sizeof(_countiesSize));
+		_electionday->loadDate(in);
 	}
 }
