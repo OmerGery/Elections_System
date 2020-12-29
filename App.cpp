@@ -90,6 +90,7 @@ namespace votes
 		CountyArray.loadCountyArray(in);
 		partyList.loadPartyList(in);
 		loadPartyLeaders(in);
+		loadCitizenVotes(in);
 	}
 	void App::savePartyLeaders(ostream& out) const
 	{
@@ -105,7 +106,7 @@ namespace votes
 		{
 			County* currentCounty = CountyArray.getCounty(i);
 			int citizensInCounty = currentCounty->getCountySize();
-			for (int j = 0; j < citizensInCounty; j++)
+			for (int j = 1; j <= citizensInCounty; j++)
 			{
 				Citizen* current=currentCounty->getCitizenByIndex(j);
 				int partyvotedto=-1;
@@ -122,7 +123,7 @@ namespace votes
 		{
 			County* currentCounty = CountyArray.getCounty(i);
 			int citizensInCounty = currentCounty->getCountySize();
-			for (int j = 0; j < citizensInCounty; j++)
+			for (int j = 1; j <= citizensInCounty; j++)
 			{
 				Citizen* current = currentCounty->getCitizenByIndex(j);
 				int partyvotedto;

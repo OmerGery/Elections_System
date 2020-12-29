@@ -62,6 +62,7 @@ namespace votes
 		CountyArray.saveCountyArray(out);
 		partyList.savePartyList(out);
 		savePartyLeaders(out);
+		saveCitizenVotes(out);
 
 		// save matrices::
 		//int** _voteCountMatrix;
