@@ -43,14 +43,14 @@ namespace votes
 		_size++;
 		return true;
 	}
-	void CitizenList::PrintList() const
+	void CitizenList::PrintList(char* countyName) const
 	{
 		CzListNode* current = _head;
 		while (current != nullptr)
 		{
 			Citizen* C_Citizen = current->_data;
 			cout << *(C_Citizen);
-			//cout << " County: " << countyName << endl;
+			cout << " County: " << countyName << endl;
 			
 			current = current->_next;
 		}

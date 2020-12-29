@@ -2,14 +2,12 @@
 #define rcastcc reinterpret_cast<const char*>
 #define rcastc reinterpret_cast<char*>
 #include "Citizen.h"
-//#include "County.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
 namespace votes
 {
 	class Citizen;
-	//class County;
 	class CzListNode
 	{
 		friend class CitizenList;
@@ -36,7 +34,7 @@ namespace votes
 		CitizenList() :_head(nullptr), _tail(nullptr), _size(0){}
 		~CitizenList();
 		bool AddCitizen(Citizen* toadd);
-		void PrintList() const;
+		void PrintList(char* countyName) const;
 		Citizen* findCitizen(int id) const;
 		void getVotes(int* voteArr) const;
 		const int getSize() const { return _size; }

@@ -54,7 +54,7 @@ namespace votes
 	}
 	void County::PrintCitizenList() const
 	{
-		this->_citizenAllowed.PrintList();
+		this->_citizenAllowed.PrintList(_countyName);
 	}
 	void County::loadCounty(istream& in)
 	{
