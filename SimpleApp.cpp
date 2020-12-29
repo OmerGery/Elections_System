@@ -48,22 +48,8 @@ namespace votes
 	{
 		int simple = 1;
 		out.write(rcastcc(&simple), sizeof(simple));
-		out.write(rcastcc(&_partiesSize), sizeof(_partiesSize));
-		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
-		_electionday->saveDate(out);
-		CountyArray.saveCountyArray(out);
-		partyList.savePartyList(out);
-		savePartyLeaders(out);
-		saveCitizenVotes(out);
-
-		// save matrices::
-		//int** _voteCountMatrix;
-		//float** _statisticsMatrix;
-		//int** _delegatesMatrix;
-		//int** _electorsMatrix;
+		saveAll(out);
 	}
-	
-	// print: name , amount of Delegates that the county gives , leader name of the winning party.
 	void SimpleApp::printVotes()
 	{
 		calcVotes();

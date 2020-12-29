@@ -100,6 +100,16 @@ namespace votes
 			out.write(rcastcc(&leaderID), sizeof(leaderID));
 		}
 	}
+	void App::saveAll(ostream& out)const
+	{
+		out.write(rcastcc(&_partiesSize), sizeof(_partiesSize));
+		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
+		_electionday->saveDate(out);
+		CountyArray.saveCountyArray(out);
+		partyList.savePartyList(out);
+		savePartyLeaders(out);
+		saveCitizenVotes(out);
+	}
 	void App::saveCitizenVotes(ostream& out) const
 	{
 		for (int i = 1; i <= CountyArray.getSize(); i++)

@@ -50,7 +50,8 @@ namespace votes
 		virtual void PrintAllCounties() const = 0;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;
 		virtual void printVotes() = 0;
-		virtual void saveApp(ostream& out) const = 0;
+		void saveAll(ostream& out) const;
+		virtual void saveApp(ostream& out)const=0;
 		void loadApp(istream& in);
 		void loadPartyLeaders(istream& in);
 		void savePartyLeaders(ostream& out) const;
