@@ -20,7 +20,6 @@ namespace votes
 		strcpy(_partyName, partyName);
 		_partySerial = ++partyCounter;
 		_leader = leader;
-		
 	}
 	Party::~Party()
 	{		
@@ -31,7 +30,7 @@ namespace votes
 		os << "Party Number:"<< party._partySerial << " Party Name:'" << party._partyName << "' Party Leader:" << party._leader->getName() << endl;
 		return os;
 	}
-	void Party::shallowSaveParty(ostream& out)
+	void Party::shallowSaveParty(ostream& out) const
 	{
 		if (this == nullptr)
 		{
@@ -44,5 +43,29 @@ namespace votes
 	void Party::shallowLoadParty(istream& in)
 	{
 		in.read(rcastc(&_partySerial), sizeof(_partySerial));
+	}
+	void Party::saveParty(ostream& out) const
+	{
+		int leaderID = _leader->getID();
+		out.write(rcastcc(&leaderID), sizeof(leaderID));
+
+		out.write(rcastcc(&_partySerial), sizeof(_partySerial));
+		out.write(rcastcc(&partyCounter), sizeof(partyCounter));
+		int partyNamelen = static_cast<int> (strlen(_partyName) + 1);
+		out.write(rcastcc(&partyNamelen), sizeof(partyNamelen));
+		out.write(rcastcc(&_partyName[0]), sizeof(char) * partyNamelen);
+	}
+	void Party::loadParty(istream& in)
+	{
+		int leaderID;
+		in.read(rcastc(&leaderID), sizeof(leaderID));
+		//_leader = countyArray->getCitizen(leaderID);
+
+		in.read(rcastc(&_partySerial), sizeof(_partySerial));
+		in.read(rcastc(&partyCounter), sizeof(partyCounter));
+		int partyNamelen = static_cast<int> (strlen(_partyName) + 1);
+		_partyName = new char[partyNamelen];
+		in.read(rcastc(&partyNamelen), sizeof(partyNamelen));
+		in.read(rcastc(&_partyName[0]), sizeof(char) * partyNamelen);
 	}
 }

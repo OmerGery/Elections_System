@@ -60,7 +60,7 @@ namespace votes
 		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
 		_electionday->saveDate(out);
 		CountyArray.saveCountyArray(out);
-		//partyList.savePartyList()
+		partyList.savePartyList(out);
 
 		// save matrices::
 		//int** _voteCountMatrix;

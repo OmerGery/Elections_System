@@ -27,6 +27,7 @@ namespace votes
 			_tail->_next = newTail;
 			_tail = newTail;
 		}
+		_size++;
 		return true;
 	}
 	void PartyList::PrintaParty(int partyserial) const
@@ -71,5 +72,26 @@ namespace votes
 			toReturn = toReturn->_next;
 		}
 		return toReturn->_data;
+	}
+	void PartyList::savePartyList(ostream& out) const
+	{
+		PListNode* saver = _head;
+		out.write(rcastcc(&this->_size), sizeof(_size));
+		while (saver != nullptr)
+		{
+			saver->_data->saveParty(out);
+			saver = saver->_next;
+		}
+	}
+	void PartyList::loadPartyList(istream& in)
+	{
+		int loadSize = _size;
+		in.read(rcastc(&loadSize), sizeof(loadSize));
+		for (int i = 0; i < loadSize; i++)
+		{
+			Party* toadd = new Party();
+			toadd->loadParty(in);
+			this->Add(toadd);
+		}
 	}
 }

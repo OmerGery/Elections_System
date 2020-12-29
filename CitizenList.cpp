@@ -87,8 +87,6 @@ namespace votes
 		}
 		return nullptr;
 	}
-
-
 	void CitizenList::saveCitizensList(ostream& out) const
 	{
 		CzListNode* saver =_head;

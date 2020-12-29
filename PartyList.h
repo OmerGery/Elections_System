@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #include "Party.h"
 namespace votes
 {
@@ -21,6 +22,7 @@ namespace votes
 	class PartyList
 	{
 	private:
+		int _size;
 		PListNode* _head;
 		PListNode* _tail;
 	public:
@@ -30,6 +32,8 @@ namespace votes
 		Party* getData(int index) const;
 		void PrintaParty(int partyserial) const;
 		void PrintLeader(int partySerial) const;
+		void savePartyList(ostream& out) const;
+		void loadPartyList(istream& in);
 		
 	};
 }

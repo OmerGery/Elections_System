@@ -1,7 +1,9 @@
 #pragma once
+#pragma once
 #include "CitizenList.h"
 #include "Citizen.h"
 #include <iostream>
+using namespace std;
 using namespace std;
 namespace votes
 {
@@ -13,6 +15,7 @@ namespace votes
 		int _partySerial;
 		static int partyCounter;
 	public:
+		Party() {}
 		Party(const char* partyName, Citizen* leader);
 		Party(const Party& other)=delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
 		Party& operator=(const Party& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.
@@ -23,7 +26,9 @@ namespace votes
 		const int getPartySerial() const { return _partySerial; }
 		const int getPartyCounter() const { return partyCounter; }
 		friend ostream& operator<<(ostream& os, const Party& party);
-		void shallowSaveParty(ostream& out);
+		void shallowSaveParty(ostream& out) const;
 		void shallowLoadParty(istream& in);
+		void saveParty(ostream& out) const;
+		void loadParty(istream& in);
 	};
 }

@@ -88,6 +88,7 @@ namespace votes
 		in.read(rcastc(&_countiesSize), sizeof(_countiesSize));
 		_electionday->loadDate(in);
 		CountyArray.loadCountyArray(in);
+		partyList.loadPartyList(in);
 	}
 
 	// CALCS: 
