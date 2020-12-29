@@ -7,9 +7,9 @@ using namespace std;
 namespace votes
 {
 	SimpleApp::SimpleApp(Date* electionday, int delegatesNum):App(electionday)
-	{	
-		_countiesSize = 1;
-		County* county = new ComplexCounty("default", delegatesNum);
+	{
+		char defaultName[] = "default";
+		County* county = new ComplexCounty(defaultName, delegatesNum);
 		CountyArray.insert(county);
 	}
 	void SimpleApp::PrintAllCounties()const
@@ -44,7 +44,22 @@ namespace votes
 		return true;
 	}
 
+	void SimpleApp::saveApp(ostream& out)const
+	{
+		int simple = 1;
+		out.write(rcastcc(&simple), sizeof(simple));
+		out.write(rcastcc(&_partiesSize), sizeof(_partiesSize));
+		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
+		_electionday->saveDate(out);
+		CountyArray.saveCountyArray(out);
+		//partyList.savePartyList()
 
+		// save matrices::
+		//int** _voteCountMatrix;
+		//float** _statisticsMatrix;
+		//int** _delegatesMatrix;
+		//int** _electorsMatrix;
+	}
 	
 	// print: name , amount of Delegates that the county gives , leader name of the winning party.
 	void SimpleApp::printVotes()

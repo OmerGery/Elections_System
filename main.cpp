@@ -84,6 +84,13 @@ int main()
             cout << "Please enter the file name you want to load" << endl;
             cin >> fname;
             infile.open(fname, ios::binary | ios::in);
+            if (!infile.is_open())
+            {
+                cout << "File name wasn't found";
+                prexit = true;
+                exit = true;
+                break;
+            }
             date = new Date();
             int simple;
             infile.read(rcastc(&simple), sizeof(simple));
@@ -94,6 +101,7 @@ int main()
             mainApp->loadApp(infile);
             infile.close();
             prexit = true;
+            break;
         case preOptions::PreExit:
             cout << "You have exited the program. " << endl;
             prexit = true;
@@ -249,6 +257,12 @@ int main()
                     cout << "Please enter the file name you want to load" << endl;
                     cin >> fname;
                     infile.open(fname, ios::binary | ios::in);
+                    if (!infile.is_open())
+                    {
+                        cout << "File name wasn't found";
+                        exit = true;
+                        break;
+                    }
                     date = new Date();
                     int simple;
                     infile.read(rcastc(&simple), sizeof(simple));
@@ -264,5 +278,5 @@ int main()
                     break;
                 }
             }
-    return 0;
+            return 0;
 }

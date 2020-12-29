@@ -31,4 +31,18 @@ namespace votes
 		os << "Party Number:"<< party._partySerial << " Party Name:'" << party._partyName << "' Party Leader:" << party._leader->getName() << endl;
 		return os;
 	}
+	void Party::shallowSaveParty(ostream& out)
+	{
+		if (this == nullptr)
+		{
+			int noVote = -1;
+			out.write(rcastcc(&noVote), sizeof(noVote));
+		}
+		else
+			out.write(rcastcc(&_partySerial), sizeof(_partySerial));
+	}
+	void Party::shallowLoadParty(istream& in)
+	{
+		in.read(rcastc(&_partySerial), sizeof(_partySerial));
+	}
 }

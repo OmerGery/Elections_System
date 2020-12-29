@@ -3,7 +3,6 @@
 #include "CitizenList.h"
 #include <string.h>
 #include <iostream>
-#include "County.h"
 using namespace std;
 
 namespace votes
@@ -51,6 +50,8 @@ namespace votes
 		{
 			Citizen* C_Citizen = current->_data;
 			cout << *(C_Citizen);
+			//cout << " County: " << countyName << endl;
+			
 			current = current->_next;
 		}
 	}
@@ -86,6 +87,8 @@ namespace votes
 		}
 		return nullptr;
 	}
+
+
 	void CitizenList::saveCitizensList(ostream& out) const
 	{
 		CzListNode* saver =_head;
@@ -96,19 +99,16 @@ namespace votes
 			saver = saver->_next;
 		}
 	}
-	void CitizenList::load(istream& in)
+	void CitizenList::loadCitizensList(istream& in)
 	{
-		CzListNode* loader = _head;
-		in.read(rcastc(&_size), sizeof(_size));
-		while(loader!=nullptr)
+		int loadSize=_size;
+		in.read(rcastc(&loadSize), sizeof(loadSize));
+		for(int i=0;i<loadSize;i++)
 		{
-			//loader.load(in);
-			loader = loader->_next;
+			Citizen* toadd =new Citizen();
+			toadd->loadCitizen(in);
+			this->AddCitizen(toadd);
 		}
-	}
-	void CzListNode::load(istream& in)
-	{
-	//	_data->load();
 	}
 
 }

@@ -1,6 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "County.h"
 #include "CountyArr.h"
+#include "SimpleCounty.h"
+#include "ComplexCounty.h"
 #include <string.h>
 #include <iostream>
 
@@ -165,8 +167,25 @@ namespace votes
     }
     void countyArr::saveCountyArray(ostream& out) const
     {
-        out.write(rcastcc(_size), sizeof(_size));
-        for (int i = 0; i < _size; ++i) 
+        out.write(rcastcc(&_size), sizeof(_size));
+        for (int i = 1; i < _size; ++i) 
             countyArray[i]->saveCounty(out);
+    }
+    void countyArr::loadCountyArray(istream& in)
+    {
+        int loadedCounites;
+        in.read(rcastc(&loadedCounites), sizeof(loadedCounites));
+        for (int i = 1; i < loadedCounites; ++i)
+        {
+            int simple;
+            in.read(rcastc(&simple), sizeof(simple));
+            County* county = nullptr;
+            if (simple)
+                county = new SimpleCounty();
+            else
+                county = new ComplexCounty();
+           county->loadCounty(in);
+           insert(county);
+        }
     }
 };

@@ -35,5 +35,6 @@ namespace votes
       const int getDelegatesArrSize(int countyNum) const;
       bool searchDelegate(int id) const;
       void saveCountyArray(ostream& out) const;
+      void loadCountyArray(istream& in);
     };
 }

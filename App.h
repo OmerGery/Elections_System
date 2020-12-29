@@ -45,12 +45,12 @@ namespace votes
 		void PrintAllParties() const;
 		bool AddParty(char* partyname, int idCandidate);
 		bool Vote(int id, int partyNum);
-		void loadApp(istream& in);
-		void saveApp(ostream& out) const;
 		virtual void AddCounty(char* name, int delegatesNum, bool simple) = 0;
 		virtual bool AddCitizen(char* name, int id, int year, int countynum) = 0;
 		virtual void PrintAllCounties() const = 0;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;
 		virtual void printVotes() = 0;
+		virtual void saveApp(ostream& out) const = 0;
+		void loadApp(istream& in);
 	};
 }

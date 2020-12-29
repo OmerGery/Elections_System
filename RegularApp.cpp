@@ -51,6 +51,24 @@ namespace votes
 		}
 		CountyArray.printAllCounties();
 	}
+
+	void RegularApp::saveApp(ostream& out)const
+	{
+		int regular = 0;
+		out.write(rcastcc(&regular), sizeof(regular));
+		out.write(rcastcc(&_partiesSize), sizeof(_partiesSize));
+		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
+		_electionday->saveDate(out);
+		CountyArray.saveCountyArray(out);
+		//partyList.savePartyList()
+
+		// save matrices::
+		//int** _voteCountMatrix;
+		//float** _statisticsMatrix;
+		//int** _delegatesMatrix;
+		//int** _electorsMatrix;
+	}
+
 	// print for each county : name , amount of Delegates that the county gives , leader name of the winning party.
 	void RegularApp::printVotes()
 	{

@@ -11,5 +11,6 @@ namespace votes
 		virtual void PrintAllCounties() const override;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) override;
 		virtual void printVotes() override;
+		virtual void saveApp(ostream& out) const override;
 	};
 }

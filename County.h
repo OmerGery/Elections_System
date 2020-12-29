@@ -43,6 +43,7 @@ namespace votes
 		virtual void GetPartiesElectors(float* statisticsArray, int* countyElectors, int partiesSize)const=0;
 		virtual void sortAndPrintWinners(int* voteCount,int* Electors,int partiesSize,PartyList* partylist)const = 0;
 		virtual void printCountyType() const=0;
-		void saveCounty(ostream& out) const;
+		virtual void saveCounty(ostream& out) const=0;
+		void loadCounty(istream& in);
 	};
 }

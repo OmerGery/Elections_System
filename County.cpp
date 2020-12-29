@@ -56,19 +56,16 @@ namespace votes
 	{
 		this->_citizenAllowed.PrintList();
 	}
-	void County::saveCounty(ostream& out) const
+	void County::loadCounty(istream& in)
 	{
-
-		//CitizenList _citizenAllowed;
 		//countyDelegateArr CDArr;
-		out.write(rcastcc(&_countySerial), sizeof(_countySerial));
-		out.write(rcastcc(&_numdelegates), sizeof(_numdelegates));
-		out.write(rcastcc(&countyCounter), sizeof(countyCounter));
-		int countyNamelen = static_cast<int> (strlen(_countyName));
-		out.write(rcastcc(&countyNamelen), sizeof(countyNamelen));
-		for (int i = 0; i <countyNamelen; i++)
-			out.write(rcastcc(&_countyName[i]), sizeof(char));
-		_citizenAllowed.saveCitizensList(out);
-
+		in.read(rcastc(&_countySerial), sizeof(_countySerial));
+		in.read(rcastc(&_numdelegates), sizeof(_numdelegates));
+		in.read(rcastc(&countyCounter), sizeof(countyCounter));
+		int countyNamelen = 0;
+		in.read(rcastc(&countyNamelen), sizeof(countyNamelen));
+		_countyName = new char[countyNamelen];
+		in.read(rcastc(&_countyName[0]), sizeof(char) * countyNamelen);
+		_citizenAllowed.loadCitizensList(in);
 	}
 }

@@ -82,7 +82,13 @@ namespace votes
 			return false;
 		return true;
 	}
-
+	void App::loadApp(istream& in)
+	{
+		in.read(rcastc(&_partiesSize), sizeof(_partiesSize));
+		in.read(rcastc(&_countiesSize), sizeof(_countiesSize));
+		_electionday->loadDate(in);
+		CountyArray.loadCountyArray(in);
+	}
 
 	// CALCS: 
 
@@ -170,27 +176,5 @@ namespace votes
 			_delegatesMatrix[i][place] += remainingDelegates;
 		}
 		CountyArray.getElectors(_electorsMatrix, _statisticsMatrix, _partiesSize);
-	}
-	void App::saveApp(ostream& out)const
-	{	
-		int simple = 1;
-		out.write(rcastcc(&simple), sizeof(simple));
-		out.write(rcastcc(&_partiesSize), sizeof(_partiesSize));
-		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
-		_electionday->saveDate(out); 
-		CountyArray.saveCountyArray(out);
-		//partyList.savePartyList()
-
-		// save matrices::
-		//int** _voteCountMatrix;
-		//float** _statisticsMatrix;
-		//int** _delegatesMatrix;
-		//int** _electorsMatrix;
-	}
-	void App::loadApp(istream& in)
-	{
-		in.read(rcastc(&_partiesSize), sizeof(_partiesSize));
-		in.read(rcastc(&_countiesSize), sizeof(_countiesSize));
-		_electionday->loadDate(in);
 	}
 }

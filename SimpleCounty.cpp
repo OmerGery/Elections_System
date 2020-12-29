@@ -32,4 +32,18 @@ namespace votes
 		cout << " County Type: Simple " << endl;
 	}
 
+	void SimpleCounty::saveCounty(ostream& out) const
+	{
+		//countyDelegateArr CDArr;
+		int simple = 1;
+		out.write(rcastcc(&simple), sizeof(simple));
+		out.write(rcastcc(&_countySerial), sizeof(_countySerial));
+		out.write(rcastcc(&_numdelegates), sizeof(_numdelegates));
+		out.write(rcastcc(&countyCounter), sizeof(countyCounter));
+		int countyNamelen = static_cast<int> (strlen(_countyName) + 1);
+		out.write(rcastcc(&countyNamelen), sizeof(countyNamelen));
+		out.write(rcastcc(&_countyName[0]), sizeof(char) * countyNamelen);
+		_citizenAllowed.saveCitizensList(out);
+	}
+
 }

@@ -30,26 +30,26 @@ namespace votes
 	}
 	ostream& operator<<(ostream& os, const Citizen& citizen)
 	{
-		os << "Name:" << citizen._name << " ID:" << citizen._id << " Born in:" << citizen._year << " " << endl;
+		os << "Name:" << citizen._name << " ID:" << citizen._id << " Born in:" << citizen._year;
 		return os;
 	}
 	void Citizen::saveCitizen(ostream& out) const
 	{
-		out.write(rcastcc(&_id), sizeof(int));
-		out.write(rcastcc(&_year), sizeof(int));
-		int sizename =static_cast<int>(strlen(_name));
+		out.write(rcastcc(&_id), sizeof(_id));
+		out.write(rcastcc(&_year), sizeof(_year));
+		int sizename =static_cast<int>(strlen(_name)+1);
 		out.write(rcastcc(&sizename), sizeof(sizename));
-		out.write(rcastcc(&_name),sizename);
-		//party?
+		out.write(rcastcc(&_name[0]), sizeof(char) * sizename);
+		//_PartyVotedTo->shallowSaveParty(out);
 	}
-	void Citizen::load(istream& in)
+	void Citizen::loadCitizen(istream& in)
 	{
-		in.read(rcastc(&_id), sizeof(int));
-		in.read(rcastc(&_year), sizeof(int));
-		//int sizename;
-		//in.read(rcastc(&sizename), sizeof(sizename));
-		//_name = new char[sizename];
-		//in.read(rcastc(&_name), sizename);
-		
+		in.read(rcastc(&_id), sizeof(_id));
+		in.read(rcastc(&_year), sizeof(_year));
+		int sizename=0;
+		in.read(rcastc(&sizename), sizeof(sizename));
+		_name = new char[sizename];
+		in.read(rcastc(&_name[0]), sizename);
+		//_PartyVotedTo->shallowLoadParty(in);
 	}
 }
