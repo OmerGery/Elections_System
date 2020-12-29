@@ -56,9 +56,9 @@ namespace votes
 	{
 		in.read(rcastc(&_partySerial), sizeof(_partySerial));
 		in.read(rcastc(&partyCounter), sizeof(partyCounter));
-		int partyNamelen = static_cast<int> (strlen(_partyName) + 1);
-		_partyName = new char[partyNamelen];
+		int partyNamelen;
 		in.read(rcastc(&partyNamelen), sizeof(partyNamelen));
+		_partyName = new char[partyNamelen];
 		in.read(rcastc(&_partyName[0]), sizeof(char) * partyNamelen);
 	}
 }
