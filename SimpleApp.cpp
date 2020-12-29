@@ -53,6 +53,7 @@ namespace votes
 		_electionday->saveDate(out);
 		CountyArray.saveCountyArray(out);
 		partyList.savePartyList(out);
+		savePartyLeaders(out);
 
 		// save matrices::
 		//int** _voteCountMatrix;

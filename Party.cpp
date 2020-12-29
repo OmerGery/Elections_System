@@ -46,9 +46,6 @@ namespace votes
 	}
 	void Party::saveParty(ostream& out) const
 	{
-		int leaderID = _leader->getID();
-		out.write(rcastcc(&leaderID), sizeof(leaderID));
-
 		out.write(rcastcc(&_partySerial), sizeof(_partySerial));
 		out.write(rcastcc(&partyCounter), sizeof(partyCounter));
 		int partyNamelen = static_cast<int> (strlen(_partyName) + 1);
@@ -57,10 +54,6 @@ namespace votes
 	}
 	void Party::loadParty(istream& in)
 	{
-		int leaderID;
-		in.read(rcastc(&leaderID), sizeof(leaderID));
-		//_leader = countyArray->getCitizen(leaderID);
-
 		in.read(rcastc(&_partySerial), sizeof(_partySerial));
 		in.read(rcastc(&partyCounter), sizeof(partyCounter));
 		int partyNamelen = static_cast<int> (strlen(_partyName) + 1);

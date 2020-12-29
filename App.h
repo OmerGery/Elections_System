@@ -52,5 +52,7 @@ namespace votes
 		virtual void printVotes() = 0;
 		virtual void saveApp(ostream& out) const = 0;
 		void loadApp(istream& in);
+		void loadPartyLeaders(istream& in);
+		void savePartyLeaders(ostream& out) const;
 	};
 }

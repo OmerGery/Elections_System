@@ -26,7 +26,7 @@ namespace votes
 		PListNode* _head;
 		PListNode* _tail;
 	public:
-		PartyList() :_head(nullptr), _tail(nullptr) {}
+		PartyList() :_head(nullptr), _tail(nullptr), _size(0) {}
 		~PartyList() ;
 		bool Add(Party* party);
 		Party* getData(int index) const;
@@ -34,6 +34,7 @@ namespace votes
 		void PrintLeader(int partySerial) const;
 		void savePartyList(ostream& out) const;
 		void loadPartyList(istream& in);
+		const int getSize() const { return _size;}
 		
 	};
 }

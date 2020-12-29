@@ -89,6 +89,26 @@ namespace votes
 		_electionday->loadDate(in);
 		CountyArray.loadCountyArray(in);
 		partyList.loadPartyList(in);
+		loadPartyLeaders(in);
+	}
+	void App::savePartyLeaders(ostream& out) const
+	{
+		for (int i = 1; i <= partyList.getSize(); i++)
+		{
+			int leaderID = partyList.getData(i)->getLeader()->getID();
+			out.write(rcastcc(&leaderID), sizeof(leaderID));
+		}
+	}
+	void App::loadPartyLeaders(istream& in)
+	{
+		for (int i = 1; i <= partyList.getSize(); i++)
+		{
+			int leaderID;
+			in.read(rcastc(&leaderID), sizeof(leaderID));
+			Party* current = partyList.getData(i);
+			Citizen* currentLeader = CountyArray.getCitizen(leaderID);
+			current->setLeader(currentLeader);
+		}
 	}
 
 	// CALCS: 
