@@ -45,5 +45,6 @@ namespace votes
 		virtual void printCountyType() const=0;
 		virtual void saveCounty(ostream& out) const=0;
 		void loadCounty(istream& in);
+		Citizen* getCitizenByIndex(int index)const { return this->_citizenAllowed.getData(index); }
 	};
 }

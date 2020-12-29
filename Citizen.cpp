@@ -40,7 +40,6 @@ namespace votes
 		int sizename =static_cast<int>(strlen(_name)+1);
 		out.write(rcastcc(&sizename), sizeof(sizename));
 		out.write(rcastcc(&_name[0]), sizeof(char) * sizename);
-		//_PartyVotedTo->shallowSaveParty(out);
 	}
 	void Citizen::loadCitizen(istream& in)
 	{
@@ -50,6 +49,5 @@ namespace votes
 		in.read(rcastc(&sizename), sizeof(sizename));
 		_name = new char[sizename];
 		in.read(rcastc(&_name[0]), sizename);
-		//_PartyVotedTo->shallowLoadParty(in);
 	}
 }

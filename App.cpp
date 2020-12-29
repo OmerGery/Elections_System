@@ -99,6 +99,42 @@ namespace votes
 			out.write(rcastcc(&leaderID), sizeof(leaderID));
 		}
 	}
+	void App::saveCitizenVotes(ostream& out) const
+	{
+		for (int i = 1; i <= CountyArray.getSize(); i++)
+		{
+			County* currentCounty = CountyArray.getCounty(i);
+			int citizensInCounty = currentCounty->getCountySize();
+			for (int j = 0; j < citizensInCounty; j++)
+			{
+				Citizen* current=currentCounty->getCitizenByIndex(j);
+				int partyvotedto=-1;
+				const Party* pParty = current->getVote();
+				if(pParty)
+					partyvotedto=pParty->getPartySerial();
+				out.write(rcastcc(&partyvotedto), sizeof(partyvotedto));
+			}
+		}
+	}
+	void App::loadCitizenVotes(istream& in)
+	{
+		for (int i = 1; i <= CountyArray.getSize(); i++)
+		{
+			County* currentCounty = CountyArray.getCounty(i);
+			int citizensInCounty = currentCounty->getCountySize();
+			for (int j = 0; j < citizensInCounty; j++)
+			{
+				Citizen* current = currentCounty->getCitizenByIndex(j);
+				int partyvotedto;
+				in.read(rcastc(&partyvotedto), sizeof(partyvotedto));
+				if (partyvotedto != -1)
+				{
+					Party* PParty = this->partyList.getData(partyvotedto);
+					current->vote(PParty);
+				}
+			}
+		}
+	}
 	void App::loadPartyLeaders(istream& in)
 	{
 		for (int i = 1; i <= partyList.getSize(); i++)

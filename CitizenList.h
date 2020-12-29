@@ -37,6 +37,7 @@ namespace votes
 		void PrintList(char* countyName) const;
 		Citizen* findCitizen(int id) const;
 		void getVotes(int* voteArr) const;
+		Citizen* getData(int index) const;
 		const int getSize() const { return _size; }
 		void saveCitizensList(ostream& out) const;
 		void loadCitizensList(istream& in);

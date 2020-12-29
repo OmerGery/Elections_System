@@ -27,8 +27,6 @@ namespace votes
 		const int getPartySerial() const { return _partySerial; }
 		const int getPartyCounter() const { return partyCounter; }
 		friend ostream& operator<<(ostream& os, const Party& party);
-		void shallowSaveParty(ostream& out) const;
-		void shallowLoadParty(istream& in);
 		void saveParty(ostream& out) const;
 		void loadParty(istream& in);
 	};

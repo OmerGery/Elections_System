@@ -54,5 +54,7 @@ namespace votes
 		void loadApp(istream& in);
 		void loadPartyLeaders(istream& in);
 		void savePartyLeaders(ostream& out) const;
+		void saveCitizenVotes(ostream& out) const;
+		void loadCitizenVotes(istream& in);
 	};
 }

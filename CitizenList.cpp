@@ -43,6 +43,19 @@ namespace votes
 		_size++;
 		return true;
 	}
+	Citizen* CitizenList::getData(int index) const
+	{
+		CzListNode* toReturn = _head;
+		if (index < 1 || toReturn == nullptr)
+			return nullptr;
+		for (int i = 1; i < index; i++)
+		{
+			if (toReturn == NULL)
+				return nullptr;
+			toReturn = toReturn->_next;
+		}
+		return toReturn->_data;
+	}
 	void CitizenList::PrintList(char* countyName) const
 	{
 		CzListNode* current = _head;
