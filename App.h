@@ -57,5 +57,7 @@ namespace votes
 		void savePartyLeaders(ostream& out) const;
 		void saveCitizenVotes(ostream& out) const;
 		void loadCitizenVotes(istream& in);
+		void saveCountiesDelegates(ostream& out) const;
+		void loadCountiesDelegates(istream& in);
 	};
 }

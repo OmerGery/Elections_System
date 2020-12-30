@@ -109,6 +109,7 @@ namespace votes
 		partyList.savePartyList(out);
 		savePartyLeaders(out);
 		saveCitizenVotes(out);
+		saveCountiesDelegates(out);
 	}
 	void App::saveCitizenVotes(ostream& out) const
 	{
@@ -155,6 +156,42 @@ namespace votes
 			Party* current = partyList.getData(i);
 			Citizen* currentLeader = CountyArray.getCitizen(leaderID);
 			current->setLeader(currentLeader);
+		}
+	}
+	void App::saveCountiesDelegates(ostream& out) const
+	{
+		for (int i = 1; i <= CountyArray.getSize(); i++)
+		{
+			County* currentCounty = CountyArray.getCounty(i);
+			countyDelegateArr currentDelegateArr = currentCounty->getDelgatesArr();
+			int delegatesInCounty = currentCounty->getdelegatesNum();
+			for (int j = 1; j <= delegatesInCounty; j++)
+			{
+				CountyDelegate* currentDelegate = currentDelegateArr.getDel(j);
+				int delegateID = currentDelegate->getID();
+				out.write(rcastcc(&delegateID), sizeof(delegateID));
+				int partyID = currentDelegate->GetPartySerialOfDeligate();
+				out.write(rcastcc(&partyID), sizeof(partyID));
+			}
+		}
+	}
+	void App::loadCountiesDelegates(istream& in) 
+	{
+		for (int i = 1; i <= CountyArray.getSize(); i++)
+		{
+			County* currentCounty = CountyArray.getCounty(i);
+			int delegatesInCounty = currentCounty->getdelegatesNum();
+			for (int j = 1; j <= delegatesInCounty; j++)
+			{
+				int delegateID;
+				in.read(rcastc(&delegateID), sizeof(delegateID));
+				Citizen* currentDelegate = CountyArray.getCitizen(delegateID);
+				int partyID;
+				in.read(rcastc(&partyID), sizeof(partyID));
+				Party* currentParty = partyList.getData(partyID);
+				CountyDelegate* Delegate = new CountyDelegate(currentDelegate, currentParty);
+				CountyArray.addCDToCounty(Delegate, i);
+			}
 		}
 	}
 
