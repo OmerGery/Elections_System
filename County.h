@@ -1,6 +1,5 @@
 #pragma once
-static const int SIMPLE = 1;
-static const int COMPLEX = 0;
+
 #include "Party.h"
 #include "CitizenList.h"
 #include "PartyList.h"

@@ -3,6 +3,8 @@
 using namespace std;
 namespace votes
 {
+	static const int SIMPLE = 1;
+	static const int COMPLEX = 0;
 	struct Elector
 	{
 		int sumElectors;

@@ -239,7 +239,7 @@ int main()
                     mainApp->printVotes();
                     break;
                 case options::Exit:
-                    cout << "You have exited the Election round. " << endl;
+                    cout << "You have exited the program. " << endl;
                     delete mainApp;
                     exit = true;
                     break;
