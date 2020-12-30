@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "CitizenList.h"
 #include "Citizen.h"
 #include <iostream>
@@ -15,7 +14,7 @@ namespace votes
 		int _partySerial;
 		static int partyCounter;
 	public:
-		Party() {}
+		Party() { _leader = nullptr; _partyName = nullptr; _partySerial = 0; }
 		Party(const char* partyName, Citizen* leader);
 		Party(const Party& other)=delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
 		Party& operator=(const Party& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.

@@ -6,12 +6,16 @@
 using namespace std;
 namespace votes
 {
-	Date::Date(int day, int month, int year)
+	Date::Date()
 	{
-		if (day < c_maxDayPerMonthArr[month])
-			_day = day;
-		if (month > 0 && month <= 12 && c_maxDayPerMonthArr[month] >= _day)
-			_month = month;
+		_day = 1;
+		_month = 1;
+		_year = 1900;
+	}
+	Date::Date(int day ,int month , int year)
+	{
+		_day = day;
+		_month = month;
 		_year = year;
 	}
 	void Date::saveDate(ostream& out) const

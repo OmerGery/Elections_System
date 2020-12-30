@@ -6,7 +6,7 @@
 using namespace std;
 namespace votes
 {
-	SimpleApp::SimpleApp(Date* electionday, int delegatesNum):App(electionday)
+	SimpleApp::SimpleApp(Date electionday, int delegatesNum):App(electionday)
 	{
 		char defaultName[] = "default";
 		County* county = new ComplexCounty(defaultName, delegatesNum);
@@ -46,9 +46,8 @@ namespace votes
 
 	void SimpleApp::saveApp(ostream& out)const
 	{
-		int simple = 1;
-		out.write(rcastcc(&simple), sizeof(simple));
-		saveAll(out);
+		out.write(rcastcc(&SIMPLE), sizeof(SIMPLE));
+		App::saveApp(out);
 	}
 	void SimpleApp::printVotes()
 	{

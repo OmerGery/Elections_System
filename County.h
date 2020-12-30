@@ -1,4 +1,6 @@
 #pragma once
+static const int SIMPLE = 1;
+static const int COMPLEX = 0;
 #include "Party.h"
 #include "CitizenList.h"
 #include "PartyList.h"
@@ -23,7 +25,7 @@ namespace votes
 	public:
 		County(const char* countyName, int numdelegates);
 		County();
-		~County();
+		virtual ~County();
 		void resetCounter() { countyCounter = 0; }
 		County(const County& other) = delete;//according to moshe's instructions , we can either implent or delete a copy c'tor.
 		County& operator=(const County& other) = delete;//according to moshe's instructions , we can either implent or delete a opertor=.
@@ -33,7 +35,6 @@ namespace votes
 		const char* getCountyName() const { return _countyName; }
 		int getCountySerial() const { return _countySerial; }
 		const int getdelegatesNum() const { return this->_numdelegates; }
-		countyDelegateArr getDelgatesArr() const { return CDArr; };
 		const int getDelgatesarrSize()const { return CDArr.getSize(); }
 		const int getCountySize()const { return _citizenAllowed.getSize(); };
 		friend ostream& operator<<(ostream& os, const County& county);

@@ -101,11 +101,11 @@ namespace votes
     }
     void countyArr::addCitizenToCounty(Citizen* citizen, int countynum)
     {
-        (*(countyArray[countynum])).AddCitizen(citizen);
+        countyArray[countynum]->AddCitizen(citizen);
     }
     void countyArr::addCDToCounty(CountyDelegate* delegate, int countynum)
     {
-        (*countyArray[countynum]).AddCD(delegate);
+        countyArray[countynum]->AddCD(delegate);
     }
     const int countyArr::getSize()const { return _size-1; }
     
@@ -177,10 +177,10 @@ namespace votes
         in.read(rcastc(&loadedCounites), sizeof(loadedCounites));
         for (int i = 1; i < loadedCounites; ++i)
         {
-            int simple;
-            in.read(rcastc(&simple), sizeof(simple));
+            int type;
+            in.read(rcastc(&type), sizeof(type));
             County* county = nullptr;
-            if (simple)
+            if (type==SIMPLE)
                 county = new SimpleCounty();
             else
                 county = new ComplexCounty();

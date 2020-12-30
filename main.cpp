@@ -17,19 +17,18 @@
 
 using namespace std;
 using namespace votes;
-static const int first_option = 1;
 enum options {
-    AddCounty=first_option, AddCitizen, AddParty, AddDelegate, DisplayCounties, DisplayCitizens, DisplayParties, Vote, ShowRes, Exit, Save, Load
+    AddCounty=1, AddCitizen, AddParty, AddDelegate, DisplayCounties, DisplayCitizens, DisplayParties, Vote, ShowRes, Exit, Save, Load
 }option;
 enum preOptions {
-    NewRound = first_option, LoadVotes, PreExit
+    NewRound = 1, LoadVotes, PreExit
 }preoption;
 //Maximum string size:
 static const int MAX_SIZE = 100;
 
 //MIN and MAX - modify the maximum and minimum age for a citizen to vote:
 static const int MIN_YEAR_TO_VOTE = 1700;
-static const int MAX_YEAR_TO_VOTE = 2020;
+static const int MAX_YEAR_TO_VOTE = 2022;
 
 int main()
 { 
@@ -37,11 +36,11 @@ int main()
     ofstream outfile;
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
     char name[MAX_SIZE], fname[MAX_SIZE];        
-    int option, delegatesNum, id, day, month, year, countyNum, partyNum, simple;
+    int option, delegatesNum, id, day, month, year, countyNum, partyNum, type;
     bool correctInput; // used for input checks 
     bool exit=false, prexit=false;
     App* mainApp = nullptr;
-    Date* date = nullptr;
+    Date date;
     
     while (!prexit)
     {
@@ -52,11 +51,11 @@ int main()
         {
         case preOptions::NewRound:
             cout << "Please enter the Elections type - 1 for simple or 0 for regular " << endl;
-            cin >> simple;
-            while (simple != 1 && simple != 0)
+            cin >> type;
+            while (type != SIMPLE && type != COMPLEX)
             {
                 cout << "Please enter 0 or 1 ." << endl;
-                cin >> simple;
+                cin >> type;
             }
             cout << "Please enter election day" << endl;
             cin >> day;
@@ -64,8 +63,8 @@ int main()
             cin >> month;
             cout << "Please enter election year" << endl;
             cin >> year;
-            date = new Date(day, month, year);
-            if (simple)
+            date=Date(day, month, year);
+            if (type==SIMPLE)
             {
                 cout << "Enter number of delegates" << endl;
                 cin >> delegatesNum;
@@ -76,7 +75,7 @@ int main()
                 }
                 mainApp = new SimpleApp(date, delegatesNum);
             }
-            else
+            else//type == COMPLEX
                 mainApp = new RegularApp(date);
             prexit = true;
             break;
@@ -91,12 +90,11 @@ int main()
                 exit = true;
                 break;
             }
-            date = new Date();
-            int simple;
-            infile.read(rcastc(&simple), sizeof(simple));
-            if (simple)
-                mainApp = new SimpleApp(date,0);
-            else
+            infile.read(rcastc(&type), sizeof(type));
+            date = Date();
+            if (type==SIMPLE)
+                mainApp = new SimpleApp(date);
+            else//type == COMPLEX
                 mainApp = new RegularApp(date);
             mainApp->loadApp(infile);
             infile.close();
@@ -112,7 +110,7 @@ int main()
             break;
         }
     }
-        
+   
             while (!exit)
             {
                 cout << endl << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
@@ -125,11 +123,11 @@ int main()
                 {
                 case options::AddCounty:
                     cout << "Please Enter 1 for simple county or 0 for split county" << endl;
-                    cin >> simple;
-                    while (simple != 1 && simple != 0)
+                    cin >> type;
+                    while (type != SIMPLE && type != COMPLEX)
                     {
                         cout << "Please enter 0 or 1 ." << endl;
-                        cin >> simple;
+                        cin >> type;
                     }
                     cout << "Enter the County name" << endl;
                     cin >> name;
@@ -140,7 +138,7 @@ int main()
                         cout << "please enter a positive number of delegates" << endl;
                         cin >> delegatesNum;
                     }
-                    mainApp->AddCounty(name, delegatesNum, simple);
+                    mainApp->AddCounty(name, delegatesNum, type);
                     break;
                 case options::AddCitizen:
                     cout << "Enter the citizen name" << endl;
@@ -243,7 +241,6 @@ int main()
                 case options::Exit:
                     cout << "You have exited the Election round. " << endl;
                     delete mainApp;
-                    delete date;
                     exit = true;
                     break;
                 case options::Save:
@@ -263,11 +260,10 @@ int main()
                         exit = true;
                         break;
                     }
-                    date = new Date();
-                    int simple;
-                    infile.read(rcastc(&simple), sizeof(simple));
-                    if (simple)
-                        mainApp = new SimpleApp(date,0);
+                    date = Date();
+                    infile.read(rcastc(&type), sizeof(type));
+                    if (type==SIMPLE)
+                        mainApp = new SimpleApp(date);
                     else
                         mainApp = new RegularApp(date);
                     mainApp->loadApp(infile);

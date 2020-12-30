@@ -42,15 +42,7 @@ namespace votes
 	}
 	void ComplexCounty::saveCounty(ostream& out) const
 	{
-		//countyDelegateArr CDArr;
-		int complex = 0;
-		out.write(rcastcc(&complex), sizeof(complex));
-		out.write(rcastcc(&_countySerial), sizeof(_countySerial));
-		out.write(rcastcc(&_numdelegates), sizeof(_numdelegates));
-		out.write(rcastcc(&countyCounter), sizeof(countyCounter));
-		int countyNamelen = static_cast<int> (strlen(_countyName) + 1);
-		out.write(rcastcc(&countyNamelen), sizeof(countyNamelen));
-		out.write(rcastcc(&_countyName[0]), sizeof(char) * countyNamelen);
-		_citizenAllowed.saveCitizensList(out);
+		out.write(rcastcc(&COMPLEX), sizeof(COMPLEX));
+		County::saveCounty(out);
 	}
 }

@@ -21,9 +21,8 @@ namespace votes
 		_voteCountMatrix = nullptr;
 		_partiesSize = 0;
 		_countiesSize = 0;
-		_electionday = nullptr;
 	}
-	App::App(Date* electionday)
+	App::App(Date& electionday)
 	{
 		_electorsMatrix=nullptr;
 		_delegatesMatrix = nullptr;
@@ -82,15 +81,23 @@ namespace votes
 			return false;
 		return true;
 	}
+	void App::saveApp(ostream& out)const
+	{
+		_electionday.saveDate(out);
+		CountyArray.saveCountyArray(out);
+		partyList.savePartyList(out);
+		savePartyLeaders(out);
+		saveCitizenVotes(out);
+		saveCountiesDelegates(out);
+	}
 	void App::loadApp(istream& in)
 	{
-		in.read(rcastc(&_partiesSize), sizeof(_partiesSize));
-		in.read(rcastc(&_countiesSize), sizeof(_countiesSize));
-		_electionday->loadDate(in);
+		_electionday.loadDate(in);
 		CountyArray.loadCountyArray(in);
 		partyList.loadPartyList(in);
 		loadPartyLeaders(in);
 		loadCitizenVotes(in);
+		loadCountiesDelegates(in);
 	}
 	void App::savePartyLeaders(ostream& out) const
 	{
@@ -100,17 +107,7 @@ namespace votes
 			out.write(rcastcc(&leaderID), sizeof(leaderID));
 		}
 	}
-	void App::saveAll(ostream& out)const
-	{
-		out.write(rcastcc(&_partiesSize), sizeof(_partiesSize));
-		out.write(rcastcc(&_countiesSize), sizeof(_countiesSize));
-		_electionday->saveDate(out);
-		CountyArray.saveCountyArray(out);
-		partyList.savePartyList(out);
-		savePartyLeaders(out);
-		saveCitizenVotes(out);
-		saveCountiesDelegates(out);
-	}
+	
 	void App::saveCitizenVotes(ostream& out) const
 	{
 		for (int i = 1; i <= CountyArray.getSize(); i++)
@@ -163,11 +160,10 @@ namespace votes
 		for (int i = 1; i <= CountyArray.getSize(); i++)
 		{
 			County* currentCounty = CountyArray.getCounty(i);
-			countyDelegateArr currentDelegateArr = currentCounty->getDelgatesArr();
 			int delegatesInCounty = currentCounty->getdelegatesNum();
 			for (int j = 1; j <= delegatesInCounty; j++)
 			{
-				CountyDelegate* currentDelegate = currentDelegateArr.getDel(j);
+				CountyDelegate* currentDelegate = currentCounty->getDelgate(j);
 				int delegateID = currentDelegate->getID();
 				out.write(rcastcc(&delegateID), sizeof(delegateID));
 				int partyID = currentDelegate->GetPartySerialOfDeligate();

@@ -54,9 +54,8 @@ namespace votes
 
 	void RegularApp::saveApp(ostream& out)const
 	{
-		int regular = 0;
-		out.write(rcastcc(&regular), sizeof(regular));
-		saveAll(out);
+		out.write(rcastcc(&COMPLEX), sizeof(COMPLEX));
+		App::saveApp(out);
 	}
 
 	// print for each county : name , amount of Delegates that the county gives , leader name of the winning party.
