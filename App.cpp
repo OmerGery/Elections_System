@@ -160,8 +160,9 @@ namespace votes
 		for (int i = 1; i <= CountyArray.getSize(); i++)
 		{
 			County* currentCounty = CountyArray.getCounty(i);
-			int delegatesInCounty = currentCounty->getdelegatesNum();
-			for (int j = 1; j <= delegatesInCounty; j++)
+			int delegatesInCounty = currentCounty->getDelgatesarrSize();
+			out.write(rcastcc(&delegatesInCounty), sizeof(delegatesInCounty));
+			for (int j = 0; j < delegatesInCounty; j++)
 			{
 				CountyDelegate* currentDelegate = currentCounty->getDelgate(j);
 				int delegateID = currentDelegate->getID();
@@ -176,8 +177,9 @@ namespace votes
 		for (int i = 1; i <= CountyArray.getSize(); i++)
 		{
 			County* currentCounty = CountyArray.getCounty(i);
-			int delegatesInCounty = currentCounty->getdelegatesNum();
-			for (int j = 1; j <= delegatesInCounty; j++)
+			int delegatesInCounty = 0;
+			in.read(rcastc(&delegatesInCounty), sizeof(delegatesInCounty));
+			for (int j = 0; j < delegatesInCounty; j++)
 			{
 				int delegateID;
 				in.read(rcastc(&delegateID), sizeof(delegateID));
