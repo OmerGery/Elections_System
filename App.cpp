@@ -81,6 +81,13 @@ namespace votes
 			return false;
 		return true;
 	}
+	bool App::printVotes()
+	{
+		if (this->partyList.getSize() < 1)
+			return false;
+		calcVotes();
+		return true;
+	}
 	void App::saveApp(ostream& out)const
 	{
 		_electionday.saveDate(out);

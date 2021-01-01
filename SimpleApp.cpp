@@ -49,9 +49,11 @@ namespace votes
 		out.write(rcastcc(&SIMPLE), sizeof(SIMPLE));
 		App::saveApp(out);
 	}
-	void SimpleApp::printVotes()
+	bool SimpleApp::printVotes()
 	{
-		calcVotes();
+		bool votes = App::printVotes();
+		if (!votes)
+			return false;
 		int  j, DeligatesPrinted, max = -1, partyNum = -1;
 			cout << "Amount of Delegates: ";  CountyArray.printDelegatesNum(1);
 			cout << "The total voting precntage is: " << _statisticsMatrix[1][0] * 100 << "%" << endl;
@@ -100,6 +102,6 @@ namespace votes
 			cout << "#" << _partiesSize - i + 1 << ". " << electorsArray[i].party->getLeader()->getName() << " Has got: "
 			<< electorsArray[i].sumElectors << " Electors and his party got " <<
 			this->_voteCountMatrix[0][electorsArray[i].party->getPartySerial()] << " votes" << endl;
+		return true;
 	}
-
 }

@@ -10,7 +10,7 @@ namespace votes
 		virtual bool AddCitizen(char* name, int id, int year, int countynum) override;
 		virtual void PrintAllCounties() const override;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) override;
-		virtual void printVotes() override;
+		bool printVotes() override;
 		virtual void saveApp(ostream& out)const override;
 	};
 
