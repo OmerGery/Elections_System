@@ -12,11 +12,14 @@ namespace votes
 		int _month;
 		int _year;
 	public:
+		//ctors:
 		Date(int day,int month ,int year);
 		Date();
+
 		int getDay() const { return _day; }
 		int getMonth() const { return _month; }
 		int getYear() const { return _year; }
+
 		void loadDate(istream& in);
 		void saveDate(ostream& out) const;
 	};

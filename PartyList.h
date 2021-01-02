@@ -26,15 +26,19 @@ namespace votes
 		PListNode* _head;
 		PListNode* _tail;
 	public:
+		//ctors/dtors:
 		PartyList() :_head(nullptr), _tail(nullptr), _size(0) {}
 		~PartyList() ;
+
 		bool Add(Party* party);
 		Party* getData(int index) const;
+		const int getSize() const { return _size; }
+
 		void PrintaParty(int partyserial) const;
 		void PrintLeader(int partySerial) const;
+		
 		void savePartyList(ostream& out) const;
 		void loadPartyList(istream& in);
-		const int getSize() const { return _size;}
 		
 	};
 }

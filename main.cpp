@@ -64,7 +64,7 @@ int main()
             cout << "Please enter election year" << endl;
             cin >> year;
             date=Date(day, month, year);
-            if (type==SIMPLE)
+            if (type==SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
             {
                 cout << "Enter number of delegates" << endl;
                 cin >> delegatesNum;
@@ -73,10 +73,10 @@ int main()
                     cout << "please enter a positive number of delegates" << endl;
                     cin >> delegatesNum;
                 }
-                mainApp = new SimpleApp(date, delegatesNum);
+                mainApp = new SimpleApp(date, delegatesNum); 
             }
             else//type == COMPLEX
-                mainApp = new RegularApp(date);
+                mainApp = new RegularApp(date); 
             prexit = true;
             break;
         case preOptions::LoadVotes:
@@ -92,10 +92,10 @@ int main()
             }
             infile.read(rcastc(&type), sizeof(type));
             date = Date();
-            if (type==SIMPLE)
-                mainApp = new SimpleApp(date);
+            if (type==SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
+                mainApp = new SimpleApp(date); 
             else//type == COMPLEX
-                mainApp = new RegularApp(date);
+                mainApp = new RegularApp(date); 
             mainApp->loadApp(infile);
             infile.close();
             prexit = true;
@@ -110,7 +110,6 @@ int main()
             break;
         }
     }
-   
             while (!exit)
             {
                 cout << endl << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
@@ -260,6 +259,7 @@ int main()
                         exit = true;
                         break;
                     }
+                    delete mainApp; // delete the current app before loading the new app from file
                     date = Date();
                     infile.read(rcastc(&type), sizeof(type));
                     if (type==SIMPLE)

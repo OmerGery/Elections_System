@@ -31,14 +31,17 @@ namespace votes
 		CzListNode* _head;
 		CzListNode* _tail;
 	public:
+		//ctors/dtors:
 		CitizenList() :_head(nullptr), _tail(nullptr), _size(0){}
 		~CitizenList();
+
 		bool AddCitizen(Citizen* toadd);
-		void PrintList(char* countyName) const;
 		Citizen* findCitizen(int id) const;
 		void getVotes(int* voteArr) const;
 		Citizen* getData(int index) const;
 		const int getSize() const { return _size; }
+		void PrintList(char* countyName) const;
+
 		void saveCitizensList(ostream& out) const;
 		void loadCitizensList(istream& in);
 	};

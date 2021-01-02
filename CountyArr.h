@@ -4,6 +4,7 @@
 using namespace std;
 namespace votes
 {
+    // CountyArr is the class we use for handling the counties in the election round, we hold them in an array.
     class countyArr
     {
     private:
@@ -12,8 +13,10 @@ namespace votes
         int _size;
 
     public:
+        //ctors/dtors:
       countyArr();
       ~countyArr();
+
       void insert(County* county);
       const int getSize()const;
       void resize();
@@ -25,10 +28,12 @@ namespace votes
       Citizen* getCitizen(int id);
       void getCitizensVotes(int** votesMatrix, int counties, int parties)const;
       void getElectors(int** electorsMatrix,float** statsMatrix,int partiesSize);
+
       void printCountyName(int countyNum) const;
       void printWinnersOfCounty(int* voteCount,int* electors, int countyNum, int partiesSize, PartyList* partylist) const;
       void printDelegatesNum(int countyNum) const;
       void printDelegatesOfAParty(int countynum, int partynum) const;
+
       const int getDelegatesNum(int countyNum) const;
       County* getCounty(int i) const  { return countyArray[i]; }
       const int getCountySize(int county) const;

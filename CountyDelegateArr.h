@@ -13,8 +13,10 @@ namespace votes
         int _size;
 
     public:
+        //ctors/dtors:
         countyDelegateArr();
         ~countyDelegateArr();
+
         void insert(CountyDelegate* cd);
         int getSize()const;
         void resize();

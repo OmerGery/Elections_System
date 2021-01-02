@@ -16,6 +16,8 @@
 using namespace std;
 namespace votes
 {
+	//A class we use for holding the date, counties and list of parties in the election round. 
+	// App is an Abstract class, the classes SimpleApp and RegularApp uses it.
 	class App
 	{
 	protected:
@@ -39,18 +41,22 @@ namespace votes
 		void calcVotes();
 		
 	public:
+		//ctors/dtors:
 		App();
 		App(Date& electionday);
 		virtual ~App();
-		void PrintAllCitizens()const;
-		void PrintAllParties() const;
+
 		bool AddParty(char* partyname, int idCandidate);
 		bool Vote(int id, int partyNum);
 		virtual void AddCounty(char* name, int delegatesNum, bool simple) = 0;
 		virtual bool AddCitizen(char* name, int id, int year, int countynum) = 0;
-		virtual void PrintAllCounties() const = 0;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;
+
+		void PrintAllCitizens()const;
+		void PrintAllParties() const;
+		virtual void PrintAllCounties() const = 0;
 		virtual bool printVotes() = 0;
+
 		virtual void saveApp(ostream& out)const=0;
 		void loadApp(istream& in);
 		void loadPartyLeaders(istream& in);

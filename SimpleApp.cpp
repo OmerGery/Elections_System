@@ -8,7 +8,6 @@ namespace votes
 {
 	SimpleApp::SimpleApp(Date electionday, int delegatesNum):App(electionday)
 	{
-		char defaultName[] = "default";
 		County* county = new ComplexCounty(defaultName, delegatesNum);
 		CountyArray.insert(county);
 	}
