@@ -18,6 +18,7 @@ namespace votes
 		_month = month;
 		_year = year;
 	}
+
 	void Date::saveDate(ostream& out) const
 	{
 		out.write(rcastcc(&_day), sizeof(_day));
@@ -29,6 +30,11 @@ namespace votes
 		in.read(rcastc(&_day), sizeof(_day));
 		in.read(rcastc(&_month), sizeof(_month));
 		in.read(rcastc(&_year), sizeof(_year));
+	}
+	ostream& operator<<(ostream& os, const Date& date)
+	{
+		os << "The Date is: " << date.getDay() << "/" << date.getMonth() << "/" << date.getYear() << endl;
+		return os;
 	}
 }
 

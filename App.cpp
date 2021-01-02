@@ -85,6 +85,7 @@ namespace votes
 	{
 		if (this->partyList.getSize() < 1)
 			return false;
+		cout << _electionday;
 		calcVotes();
 		return true;
 	}

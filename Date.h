@@ -19,7 +19,8 @@ namespace votes
 		int getDay() const { return _day; }
 		int getMonth() const { return _month; }
 		int getYear() const { return _year; }
-
+		friend ostream& operator<<(ostream& os, const Date& date);
+		
 		void loadDate(istream& in);
 		void saveDate(ostream& out) const;
 	};
