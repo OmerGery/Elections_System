@@ -117,6 +117,8 @@ namespace votes
 			cout << "#" << _partiesSize - i + 1 << ". " << electorsArray[i].party->getLeader()->getName() << " Has got: "
 			<< electorsArray[i].sumElectors << " Electors and his party got " <<
 			this->_voteCountMatrix[0][electorsArray[i].party->getPartySerial()] << " votes" << endl;
+		delete[] electorsArray;
 		return true;
+		
 	}
 }

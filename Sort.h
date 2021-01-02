@@ -10,6 +10,15 @@ namespace votes
 		int sumElectors;
 		Party* party;
 	};
+	struct voteData
+	{
+		int sumDelegates;
+		Party* party;
+		int numVotes;
+		float precentage;
+	};
 	void swap(Elector& a, Elector& b);
 	void bubbleSort(Elector* Electors, int size);
+	void swapvoteData(voteData& a, voteData& b);
+	void bubbleSortvoteData(voteData* voteDataArr, int size);
 }
