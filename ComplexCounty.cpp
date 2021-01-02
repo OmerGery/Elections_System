@@ -3,20 +3,22 @@ namespace votes
 {
 	void ComplexCounty::GetPartiesElectors(float* statisticsArray, int* countyElectors, int partiesSize)const
 	{
-		int place = 0, tempElectorsNum = 0, remainingDelegates = 0, max = -1;
+		int place = 0, tempElectorsNum = 0, remainingDelegates = 0;
+		float max = -1;
+		float currentPrecent;
 		for (int i = 1; i <= partiesSize; i++)
 		{
+			currentPrecent=statisticsArray[i];
 			countyElectors[i] = static_cast<int>(_numdelegates * statisticsArray[i]);
-			if (countyElectors[i] > max)
+			if (currentPrecent > max)
 			{
-				max = countyElectors[i];
+				max = currentPrecent;
 				place = i;
 			}
 			tempElectorsNum += countyElectors[i];
 		}
 		remainingDelegates = _numdelegates - tempElectorsNum;
 		countyElectors[place] += remainingDelegates;
-
 	}
 	void ComplexCounty::sortAndPrintWinners(int* voteCount, int* Electors, int partiesSize, PartyList* partylist)const
 	{

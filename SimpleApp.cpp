@@ -53,48 +53,50 @@ namespace votes
 		bool votes = App::printVotes();
 		if (!votes)
 			return false;
-		int DeligatesPrinted;
+		int DeligatesPrinted,partyNumber,totalDels;
+		int numdeligates = CountyArray.getDelegatesArrSize(1);
 		cout << "The total voting precntage is: " << _statisticsMatrix[1][0] * 100 << "%" << endl;
 		voteData* voteDataArr = new voteData[_partiesSize + 1];
 		voteDataArr[0].sumDelegates = -1;
 		for (int j = 1; j <= _partiesSize; j++)
 		{
-			voteDataArr[j].sumDelegates = _electorsMatrix[0][j];
+			voteDataArr[j].sumDelegates = _electorsMatrix[1][j];
 			voteDataArr[j].party = partyList.getData(j);
 			voteDataArr[j].precentage =_statisticsMatrix[1][j]*100;
 			voteDataArr[j].numVotes = _voteCountMatrix[0][j];
 		}
 		bubbleSortvoteData(voteDataArr, _partiesSize + 1);
-		cout << endl << "The final election results are: " << endl;
+		cout << "The final election results are: " << endl;
 
 		for (int i = _partiesSize; i > 0; i--)
 		{
-			int partyNumber = voteDataArr[i].party->getPartySerial();
+			partyNumber = voteDataArr[i].party->getPartySerial();
 			DeligatesPrinted = 0;
-			cout << "#" << _partiesSize - i + 1 << ". '" << voteDataArr[i].party->getPartyName() << "' Has got: ";
-			cout << voteDataArr[i].sumDelegates << " Delegates ," << voteDataArr[i].numVotes << " votes, ";
-			cout << voteDataArr[i].precentage << "% of votes. The Leader name of this party is: " << voteDataArr[i].party->getLeader()->getName() << endl;
-			for (int k = 0; k < voteDataArr[i].sumDelegates; k++) // run on all the K delegates from the current county , and print the delegates from the rellevant party
+			totalDels = _electorsMatrix[1][partyNumber];
+			cout << "#" << _partiesSize - i + 1 << ". The Party '" << voteDataArr[i].party->getPartyName() << "' Has got: ";
+			cout << totalDels << " Delegates ," << voteDataArr[i].numVotes << " votes, ";
+			cout << voteDataArr[i].precentage << "% of votes." << endl <<"The Leader name of this party is: " << voteDataArr[i].party->getLeader()->getName() << "." << endl;
+			for (int k = 0; k < numdeligates; k++) // run on all the K delegates from the current county , and print the delegates from the rellevant party
 			{
-				if (voteDataArr[i].sumDelegates == 0)
+				if (totalDels == 0)
 				{
-				cout << "No chosen Delegates from the party '" << voteDataArr[i].party->getPartyName() << endl;
+				cout << "No chosen Delegates from the party '" << voteDataArr[i].party->getPartyName() << "." << endl;
 				break;
 				}
 			CountyDelegate* currentDelgate = this->CountyArray.getCounty(1)->getDelgate(k);
-			if (currentDelgate->GetPartySerialOfDeligate() == i)// if the delegate is from the current party , print him
+			if (currentDelgate->GetPartySerialOfDeligate() == partyNumber)// if the delegate is from the current party , print him
 			{
 				DeligatesPrinted++;
 				if (DeligatesPrinted == 1)
 					cout << "The chosen Delegates from the party '" << partyList.getData(partyNumber)->getPartyName() << "' are: ";
 				cout << currentDelgate->getName();
-				if (DeligatesPrinted != 0 && DeligatesPrinted != _delegatesMatrix[1][partyNumber]) cout << ", ";
+				if (DeligatesPrinted != 0 && DeligatesPrinted < totalDels) cout << ", ";
 			}
-			if (DeligatesPrinted == _delegatesMatrix[1][partyNumber] && DeligatesPrinted >= 1) // check how many delegates were actually printed from each party
-			{
+			if (DeligatesPrinted == totalDels && DeligatesPrinted >= 1) // check how many delegates were actually printed from each party
+				{
 				cout << "." << endl;
 				break;
-			}
+				}
 			}
 		}
 		delete [] voteDataArr;

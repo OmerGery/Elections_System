@@ -33,7 +33,7 @@ namespace votes
 	}
 	ostream& operator<<(ostream& os, const Date& date)
 	{
-		os << "The Date is: " << date.getDay() << "/" << date.getMonth() << "/" << date.getYear() << endl;
+		os << "The Election Date is: " << date.getDay() << "/" << date.getMonth() << "/" << date.getYear() << endl;
 		return os;
 	}
 }
