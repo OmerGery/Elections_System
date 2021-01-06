@@ -59,7 +59,7 @@ namespace votes
 	{
 		CountyArray.printAllCitizens();
 	}
-	bool App::AddParty(char* partyname, int idCandidate)
+	bool App::AddParty(string partyname, int idCandidate)
 	{
 
 		Citizen* leader=CountyArray.getCitizen(idCandidate);

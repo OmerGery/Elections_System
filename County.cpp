@@ -10,10 +10,9 @@ namespace votes
 {
 	
 	int County::countyCounter=0;
-	County::County(const char* countyName, int numdelegates)
+	County::County(const string& countyName, int numdelegates)
 	{
-		_countyName = new char[strlen(countyName)+1];
-		strcpy(_countyName,countyName);
+		_countyName = countyName;
 		_numdelegates = numdelegates;
 		_countySerial=++countyCounter;
 	}
@@ -22,7 +21,7 @@ namespace votes
 		out.write(rcastcc(&_countySerial), sizeof(_countySerial));
 		out.write(rcastcc(&_numdelegates), sizeof(_numdelegates));
 		out.write(rcastcc(&countyCounter), sizeof(countyCounter));
-		int countyNamelen = static_cast<int> (strlen(_countyName) + 1);
+		int countyNamelen = static_cast<int> (_countyName.size() + 1);
 		out.write(rcastcc(&countyNamelen), sizeof(countyNamelen));
 		out.write(rcastcc(&_countyName[0]), sizeof(char) * countyNamelen);
 		_citizenAllowed.saveCitizensList(out);
@@ -38,11 +37,9 @@ namespace votes
 	}
 	County::~County()
 	{
-		delete[] _countyName;
 	}
 	County::County()
 	{
-		_countyName = nullptr;
 		_numdelegates =-1;
 		_countySerial =-1;
 	}
@@ -73,7 +70,7 @@ namespace votes
 		in.read(rcastc(&countyCounter), sizeof(countyCounter));
 		int countyNamelen = 0;
 		in.read(rcastc(&countyNamelen), sizeof(countyNamelen));
-		_countyName = new char[countyNamelen];
+		_countyName.resize(countyNamelen);
 		in.read(rcastc(&_countyName[0]), sizeof(char) * countyNamelen);
 		_citizenAllowed.loadCitizensList(in);
 	}

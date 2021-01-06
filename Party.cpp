@@ -13,17 +13,15 @@ using namespace std;
 namespace votes
 {
 	int Party::partyCounter = 0;
-	Party::Party(const char* partyName, Citizen* leader)
+	Party::Party(const string& partyName, Citizen* leader)
 	{
-		int len = static_cast<int>(strlen(partyName) + 1);
-		_partyName = new char[len];
-		strcpy(_partyName, partyName);
+		_partyName=partyName;
 		_partySerial = ++partyCounter;
 		_leader = leader;
 	}
 	Party::~Party()
 	{		
-		delete[] _partyName;	
+
 	}
 	ostream& operator<<(ostream& os, const Party& party)
 	{
@@ -34,7 +32,7 @@ namespace votes
 	{
 		out.write(rcastcc(&_partySerial), sizeof(_partySerial));
 		out.write(rcastcc(&partyCounter), sizeof(partyCounter));
-		int partyNamelen = static_cast<int> (strlen(_partyName) + 1);
+		int partyNamelen = static_cast<int> (_partyName.size() + 1);
 		out.write(rcastcc(&partyNamelen), sizeof(partyNamelen));
 		out.write(rcastcc(&_partyName[0]), sizeof(char) * partyNamelen);
 	}
@@ -44,7 +42,7 @@ namespace votes
 		in.read(rcastc(&partyCounter), sizeof(partyCounter));
 		int partyNamelen;
 		in.read(rcastc(&partyNamelen), sizeof(partyNamelen));
-		_partyName = new char[partyNamelen];
+		_partyName.resize(partyNamelen);
 		in.read(rcastc(&_partyName[0]), sizeof(char) * partyNamelen);
 	}
 }

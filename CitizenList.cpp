@@ -56,7 +56,7 @@ namespace votes
 		}
 		return toReturn->_data;
 	}
-	void CitizenList::PrintList(char* countyName) const
+	void CitizenList::PrintList(string countyName) const
 	{
 		CzListNode* current = _head;
 		while (current != nullptr)

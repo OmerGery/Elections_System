@@ -23,8 +23,6 @@ enum options {
 enum preOptions {
     NewRound = 1, LoadVotes, PreExit
 }preoption;
-//Maximum string size:
-static const int MAX_SIZE = 100;
 
 //MIN and MAX - modify the maximum and minimum age for a citizen to vote:
 static const int MIN_YEAR_TO_VOTE = 1700;
@@ -35,7 +33,7 @@ int main()
     ifstream infile;
     ofstream outfile;
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
-    char name[MAX_SIZE], fname[MAX_SIZE];        
+    string name, fname;        
     int option, delegatesNum, id, day, month, year, countyNum, partyNum, type;
     bool correctInput; // used for input checks 
     bool exit=false, prexit=false;

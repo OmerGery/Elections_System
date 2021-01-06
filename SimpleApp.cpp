@@ -15,11 +15,11 @@ namespace votes
 	{
 		cout << "There are no counties in this type of elections";
 	}
-	void SimpleApp::AddCounty(char* name, int delegatesNum, bool simple)
+	void SimpleApp::AddCounty(string name, int delegatesNum, bool simple)
 	{
 		cout << "Can't add counties in this type of elections";
 	}
-	bool SimpleApp::AddCitizen(char* name, int id, int year, int countynum)
+	bool SimpleApp::AddCitizen(string name, int id, int year, int countynum)
 	{
 		Citizen* citizen = CountyArray.getCitizen(id);
 		if (citizen != nullptr)

@@ -7,6 +7,7 @@
 #include "CountyDelegateArr.h"
 #include "CountyDelegate.h"
 #include "Sort.h"
+#include <string>
 #include <iostream>
 using namespace std;
 namespace votes
@@ -15,7 +16,7 @@ namespace votes
 	{
 	protected:
 		int _countySerial;
-		char* _countyName;
+		string _countyName;
 		int _numdelegates;
 		CitizenList _citizenAllowed;
 		countyDelegateArr CDArr;
@@ -23,7 +24,7 @@ namespace votes
 
 	public:
 		//ctors/dtors:
-		County(const char* countyName, int numdelegates);
+		County(const string& countyName, int numdelegates);
 		County();
 		virtual ~County();
 		// we don't use a "County" by-val initing, but we make sure no code will be using default operator '=' or 'copy ctor' by cancelling them. 
@@ -32,7 +33,7 @@ namespace votes
 
 		//getters:
 		CountyDelegate* getDelgate(int delgatePlace)const;
-		const char* getCountyName() const { return _countyName; }
+		const string getCountyName() const { return _countyName; }
 		int getCountySerial() const { return _countySerial; }
 		const int getdelegatesNum() const { return this->_numdelegates; }
 		const int getDelgatesarrSize()const { return CDArr.getSize(); }

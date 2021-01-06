@@ -40,7 +40,7 @@ namespace votes
 		void getVotes(int* voteArr) const;
 		Citizen* getData(int index) const;
 		const int getSize() const { return _size; }
-		void PrintList(char* countyName) const;
+		void PrintList(string countyName) const;
 
 		void saveCitizensList(ostream& out) const;
 		void loadCitizensList(istream& in);

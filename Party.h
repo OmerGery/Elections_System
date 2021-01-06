@@ -8,21 +8,21 @@ namespace votes
 	class Party
 	{
 	private:
-		char* _partyName;
+		string _partyName;
 		Citizen* _leader;
 		int _partySerial;
 		static int partyCounter;
 	public:
 		//ctors/dtors:
-		Party() { _leader = nullptr; _partyName = nullptr; _partySerial = 0; }
-		Party(const char* partyName, Citizen* leader);
+		Party() { _leader = nullptr; _partySerial = 0; }
+		Party(const string& partyName, Citizen* leader);
 		~Party();
 		// we don't use a "Party" by-val initing, but we make sure no code will be using default operator '=' or 'copy ctor' by cancelling them. 
 		Party& operator=(const Party& other) = delete;
 		Party(const Party& other) = delete;
 
 		//getters:
-		const char* getPartyName() const { return _partyName; }
+		const string getPartyName() const { return _partyName; }
 		const Citizen* getLeader() const { return _leader; }
 		const int getPartySerial() const { return _partySerial; }
 		const int getPartyCounter() const { return partyCounter; }

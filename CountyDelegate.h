@@ -18,7 +18,7 @@ namespace votes
 		CountyDelegate& operator=(const CountyDelegate& other) = delete;
 
 		const int GetPartySerialOfDeligate()const { return _party->getPartySerial(); }
-		const char* getName() const { return _delegate->getName(); }
+		const string getName() const { return _delegate->getName(); }
 		const int getID() const { return _delegate->getID(); }
 	};
 }

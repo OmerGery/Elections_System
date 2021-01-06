@@ -6,7 +6,7 @@
 using namespace std;
 namespace votes
 {
-	void RegularApp::AddCounty(char* name, int delegatesNum, bool simple)
+	void RegularApp::AddCounty(string name, int delegatesNum, bool simple)
 	{
 		County* county = nullptr;
 		if (simple)
@@ -15,7 +15,7 @@ namespace votes
 			county = new ComplexCounty(name, delegatesNum);
 		CountyArray.insert(county);
 	}
-	bool RegularApp::AddCitizen(char* name, int id, int year, int countynum)
+	bool RegularApp::AddCitizen(string name, int id, int year, int countynum)
 	{
 		if (countynum > CountyArray.getSize() || countynum <= 0)
 			return false;

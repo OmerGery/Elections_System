@@ -10,6 +10,7 @@
 #include "SimpleCounty.h"
 #include "ComplexCounty.h"
 #include "Sort.h"
+#include <string>
 #include <fstream>
 #define rcastcc reinterpret_cast<const char*>
 #define rcastc reinterpret_cast<char*>
@@ -46,10 +47,10 @@ namespace votes
 		App(Date& electionday);
 		virtual ~App();
 
-		bool AddParty(char* partyname, int idCandidate);
+		bool AddParty(string partyname, int idCandidate);
 		bool Vote(int id, int partyNum);
-		virtual void AddCounty(char* name, int delegatesNum, bool simple) = 0;
-		virtual bool AddCitizen(char* name, int id, int year, int countynum) = 0;
+		virtual void AddCounty(string name, int delegatesNum, bool simple) = 0;
+		virtual bool AddCitizen(string name, int id, int year, int countynum) = 0;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;
 
 		void PrintAllCitizens()const;

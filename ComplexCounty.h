@@ -6,7 +6,7 @@ namespace votes
 	{
 	public:
 		//ctors:
-		ComplexCounty(const char* countyName, int numdelegates) : County(countyName, numdelegates) {}
+		ComplexCounty(const string countyName, int numdelegates) : County(countyName, numdelegates) {}
 		ComplexCounty() {}
 
 		virtual void GetPartiesElectors(float* statisticsArray, int* countyElectors, int partiesSize)const override;
