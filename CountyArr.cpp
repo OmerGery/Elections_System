@@ -18,12 +18,10 @@ namespace votes
     {
         countyArray[0]->resetCounter();
         countyArray.clear();
-  /*      for (int i = 1; i < _size; i++)
-            delete countyArray[i];*/
     }
     void countyArr::printAllCounties()const
     {
-        for (int i = 1; i < _size; i++)
+        for (int i = 1; i < countyArray.size(); i++)
         {
             County* current = countyArray[i];
             cout << (*current) ;
@@ -53,7 +51,7 @@ namespace votes
     }
     void countyArr::printAllCitizens()const
     {
-        for (int i = 1; i < _size; i++)
+        for (int i = 1; i < countyArray.size(); i++)
             countyArray[i]->PrintCitizenList();
     }
     void countyArr::getCitizensVotes(int** votesMatrix, int counties, int parties)const
@@ -72,7 +70,7 @@ namespace votes
     void countyArr::getElectors(int** electorsMatrix, float** statsMatrix, int partiesSize)
     {
         
-        for (int i = 1; i <this->_size ; i++)
+        for (int i = 1; i < countyArray.size(); i++)
         {
             County* current = countyArray[i];
             current->GetPartiesElectors(statsMatrix[i],electorsMatrix[i],partiesSize);
@@ -98,7 +96,7 @@ namespace votes
     
     Citizen* countyArr::getCitizen(int id)
     {
-        for (int i = 1; i < _size; i++)
+        for (int i = 1; i < countyArray.size(); i++)
         {
             County* current =countyArray[i];
             Citizen* search = current->searchCitizen(id); 
@@ -130,7 +128,7 @@ namespace votes
     }
     bool countyArr::searchDelegate(int id) const
     {
-        for (int k = 1; k < _size; k++)
+        for (int k = 1; k < countyArray.size(); k++)
         {
             County* current_C = countyArray[k];
             int totalDeligatesinCounty = countyArray[k]->getDelgatesarrSize();
@@ -145,8 +143,9 @@ namespace votes
     }
     void countyArr::saveCountyArray(ostream& out) const
     {
-        out.write(rcastcc(&_size), sizeof(_size));
-        for (int i = 1; i < _size; ++i) 
+        int size = countyArray.size();
+        out.write(rcastcc(&size), sizeof(size));
+        for (int i = 1; i < size; ++i) 
             countyArray[i]->saveCounty(out);
     }
     void countyArr::loadCountyArray(istream& in)

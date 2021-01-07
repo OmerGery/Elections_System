@@ -25,8 +25,7 @@ enum preOptions {
 }preoption;
 
 //MIN and MAX - modify the maximum and minimum age for a citizen to vote:
-static const int MIN_YEAR_TO_VOTE = 1700;
-static const int MAX_YEAR_TO_VOTE = 2022;
+static const int MIN_AGE = 18;
 
 int main()
 { 
@@ -142,18 +141,36 @@ int main()
                     cin >> name;
                     cout << "Please Enter ID number" << endl;
                     cin >> id;
-                    while (id <= 0)
+                    while (true)
                     {
-                        cout << "please enter a positive ID number" << endl;
-                        cin >> id;
+                        try
+                        {
+                            if (id < 111111111 || id > 999999999)
+                                throw ("ID error");
+                            else break;
+                        }
+                        catch (...)
+                        {
+                            cout << "The ID isn't 9 digits length - which is invalid" << endl;
+                            cin >> id;
+                        }
                     }
+
                     cout << "Please Enter year of birth" << endl;
                     cin >> year;
-                    while (year < MIN_YEAR_TO_VOTE || year > MAX_YEAR_TO_VOTE)
+                    while (true)
                     {
-                        cout << "In order to vote ,the citizen age must be valid." << endl;
-                        cout << "Please Enter year of birth" << endl;
-                        cin >> year;
+                        try
+                        {
+                            if (year > 2021  - MIN_AGE) //need to change to year from user
+                                throw ("Year Error");
+                            else break;
+                        }
+                        catch (...)
+                        {
+                            cout << "The citizen is younger than " << MIN_AGE << ", the minimum age for voting" << endl;
+                            cin >> year;
+                        }
                     }
                     cout << "Please Enter serial number of county" << endl;
                     cin >> countyNum;

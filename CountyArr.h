@@ -1,7 +1,7 @@
 #pragma once
 #include "County.h"
+#include "DynamicArray.h"
 #include <iostream>
-#include <vector>
 using namespace std;
 namespace votes
 {
@@ -9,10 +9,7 @@ namespace votes
     class countyArr
     {
     private:
-        vector <County*> countyArray;
-        int physical = 1;
-        int _size;
-
+        DynamicArray <County*> countyArray;
     public:
         //ctors/dtors:
       countyArr();
@@ -21,7 +18,7 @@ namespace votes
       void addCDToCounty(CountyDelegate* delegate,int countynum);
 
       //getters:
-      const int getSize()const { return countyArray.size() - 1; }
+      const int getSize()const { return static_cast<const int>(countyArray.size() - 1); }
       Citizen* getCitizen(int id);
       void getCitizensVotes(int** votesMatrix, int counties, int parties)const;
       void getElectors(int** electorsMatrix,float** statsMatrix,int partiesSize);

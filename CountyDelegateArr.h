@@ -1,18 +1,18 @@
 #pragma once
 #include <iostream>
 #include "CountyDelegate.h"
-#include <vector>
+#include "DynamicArray.h"
 using namespace std;
 namespace votes
 {
     class countyDelegateArr
     {
     private:
-        vector<CountyDelegate*> CDArray;
+        DynamicArray<CountyDelegate*> CDArray;
 
     public:
         CountyDelegate* getDel(int place)const { return CDArray[place]; }
-        const int getSize()  const { return CDArray.size(); }
+        const int getSize()  const { return static_cast<const int>(CDArray.size()); }
         void insert(CountyDelegate* cd) { CDArray.push_back(cd); }
     };
 }
