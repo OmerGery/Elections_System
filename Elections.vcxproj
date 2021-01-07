@@ -146,7 +146,6 @@
     <ClCompile Include="County.cpp" />
     <ClCompile Include="CountyArr.cpp" />
     <ClCompile Include="CountyDelegate.cpp" />
-    <ClCompile Include="CountyDelegateArr.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Party.cpp" />

@@ -12,15 +12,14 @@ namespace votes
 {
     countyArr::countyArr()
     {
-        countyArray = new County*[physical];
-        _size = 1;
+        countyArray.push_back(nullptr);
     }
     countyArr::~countyArr()
     {
         countyArray[0]->resetCounter();
-        for (int i = 1; i < _size; i++)
-            delete countyArray[i];
-        delete[] countyArray;
+        countyArray.clear();
+  /*      for (int i = 1; i < _size; i++)
+            delete countyArray[i];*/
     }
     void countyArr::printAllCounties()const
     {
@@ -50,16 +49,12 @@ namespace votes
     }
     const int countyArr::getDelegatesArrSize(int countyNum) const
     {
-        County* current = countyArray[countyNum];
-        return current->getDelgatesarrSize();
+        return countyArray[countyNum]->getDelgatesarrSize();
     }
     void countyArr::printAllCitizens()const
     {
         for (int i = 1; i < _size; i++)
-        {
-            County* current = countyArray[i];
-            current->PrintCitizenList();
-        }
+            countyArray[i]->PrintCitizenList();
     }
     void countyArr::getCitizensVotes(int** votesMatrix, int counties, int parties)const
     {
@@ -92,13 +87,6 @@ namespace votes
         County* tofind = countyArray[county];
         return tofind->getCountySize();
     }
-    void countyArr::insert(County* county)
-    {
-        if (_size == physical)
-            resize();
-        countyArray[_size]=county;
-        _size++;
-    }
     void countyArr::addCitizenToCounty(Citizen* citizen, int countynum)
     {
         countyArray[countynum]->AddCitizen(citizen);
@@ -107,19 +95,9 @@ namespace votes
     {
         countyArray[countynum]->AddCD(delegate);
     }
-    const int countyArr::getSize()const { return _size-1; }
     
-    void countyArr::resize()
-    {
-        physical *= 2;
-        County** temp = new County*[physical];
-        std::copy(countyArray, countyArray + _size, temp);
-        delete[] countyArray;
-        countyArray = temp;
-    }
     Citizen* countyArr::getCitizen(int id)
     {
-        
         for (int i = 1; i < _size; i++)
         {
             County* current =countyArray[i];
@@ -185,7 +163,7 @@ namespace votes
             else
                 county = new ComplexCounty();
            county->loadCounty(in);
-           insert(county);
+           countyArray.push_back(county);
         }
     }
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include "County.h"
 #include <iostream>
+#include <vector>
 using namespace std;
 namespace votes
 {
@@ -8,7 +9,7 @@ namespace votes
     class countyArr
     {
     private:
-        County** countyArray;
+        vector <County*> countyArray;
         int physical = 1;
         int _size;
 
@@ -16,30 +17,29 @@ namespace votes
         //ctors/dtors:
       countyArr();
       ~countyArr();
-
-      void insert(County* county);
-      const int getSize()const;
-      void resize();
-      
       void addCitizenToCounty(Citizen* citizen, int countynum);
       void addCDToCounty(CountyDelegate* delegate,int countynum);
-      void printAllCounties()const;
-      void printAllCitizens()const;
+
+      //getters:
+      const int getSize()const { return countyArray.size() - 1; }
       Citizen* getCitizen(int id);
       void getCitizensVotes(int** votesMatrix, int counties, int parties)const;
       void getElectors(int** electorsMatrix,float** statsMatrix,int partiesSize);
+      const int getDelegatesNum(int countyNum) const;
+      County* getCounty(int i) const { return countyArray[i]; }
+      const int getCountySize(int county) const;
+      const int getDelegatesArrSize(int countyNum) const;
 
       void printCountyName(int countyNum) const;
       void printWinnersOfCounty(int* voteCount,int* electors, int countyNum, int partiesSize, PartyList* partylist) const;
       void printDelegatesNum(int countyNum) const;
       void printDelegatesOfAParty(int countynum, int partynum) const;
+      void printAllCounties()const;
+      void printAllCitizens()const;
 
-      const int getDelegatesNum(int countyNum) const;
-      County* getCounty(int i) const  { return countyArray[i]; }
-      const int getCountySize(int county) const;
-      const int getDelegatesArrSize(int countyNum) const;
       bool searchDelegate(int id) const;
       void saveCountyArray(ostream& out) const;
       void loadCountyArray(istream& in);
+      void insert(County* county) { countyArray.push_back(county); }
     };
 }

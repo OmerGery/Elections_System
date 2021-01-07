@@ -49,7 +49,7 @@ namespace votes
 	}
 	void County::AddCD(CountyDelegate* delegate)
 	{
-		(this->CDArr).insert(delegate);
+		CDArr.insert(delegate);
 	}
 	Citizen* County::searchCitizen(int id)const
 	{
