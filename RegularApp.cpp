@@ -33,6 +33,8 @@ namespace votes
 		Citizen* delegate = CountyArray.getCitizen(id);
 		if (delegate == nullptr)
 			return false;
+		if (id == 111111150)
+			cout << "x";
 		Party* party = partyList.getData(partynum);
 		if (party == nullptr)
 			return false;

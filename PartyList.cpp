@@ -8,7 +8,6 @@
 #include "PartyList.h"
 #include <list>
 #include <iterator>
-#include <algorithm>
 #include <string.h>
 #include <iostream>
 
@@ -16,6 +15,10 @@ using namespace std;
 
 namespace votes
 {
+	PartyList::PartyList()
+	{
+		PList.push_back(nullptr);
+	}
 	bool PartyList::Add(Party* party)
 	{
 		PList.push_back(party);
@@ -32,12 +35,17 @@ namespace votes
 	}
 	Party* PartyList::getData(int index) const
 	{
-		/*list<Party*>::const_iterator findIter = find(PList.begin(), PList.end(), 1);
-		return *findIter;*/
-		return nullptr;
+		list<Party*>::const_iterator it = PList.begin();
+		advance(it, index);
+		return *it;
 	}
 	void PartyList::savePartyList(ostream& out) const
 	{
+		int size = getSize();
+		out.write(rcastcc(&size), sizeof(size));
+		std::list<Party*>::const_iterator it;
+		for (int i=1; i<=size; i++)
+			this->getData(i)->saveParty(out);
 		//PListNode* saver = _head;
 		//out.write(rcastcc(&this->_size), sizeof(_size));
 		/*while (saver != nullptr)
