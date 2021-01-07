@@ -6,9 +6,11 @@
 #include "CountyArr.h"
 #include "CountyDelegate.h"
 #include "PartyList.h"
+#include <list>
+#include <iterator>
+#include <algorithm>
 #include <string.h>
 #include <iostream>
-
 
 using namespace std;
 
@@ -16,18 +18,7 @@ namespace votes
 {
 	bool PartyList::Add(Party* party)
 	{
-		PListNode* newTail = new PListNode(party, nullptr, _tail);
-		if (_head == nullptr)
-		{
-			_head = newTail;
-			_tail = newTail;
-		}
-		else
-		{
-			_tail->_next = newTail;
-			_tail = newTail;
-		}
-		_size++;
+		PList.push_back(party);
 		return true;
 	}
 	void PartyList::PrintaParty(int partyserial) const
@@ -35,57 +26,29 @@ namespace votes
 		Party* party = this->getData(partyserial);
 		cout << *party;
 	}
-	PartyList::~PartyList()
-	{
-		PListNode* deleter = this->_head;
-		if (deleter == nullptr)
-			return;
-		deleter->_data->resetCounter();
-		if (deleter->_next == nullptr)
-		{
-			delete deleter->_data;
-			delete deleter;
-			return;
-		}
-		PListNode* runner = deleter;
-		while (runner!=nullptr)
-		{
-			deleter = runner;
-			runner = runner->_next;
-			delete deleter->_data;
-			delete deleter;
-		}
-	}
 	void  PartyList::PrintLeader(int partySerial) const
 	{
 		cout << this->getData(partySerial)->getLeader()->getName() << endl;
 	}
 	Party* PartyList::getData(int index) const
 	{
-		PListNode* toReturn = _head;
-		if (index < 1 || toReturn==nullptr)
-			return nullptr;
-		for (int i = 1; i < index; i++)
-		{
-			if (toReturn == NULL)
-				return nullptr;
-			toReturn = toReturn->_next;
-		}
-		return toReturn->_data;
+		/*list<Party*>::const_iterator findIter = find(PList.begin(), PList.end(), 1);
+		return *findIter;*/
+		return nullptr;
 	}
 	void PartyList::savePartyList(ostream& out) const
 	{
-		PListNode* saver = _head;
-		out.write(rcastcc(&this->_size), sizeof(_size));
-		while (saver != nullptr)
+		//PListNode* saver = _head;
+		//out.write(rcastcc(&this->_size), sizeof(_size));
+		/*while (saver != nullptr)
 		{
 			saver->_data->saveParty(out);
 			saver = saver->_next;
-		}
+		}*/
 	}
 	void PartyList::loadPartyList(istream& in)
 	{
-		int loadSize = _size;
+		int loadSize = PList.size();
 		in.read(rcastc(&loadSize), sizeof(loadSize));
 		for (int i = 0; i < loadSize; i++)
 		{
