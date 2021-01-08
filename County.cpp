@@ -55,7 +55,7 @@ namespace votes
 	{
 		return _citizenAllowed.findCitizen(id);
 	}
-	void County::getCountyVotes(int* votearr)
+	void County::getCountyVotes(vector<int> &votearr)
 	{
 		_citizenAllowed.getVotes(votearr);
 	}

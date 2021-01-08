@@ -9,7 +9,7 @@
 #include "PartyList.h"
 #include "SimpleCounty.h"
 #include "ComplexCounty.h"
-#include "DynamicArray.h"
+#include <vector>
 #include "Sort.h"
 #include <string>
 #include <fstream>
@@ -30,10 +30,10 @@ namespace votes
 		// Calcing:
 		int _partiesSize;
 		int _countiesSize;
-		int** _voteCountMatrix;
-		float** _statisticsMatrix;
-		int** _delegatesMatrix;
-		int** _electorsMatrix;
+		vector<vector<int>> _voteCountMatrix;
+		vector<vector<float>> _statisticsMatrix;
+		vector<vector<int>> _delegatesMatrix;
+		vector<vector<int>> _electorsMatrix;
 		// Internal usage Calc FUNCS - Private.
 		void initVotesMatrix();
 		void initDeligatesMatrix();

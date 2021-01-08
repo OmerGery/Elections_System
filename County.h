@@ -7,6 +7,7 @@
 #include "CountyDelegateArr.h"
 #include "CountyDelegate.h"
 #include "Sort.h"
+#include <vector>
 #include <string>
 #include <iostream>
 using namespace std;
@@ -39,8 +40,8 @@ namespace votes
 		const int getDelgatesarrSize()const { return CDArr.getSize(); }
 		const int getCountySize()const { return _citizenAllowed.getSize(); };
 		Citizen* getCitizenByIndex(int index)const { return this->_citizenAllowed.getData(index); }
-		void getCountyVotes(int* votearr);
-		virtual void GetPartiesElectors(float* statisticsArray, int* countyElectors, int partiesSize)const = 0;
+		void getCountyVotes(vector<int> &votearr);
+		virtual void GetPartiesElectors(vector<float>& statisticsArray, vector<int>& countyElectors, int partiesSize)const = 0;
 
 		void AddCitizen(Citizen* citizen);
 		void AddCD(CountyDelegate* delegate);
@@ -48,7 +49,7 @@ namespace votes
 		Citizen* searchCitizen(int id)const;
 		void resetCounter() { countyCounter = 0; }
 
-		virtual void sortAndPrintWinners(int* voteCount,int* Electors,int partiesSize,PartyList* partylist)const = 0;
+		virtual void sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors,int partiesSize,PartyList* partylist)const = 0;
 		void PrintCitizenList() const;
 		virtual void printCountyType() const=0;
 

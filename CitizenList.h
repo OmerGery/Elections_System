@@ -2,6 +2,7 @@
 #define rcastcc reinterpret_cast<const char*>
 #define rcastc reinterpret_cast<char*>
 #include "Citizen.h"
+#include <vector>
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -37,7 +38,7 @@ namespace votes
 
 		bool AddCitizen(Citizen* toadd);
 		Citizen* findCitizen(int id) const;
-		void getVotes(int* voteArr) const;
+		void getVotes(vector<int> &voteArr) const;
 		Citizen* getData(int index) const;
 		const int getSize() const { return _size; }
 		void PrintList(string countyName) const;

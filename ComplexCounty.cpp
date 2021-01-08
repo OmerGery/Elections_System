@@ -1,7 +1,7 @@
 #include "ComplexCounty.h"
 namespace votes
 {
-	void ComplexCounty::GetPartiesElectors(float* statisticsArray, int* countyElectors, int partiesSize)const
+	void ComplexCounty::GetPartiesElectors(vector<float> &statisticsArray, vector<int> &countyElectors, int partiesSize)const
 	{
 		int place = 0, tempElectorsNum = 0, remainingDelegates = 0;
 		float max = -1;
@@ -20,7 +20,7 @@ namespace votes
 		remainingDelegates = _numdelegates - tempElectorsNum;
 		countyElectors[place] += remainingDelegates;
 	}
-	void ComplexCounty::sortAndPrintWinners(int* voteCount, int* Electors, int partiesSize, PartyList* partylist)const
+	void ComplexCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, PartyList* partylist)const
 	{
 
 		int size = partiesSize + 1;

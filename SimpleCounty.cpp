@@ -2,7 +2,7 @@
 
 namespace votes
 {
-	void SimpleCounty::GetPartiesElectors(float* statisticsArray, int* countyElectors, int partiesSize)const 
+	void SimpleCounty::GetPartiesElectors(vector<float>& statisticsArray, vector<int>& countyElectors, int partiesSize)const
 	{
 		float max = -1;
 		int winningParty = 0;
@@ -16,7 +16,7 @@ namespace votes
 		}
 		countyElectors[winningParty] = this->_numdelegates;
 	}
-	void SimpleCounty::sortAndPrintWinners(int* voteCount, int* Electors, int partiesSize, PartyList* partylist)const
+	void SimpleCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, PartyList* partylist)const
 	{
 		for (int i = 1; i <= partiesSize; i++)
 		{

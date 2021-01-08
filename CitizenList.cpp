@@ -2,6 +2,7 @@
 #include "Citizen.h"
 #include "CitizenList.h"
 #include <string.h>
+#include <vector>
 #include <iostream>
 using namespace std;
 
@@ -69,7 +70,7 @@ namespace votes
 		}
 	}
 	
-	void CitizenList::getVotes(int* voteArr) const
+	void CitizenList::getVotes(vector<int>& voteArr) const
 	{
 		CzListNode* current = _head;
 		int currentVote;

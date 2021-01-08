@@ -32,7 +32,7 @@ namespace votes
     {
         cout << (*countyArray[countyNum]).getCountyName() << endl;
     }
-    void countyArr::printWinnersOfCounty(int* voteCount,int* electors,int countyNum,int partiesSize,PartyList* partylist) const
+    void countyArr::printWinnersOfCounty(vector<int>& voteCount, vector<int>& electors,int countyNum,int partiesSize,PartyList* partylist) const
     {
         countyArray[countyNum]->sortAndPrintWinners(voteCount,electors, partiesSize, partylist);
     }
@@ -54,7 +54,7 @@ namespace votes
         for (int i = 1; i < countyArray.size(); i++)
             countyArray[i]->PrintCitizenList();
     }
-    void countyArr::getCitizensVotes(int** votesMatrix, int counties, int parties)const
+    void countyArr::getCitizensVotes(vector<vector<int>>& votesMatrix, int counties, int parties)const
     {
 
         for (int i = 1; i <= counties; i++)
@@ -67,7 +67,7 @@ namespace votes
             }
         }
     }
-    void countyArr::getElectors(int** electorsMatrix, float** statsMatrix, int partiesSize)
+    void countyArr::getElectors(vector<vector<int>>& electorsMatrix, vector<vector<float>>& statsMatrix, int partiesSize)
     {
         
         for (int i = 1; i < countyArray.size(); i++)

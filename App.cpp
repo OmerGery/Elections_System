@@ -8,6 +8,7 @@
 #include "PartyList.h"
 #include "App.h"
 #include "Sort.h"
+#include <vector>
 #include <iostream>
 #include <string.h>
 using namespace std;
@@ -15,29 +16,17 @@ namespace votes
 {
 	App::App()
 	{
-		_electorsMatrix = nullptr;
-		_delegatesMatrix = nullptr;
-		_statisticsMatrix = nullptr;
-		_voteCountMatrix = nullptr;
 		_partiesSize = 0;
 		_countiesSize = 0;
 	}
 	App::App(Date& electionday)
 	{
-		_electorsMatrix=nullptr;
-		_delegatesMatrix = nullptr;
-		_statisticsMatrix = nullptr;
-		_voteCountMatrix = nullptr;
 		_partiesSize = 0;
 		_countiesSize = 0;
 		_electionday = electionday;
 	}
 	App::~App()
 	{
-		delete[] this->_electorsMatrix;
-		delete[] this->_delegatesMatrix;
-		delete[] this->_voteCountMatrix;
-		delete[] this->_statisticsMatrix;
 	}
 	void App::PrintAllParties() const
 	{
@@ -203,49 +192,23 @@ namespace votes
 
 	// CALCS: 
 
-	void App::initVotesMatrix() 
+	void App::initVotesMatrix()
 	{
 		_partiesSize = partyList.getData(1)->getPartyCounter();
 		_countiesSize = CountyArray.getSize();
-		_voteCountMatrix = new int* [_countiesSize + 1];
-		for (int i = 0; i <= _countiesSize; i++)
-		{
-			_voteCountMatrix[i] = new int[_partiesSize + 1];
-			for (int j = 0; j <= _partiesSize; j++)
-				_voteCountMatrix[i][j] = 0;
-		}
+		_voteCountMatrix.assign(_countiesSize+1, vector < int >(_partiesSize+1, 0));
 	}
 	void App::initElectorsMatrix()
 	{
-		_partiesSize = partyList.getData(1)->getPartyCounter();
-		_countiesSize = CountyArray.getSize();
-		_electorsMatrix = new int* [_countiesSize + 1];
-		for (int i = 0; i <= _countiesSize; i++)
-		{
-			_electorsMatrix[i] = new int[_partiesSize + 1];
-			for (int j = 0; j <= _partiesSize; j++)
-				_electorsMatrix[i][j] = 0;
-		}
+		_electorsMatrix.assign(_countiesSize + 1, vector < int >(_partiesSize + 1, 0));
 	}
 	void App::initStatisticsMatrix()
 	{
-		_statisticsMatrix = new float* [_countiesSize + 1];
-		for (int i = 0; i <= _countiesSize; i++)
-		{
-			_statisticsMatrix[i] = new float[_partiesSize + 1];
-			for (int j = 0; j <= _partiesSize; j++)
-				_statisticsMatrix[i][j] = 0;
-		}
+		_statisticsMatrix.assign(_countiesSize + 1, vector <float >(_partiesSize + 1, 0));
 	}
 	void App::initDeligatesMatrix()
 	{
-		_delegatesMatrix = new int* [_countiesSize + 1];
-		for (int i = 0; i <= _countiesSize; i++)
-		{
-			_delegatesMatrix[i] = new int[_partiesSize + 1];
-			for (int j = 0; j <= _partiesSize; j++)
-				_delegatesMatrix[i][j] = 0;
-		}
+		_delegatesMatrix.assign(_countiesSize+1, vector < int >(_partiesSize+1, 0));
 	}
 	void App::initMatrices()
 	{
