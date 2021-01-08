@@ -60,14 +60,15 @@ namespace votes
 	}
 	bool App::Vote(int id, int partyNum)
 	{
+		string errorName;
 		Citizen* citizen = CountyArray.getCitizen(id);
 		if (citizen == nullptr)
-			return false;
+			throw (errorName = "Citizen ID is invalid");
 		Party* PartyVote = partyList.getData(partyNum);
 		if (PartyVote == nullptr)
-			return false;
+			throw (errorName = "Party Serial number is invalid");
 		if (citizen->vote(PartyVote) == false)
-			return false;
+			throw (errorName = "This citizen has already voted");
 		return true;
 	}
 	bool App::printVotes()

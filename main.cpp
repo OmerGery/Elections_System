@@ -143,14 +143,14 @@ int main()
                     throw (errorName = "Year is invalid, in order to vote you need to be at least 18 years old");
                 cout << "Please Enter serial number of county" << endl;
                 cin >> countyNum;
-                correctInput = mainApp->AddCitizen(name, id, year, countyNum);
+                mainApp->AddCitizen(name, id, year, countyNum);
                 break;
             case options::AddParty:
                 cout << "Enter the party name" << endl;
                 cin >> name;
                 cout << "Enter ID number of candidate for presidence" << endl;
                 cin >> id;
-                correctInput = mainApp->AddParty(name, id);
+                mainApp->AddParty(name, id);
                 break;
             case options::AddDelegate:
                 cout << "Enter the citizen ID" << endl;
@@ -159,18 +159,7 @@ int main()
                 cin >> partyNum;
                 cout << "Enter serial number of county" << endl;
                 cin >> countyNum;
-                correctInput = mainApp->AddCitizenAsDelegate(id, partyNum, countyNum);
-                while (!correctInput)
-                {
-                    cout << "Please enter a correct: citizen ID , party serial number and county number." << endl;
-                    cout << "Enter the citizen ID" << endl;
-                    cin >> id;
-                    cout << "Enter party serial number" << endl;
-                    cin >> partyNum;
-                    cout << "Enter serial number of county" << endl;
-                    cin >> countyNum;
-                    correctInput = mainApp->AddCitizenAsDelegate(id, partyNum, countyNum);
-                }
+                mainApp->AddCitizenAsDelegate(id, partyNum, countyNum);
                 break;
             case options::DisplayCounties:
                 mainApp->PrintAllCounties();
@@ -186,16 +175,7 @@ int main()
                 cin >> id;
                 cout << "Enter Party Serial number" << endl;
                 cin >> partyNum;
-                correctInput = mainApp->Vote(id, partyNum);
-                while (!correctInput)
-                {
-                    cout << "This citizen has already voted / Citizen ID or Party Serial number was invalid. please enter them again." << endl;
-                    cout << "Enter the citizen ID" << endl;
-                    cin >> id;
-                    cout << "Enter Party Serial number" << endl;
-                    cin >> partyNum;
-                    correctInput = mainApp->Vote(id, partyNum);
-                }
+                mainApp->Vote(id, partyNum);
                 break;
             case options::ShowRes:
                 mainApp->printVotes();
@@ -217,11 +197,7 @@ int main()
                 cin >> fname;
                 infile.open(fname, ios::binary | ios::in);
                 if (!infile.is_open())
-                {
-                    cout << "File name wasn't found";
-                    exit = true;
-                    break;
-                }
+                    throw (errorName = "File name wasn't found");
                 delete mainApp; // delete the current app before loading the new app from file
                 date = Date();
                 infile.read(rcastc(&type), sizeof(type));
