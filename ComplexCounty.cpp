@@ -28,12 +28,12 @@ namespace votes
 		Elector* electorsArray = new Elector[size];
 		electorsArray[0].sumElectors = -1;
 		list<Party*>::const_iterator it = partylist.begin();
+		advance(it, 1);
 		for (int i = 1; i <= partiesSize; i++)
 		{
 			electorsArray[i].sumElectors = Electors[i];
 			electorsArray[i].party = *it;
 			advance(it, 1);
-			
 		}
 
 		bubbleSort(electorsArray, size);

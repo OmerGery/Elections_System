@@ -14,11 +14,12 @@ namespace votes
 				winningParty = i;
 			}
 		}
-		countyElectors[winningParty] = this->_numdelegates;
+		countyElectors[winningParty] = _numdelegates;
 	}
 	void SimpleCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, list <Party*> partylist)const
 	{
 		list<Party*>::const_iterator it = partylist.begin();
+		advance(it, 1);
 		for (int i = 1; i <= partiesSize; i++)
 		{
 			if (Electors[i] > 0)

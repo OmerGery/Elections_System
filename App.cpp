@@ -22,12 +22,14 @@ namespace votes
 	}
 	App::App(Date& electionday)
 	{
+		partyList.push_back(nullptr);
 		_partiesSize = 0;
 		_countiesSize = 0;
 		_electionday = electionday;
 	}
 	App::~App()
 	{
+
 	}
 	void App::PrintAllParties() const
 	{

@@ -101,7 +101,7 @@ namespace votes
 				}
 			}
 		}
-		delete [] voteDataArr;
+		delete[] voteDataArr;
 		return true;
 	}
 }
