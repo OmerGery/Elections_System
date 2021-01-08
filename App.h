@@ -9,6 +9,7 @@
 #include "PartyList.h"
 #include "SimpleCounty.h"
 #include "ComplexCounty.h"
+#include "DynamicArray.h"
 #include "Sort.h"
 #include <string>
 #include <fstream>

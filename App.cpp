@@ -62,7 +62,7 @@ namespace votes
 	bool App::AddParty(string partyname, int idCandidate)
 	{
 
- 		Citizen* leader=CountyArray.getCitizen(idCandidate);
+		Citizen* leader=CountyArray.getCitizen(idCandidate);
 		if (leader == nullptr)
 			return false;
 		Party* newparty=new Party(partyname, leader);

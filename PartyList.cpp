@@ -46,13 +46,6 @@ namespace votes
 		std::list<Party*>::const_iterator it;
 		for (int i=1; i<=size; i++)
 			this->getData(i)->saveParty(out);
-		//PListNode* saver = _head;
-		//out.write(rcastcc(&this->_size), sizeof(_size));
-		/*while (saver != nullptr)
-		{
-			saver->_data->saveParty(out);
-			saver = saver->_next;
-		}*/
 	}
 	void PartyList::loadPartyList(istream& in)
 	{
