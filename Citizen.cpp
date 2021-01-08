@@ -34,7 +34,7 @@ namespace votes
 	{
 		out.write(rcastcc(&_id), sizeof(_id));
 		out.write(rcastcc(&_year), sizeof(_year));
-		int sizename =static_cast<int>(_name.size()+1);
+		int sizename =static_cast<int>(_name.size());
 		out.write(rcastcc(&sizename), sizeof(sizename));
 		out.write(rcastcc(&_name[0]), sizeof(char) * sizename);
 	}

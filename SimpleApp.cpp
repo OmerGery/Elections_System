@@ -21,23 +21,25 @@ namespace votes
 	}
 	bool SimpleApp::AddCitizen(string name, int id, int year, int countynum)
 	{
+		string errorName;
 		Citizen* citizen = CountyArray.getCitizen(id);
 		if (citizen != nullptr)
-			return false;
+			throw (errorName = "Citizen ID already exists");
 		Citizen* newCitizen = new Citizen(name, id, year);
 		CountyArray.addCitizenToCounty(newCitizen, 1);
 		return true;
 	}
 	bool SimpleApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
+		string errorName;
 		if (CountyArray.searchDelegate(id))
-			return false;
+			throw (errorName = "Citizen is already a delegate");
 		Citizen* delegate = CountyArray.getCitizen(id);
 		if (delegate == nullptr)
-			return false;
+			throw (errorName = "Citizen ID wasn't found");
 		Party* party = partyList.getData(partynum);
 		if (party == nullptr)
-			return false;
+			throw (errorName = "Party number doesn't exist");
 		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
 		CountyArray.addCDToCounty(Delegate, 1);
 		return true;

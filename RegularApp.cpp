@@ -17,29 +17,29 @@ namespace votes
 	}
 	bool RegularApp::AddCitizen(string name, int id, int year, int countynum)
 	{
+		string errorName;
 		if (countynum > CountyArray.getSize() || countynum <= 0)
-			return false;
+			throw (errorName = "County number doesn't exist/negative");
 		Citizen* citizen = CountyArray.getCitizen(id);
 		if (citizen != nullptr)
-			return false;
+			throw (errorName = "Citizen ID already exists");
 		Citizen* newCitizen = new Citizen(name, id, year);
 		CountyArray.addCitizenToCounty(newCitizen, countynum);
 		return true;
 	}
 	bool RegularApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
+		string errorName;
 		if (CountyArray.searchDelegate(id))
-			return false;
+			throw (errorName = "Citizen is already a delegate");
 		Citizen* delegate = CountyArray.getCitizen(id);
 		if (delegate == nullptr)
-			return false;
-		if (id == 111111150)
-			cout << "x";
+			throw (errorName = "Citizen ID wasn't found");
 		Party* party = partyList.getData(partynum);
 		if (party == nullptr)
-			return false;
+			throw (errorName = "Party number doesn't exist");
 		if (countynum <= 0 || countynum > CountyArray.getSize())
-			return false;
+			throw (errorName = "County Number is invalid");
 		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
 		CountyArray.addCDToCounty(Delegate, countynum);
 		return true;

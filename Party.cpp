@@ -32,7 +32,7 @@ namespace votes
 	{
 		out.write(rcastcc(&_partySerial), sizeof(_partySerial));
 		out.write(rcastcc(&partyCounter), sizeof(partyCounter));
-		int partyNamelen = static_cast<int> (_partyName.size() + 1);
+		int partyNamelen = static_cast<int> (_partyName.size());
 		out.write(rcastcc(&partyNamelen), sizeof(partyNamelen));
 		out.write(rcastcc(&_partyName[0]), sizeof(char) * partyNamelen);
 	}

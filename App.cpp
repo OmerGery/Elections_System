@@ -50,10 +50,10 @@ namespace votes
 	}
 	bool App::AddParty(string partyname, int idCandidate)
 	{
-
+		string errorName;
 		Citizen* leader=CountyArray.getCitizen(idCandidate);
 		if (leader == nullptr)
-			return false;
+			throw (errorName = "This Party leader ID doesn't match any Citizen's ID");
 		Party* newparty=new Party(partyname, leader);
 		partyList.Add(newparty);
 		return true;

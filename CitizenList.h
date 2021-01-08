@@ -15,13 +15,13 @@ namespace votes
 	private:
 		list <Citizen*> CList;
 	public:
-		//ctors/dtors:
+		//getters:
+		void getVotes(vector<int>& voteArr) const;
+		Citizen* getData(int index) const;
+		const int getSize() const { return CList.size(); }
 
 		bool AddCitizen(Citizen* toadd);
 		Citizen* findCitizen(int id) const;
-		void getVotes(vector<int> &voteArr) const;
-		Citizen* getData(int index) const;
-		const int getSize() const { return CList.size(); }
 		void PrintList(string countyName) const;
 
 		void saveCitizensList(ostream& out) const;

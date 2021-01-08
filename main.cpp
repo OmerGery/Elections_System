@@ -32,7 +32,7 @@ int main()
     ifstream infile;
     ofstream outfile;
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
-    string name, fname;        
+    string name, fname, errorName;
     int option, delegatesNum, id, day, month, year, countyNum, partyNum, type;
     bool correctInput; // used for input checks 
     bool exit=false, prexit=false;
@@ -41,170 +41,128 @@ int main()
     
     while (!prexit)
     {
-        cout << endl << "1 - Create a new Elections round" << endl << "2 - Load an exisiting Elections round" << endl << "3 - Exit" << endl;
-        cout << "Choose an option" << endl;
-        cin >> option;
-        switch (option)
-        {
-        case preOptions::NewRound:
-            cout << "Please enter the Elections type - 1 for simple or 0 for regular " << endl;
-            cin >> type;
-            while (type != SIMPLE && type != COMPLEX)
+        try {
+            cout << endl << "1 - Create a new Elections round" << endl << "2 - Load an exisiting Elections round" << endl << "3 - Exit" << endl;
+            cout << "Choose an option" << endl;
+            cin >> option;
+            switch (option)
             {
-                cout << "Please enter 0 or 1 ." << endl;
+            case preOptions::NewRound:
+                cout << "Please enter the type of elections (0 for regular and 1 for simple)" << endl;
                 cin >> type;
-            }
-            cout << "Please enter election day" << endl;
-            cin >> day;
-            cout << "Please enter election month" << endl;
-            cin >> month;
-            cout << "Please enter election year" << endl;
-            cin >> year;
-            date=Date(day, month, year);
-            if (type==SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
-            {
-                cout << "Enter number of delegates" << endl;
-                cin >> delegatesNum;
-                while (delegatesNum <= 0)
+                if (type != SIMPLE && type != COMPLEX)
+                    throw (errorName = "Round Type isn't valid (need to be 0 or 1)");
+                cout << "Please enter election day" << endl;
+                cin >> day;
+                cout << "Please enter election month" << endl;
+                cin >> month;
+                //if (need to use Avi's calander and check date and month)
+                    //throw (errorName = "Date wasn't valid, out of the calander");
+                cout << "Please enter election year" << endl;
+                cin >> year;
+                if (year < 0)
+                    throw (errorName = "Year can't be a negative number");
+                date = Date(day, month, year);
+                if (type == SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
                 {
-                    cout << "please enter a positive number of delegates" << endl;
+                    cout << "Enter number of delegates" << endl;
                     cin >> delegatesNum;
+                    if (delegatesNum <= 0)
+                        throw (errorName = "number of delegates must be positive");
+                    mainApp = new SimpleApp(date, delegatesNum);
                 }
-                mainApp = new SimpleApp(date, delegatesNum); 
-            }
-            else//type == COMPLEX
-                mainApp = new RegularApp(date); 
-            prexit = true;
-            break;
-        case preOptions::LoadVotes:
-            cout << "Please enter the file name you want to load" << endl;
-            cin >> fname;
-            infile.open(fname, ios::binary | ios::in);
-            if (!infile.is_open())
-            {
-                cout << "File name wasn't found";
+                else//type == COMPLEX
+                    mainApp = new RegularApp(date);
+                prexit = true;
+                break;
+            case preOptions::LoadVotes:
+                cout << "Please enter the file name you want to load" << endl;
+                cin >> fname;
+                infile.open(fname, ios::binary | ios::in);
+                if (!infile.is_open())
+                    throw (errorName = "File name wasn't found");
+                infile.read(rcastc(&type), sizeof(type));
+                date = Date();
+                if (type == SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
+                    mainApp = new SimpleApp(date);
+                else//type == COMPLEX
+                    mainApp = new RegularApp(date);
+                mainApp->loadApp(infile);
+                infile.close();
+                prexit = true;
+                break;
+            case preOptions::PreExit:
+                cout << "You have exited the program. " << endl;
                 prexit = true;
                 exit = true;
                 break;
+            default:
+                cout << "Please select an option between 1-3." << endl;
+                break;
             }
-            infile.read(rcastc(&type), sizeof(type));
-            date = Date();
-            if (type==SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
-                mainApp = new SimpleApp(date); 
-            else//type == COMPLEX
-                mainApp = new RegularApp(date); 
-            mainApp->loadApp(infile);
-            infile.close();
-            prexit = true;
-            break;
-        case preOptions::PreExit:
-            cout << "You have exited the program. " << endl;
-            prexit = true;
-            exit = true;
-            break;
-        default:
-            cout << "Please select an option between 1-3." << endl;
-            break;
+        }
+        catch (string error)
+        {
+            cout << error << endl;
         }
     }
-            while (!exit)
+        while (!exit)
+        {
+            try {
+            cout << endl << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
+                << "4 - Add a Citizen as a party delegate" << endl << "5 - Display all Counties" << endl << "6 - Display all Citizens" << endl
+                << "7 - Display all Parties" << endl << "8 - Vote for a Party" << endl << "9 - Display Election Results" << endl
+                << "10 - EXIT" << endl << "11 - Save Election Round" << endl << "12 - Load Election Round" << endl;
+            cout << "Choose an option" << endl;
+            cin >> option;
+            switch (option)
             {
-                cout << endl << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
-                    << "4 - Add a Citizen as a party delegate" << endl << "5 - Display all Counties" << endl << "6 - Display all Citizens" << endl
-                    << "7 - Display all Parties" << endl << "8 - Vote for a Party" << endl << "9 - Display Election Results" << endl
-                    << "10 - EXIT" << endl << "11 - Save Election Round" << endl << "12 - Load Election Round" << endl;
-                cout << "Choose an option" << endl;
-                cin >> option;
-                switch (option)
+            case options::AddCounty:
+                cout << "Please Enter 1 for simple county or 0 for split county" << endl;
+                cin >> type;
+                if (type != SIMPLE && type != COMPLEX)
+                    throw (errorName = "County Type isn't valid (need to be 0 or 1)");
+                cout << "Enter the County name" << endl;
+                cin >> name;
+                cout << "Enter number of delegates" << endl;
+                cin >> delegatesNum;
+                if (delegatesNum <= 0)
+                    throw (errorName = "Number of delegate must be a positive number");
+                mainApp->AddCounty(name, delegatesNum, type);
+                break;
+            case options::AddCitizen:
+                cout << "Enter the citizen name" << endl;
+                cin >> name;
+                cout << "Please Enter ID number" << endl;
+                cin >> id;
+                    if (id < 111111111 || id > 999999999)
+                        throw (errorName = "The ID is invalid, must be 9 digits length");
+                cout << "Please Enter year of birth" << endl;
+                cin >> year;
+                if (year > date.getYear() - MIN_AGE)
+                    throw (errorName = "Year is invalid, in order to vote you need to be at least 18 years old");
+                cout << "Please Enter serial number of county" << endl;
+                cin >> countyNum;
+                correctInput = mainApp->AddCitizen(name, id, year, countyNum);
+                break;
+            case options::AddParty:
+                cout << "Enter the party name" << endl;
+                cin >> name;
+                cout << "Enter ID number of candidate for presidence" << endl;
+                cin >> id;
+                correctInput = mainApp->AddParty(name, id);
+                break;
+            case options::AddDelegate:
+                cout << "Enter the citizen ID" << endl;
+                cin >> id;
+                cout << "Enter party serial number" << endl;
+                cin >> partyNum;
+                cout << "Enter serial number of county" << endl;
+                cin >> countyNum;
+                correctInput = mainApp->AddCitizenAsDelegate(id, partyNum, countyNum);
+                while (!correctInput)
                 {
-                case options::AddCounty:
-                    cout << "Please Enter 1 for simple county or 0 for split county" << endl;
-                    cin >> type;
-                    while (type != SIMPLE && type != COMPLEX)
-                    {
-                        cout << "Please enter 0 or 1 ." << endl;
-                        cin >> type;
-                    }
-                    cout << "Enter the County name" << endl;
-                    cin >> name;
-                    cout << "Enter number of delegates" << endl;
-                    cin >> delegatesNum;
-                    while (delegatesNum <= 0)
-                    {
-                        cout << "please enter a positive number of delegates" << endl;
-                        cin >> delegatesNum;
-                    }
-                    mainApp->AddCounty(name, delegatesNum, type);
-                    break;
-                case options::AddCitizen:
-                    cout << "Enter the citizen name" << endl;
-                    cin >> name;
-                    cout << "Please Enter ID number" << endl;
-                    cin >> id;
-                    while (true)
-                    {
-                        try
-                        {
-                            if (id < 111111111 || id > 999999999)
-                                throw ("ID error");
-                            else break;
-                        }
-                        catch (...)
-                        {
-                            cout << "The ID isn't 9 digits length - which is invalid" << endl;
-                            cin >> id;
-                        }
-                    }
-
-                    cout << "Please Enter year of birth" << endl;
-                    cin >> year;
-                    while (true)
-                    {
-                        try
-                        {
-                            if (year > 2021  - MIN_AGE) //need to change to year from user
-                                throw ("Year Error");
-                            else break;
-                        }
-                        catch (...)
-                        {
-                            cout << "The citizen is younger than " << MIN_AGE << ", the minimum age for voting" << endl;
-                            cin >> year;
-                        }
-                    }
-                    cout << "Please Enter serial number of county" << endl;
-                    cin >> countyNum;
-                    correctInput = mainApp->AddCitizen(name, id, year, countyNum);
-                    while (!correctInput)
-                    {
-                        cout << "The county number or ID number was invalid." << endl;
-                        cout << "Please Enter serial number of county" << endl;
-                        cin >> countyNum;
-                        cout << "Please Enter ID number" << endl;
-                        cin >> id;
-                        while (id <= 0)
-                        {
-                            cout << "please enter a positive ID number" << endl;
-                            cin >> id;
-                        }
-                        correctInput = mainApp->AddCitizen(name, id, year, countyNum);
-                    }
-                    break;
-                case options::AddParty:
-                    cout << "Enter the party name" << endl;
-                    cin >> name;
-                    cout << "Enter ID number of candidate for presidence" << endl;
-                    cin >> id;
-                    correctInput = mainApp->AddParty(name, id);
-                    while (!correctInput)
-                    {
-                        cout << "This citizen doesn't exist,therefore he can't be a candidate." << endl <<
-                            "please enter a correct ID of an existing citizen." << endl;
-                        cin >> id;
-                        correctInput = mainApp->AddParty(name, id);
-                    }
-                    break;
-                case options::AddDelegate:
+                    cout << "Please enter a correct: citizen ID , party serial number and county number." << endl;
                     cout << "Enter the citizen ID" << endl;
                     cin >> id;
                     cout << "Enter party serial number" << endl;
@@ -212,82 +170,77 @@ int main()
                     cout << "Enter serial number of county" << endl;
                     cin >> countyNum;
                     correctInput = mainApp->AddCitizenAsDelegate(id, partyNum, countyNum);
-                    while (!correctInput)
-                    {
-                        cout << "Please enter a correct: citizen ID , party serial number and county number." << endl;
-                        cout << "Enter the citizen ID" << endl;
-                        cin >> id;
-                        cout << "Enter party serial number" << endl;
-                        cin >> partyNum;
-                        cout << "Enter serial number of county" << endl;
-                        cin >> countyNum;
-                        correctInput = mainApp->AddCitizenAsDelegate(id, partyNum, countyNum);
-                    }
-                    break;
-                case options::DisplayCounties:
-                    mainApp->PrintAllCounties();
-                    break;
-                case options::DisplayCitizens:
-                    mainApp->PrintAllCitizens();
-                    break;
-                case options::DisplayParties:
-                    mainApp->PrintAllParties();
-                    break;
-                case options::Vote:
+                }
+                break;
+            case options::DisplayCounties:
+                mainApp->PrintAllCounties();
+                break;
+            case options::DisplayCitizens:
+                mainApp->PrintAllCitizens();
+                break;
+            case options::DisplayParties:
+                mainApp->PrintAllParties();
+                break;
+            case options::Vote:
+                cout << "Enter the citizen ID" << endl;
+                cin >> id;
+                cout << "Enter Party Serial number" << endl;
+                cin >> partyNum;
+                correctInput = mainApp->Vote(id, partyNum);
+                while (!correctInput)
+                {
+                    cout << "This citizen has already voted / Citizen ID or Party Serial number was invalid. please enter them again." << endl;
                     cout << "Enter the citizen ID" << endl;
                     cin >> id;
                     cout << "Enter Party Serial number" << endl;
                     cin >> partyNum;
                     correctInput = mainApp->Vote(id, partyNum);
-                    while (!correctInput)
-                    {
-                        cout << "This citizen has already voted / Citizen ID or Party Serial number was invalid. please enter them again." << endl;
-                        cout << "Enter the citizen ID" << endl;
-                        cin >> id;
-                        cout << "Enter Party Serial number" << endl;
-                        cin >> partyNum;
-                        correctInput = mainApp->Vote(id, partyNum);
-                    }
-                    break;
-                case options::ShowRes:
-                    mainApp->printVotes();
-                    break;
-                case options::Exit:
-                    cout << "You have exited the program. " << endl;
-                    delete mainApp;
+                }
+                break;
+            case options::ShowRes:
+                mainApp->printVotes();
+                break;
+            case options::Exit:
+                cout << "You have exited the program. " << endl;
+                delete mainApp;
+                exit = true;
+                break;
+            case options::Save:
+                cout << "Please enter the file name you want to save into" << endl;
+                cin >> fname;
+                outfile.open(fname, ios::binary | ios::out);
+                mainApp->saveApp(outfile);
+                outfile.close();
+                break;
+            case options::Load:
+                cout << "Please enter the file name you want to load" << endl;
+                cin >> fname;
+                infile.open(fname, ios::binary | ios::in);
+                if (!infile.is_open())
+                {
+                    cout << "File name wasn't found";
                     exit = true;
                     break;
-                case options::Save:
-                    cout << "Please enter the file name you want to save into" << endl;
-                    cin >> fname;
-                    outfile.open(fname, ios::binary | ios::out);
-                    mainApp->saveApp(outfile);
-                    outfile.close();
-                    break;
-                case options::Load:
-                    cout << "Please enter the file name you want to load" << endl;
-                    cin >> fname;
-                    infile.open(fname, ios::binary | ios::in);
-                    if (!infile.is_open())
-                    {
-                        cout << "File name wasn't found";
-                        exit = true;
-                        break;
-                    }
-                    delete mainApp; // delete the current app before loading the new app from file
-                    date = Date();
-                    infile.read(rcastc(&type), sizeof(type));
-                    if (type==SIMPLE)
-                        mainApp = new SimpleApp(date);
-                    else
-                        mainApp = new RegularApp(date);
-                    mainApp->loadApp(infile);
-                    infile.close();
-                    break;
-                default:
-                    cout << "Please select an option between 1-12." << endl;
-                    break;
                 }
+                delete mainApp; // delete the current app before loading the new app from file
+                date = Date();
+                infile.read(rcastc(&type), sizeof(type));
+                if (type == SIMPLE)
+                    mainApp = new SimpleApp(date);
+                else
+                    mainApp = new RegularApp(date);
+                mainApp->loadApp(infile);
+                infile.close();
+                break;
+            default:
+                cout << "Please select an option between 1-12." << endl;
+                break;
             }
-            return 0;
+        }
+        catch (string error)
+        {
+            cout << error << endl;
+        }
+    }
+        return 0;
 }
