@@ -16,6 +16,7 @@ namespace votes
 {
 	App::App()
 	{
+		partyList.push_back(nullptr);
 		_partiesSize = 0;
 		_countiesSize = 0;
 	}
@@ -30,16 +31,16 @@ namespace votes
 	}
 	void App::PrintAllParties() const
 	{
-		if (partyList.getData(1)==nullptr)
+		if (getPListData(1)==nullptr)
 		{
 			cout << "You haven't entered any parties." << endl;
 			return;
 		}
-		int partiesSize = partyList.getData(1)->getPartyCounter();
+		int partiesSize = getPListData(1)->getPartyCounter();
 		int countiesSize = CountyArray.getSize();
 		for (int i = 1; i <= partiesSize; i++)
 		{
-			partyList.PrintaParty(i);
+			PrintaParty(i);
 			for(int j=1;j<=countiesSize;j++)
 			CountyArray.printDelegatesOfAParty(j,i);
 		}
@@ -55,7 +56,7 @@ namespace votes
 		if (leader == nullptr)
 			throw (errorName = "This Party leader ID doesn't match any Citizen's ID");
 		Party* newparty=new Party(partyname, leader);
-		partyList.Add(newparty);
+		AddToPlist(newparty);
 		return true;
 	}
 	bool App::Vote(int id, int partyNum)
@@ -64,7 +65,7 @@ namespace votes
 		Citizen* citizen = CountyArray.getCitizen(id);
 		if (citizen == nullptr)
 			throw (errorName = "Citizen ID is invalid");
-		Party* PartyVote = partyList.getData(partyNum);
+		Party* PartyVote = getPListData(partyNum);
 		if (PartyVote == nullptr)
 			throw (errorName = "Party Serial number is invalid");
 		if (citizen->vote(PartyVote) == false)
@@ -74,7 +75,7 @@ namespace votes
 	bool App::printVotes()
 	{
 		string errorName;
-		if (this->partyList.getSize() < 1)
+		if (getPListSize() < 1)
 			throw (errorName = "Can't show elections results, need to add parties before");
 		cout << _electionday;
 		calcVotes();
@@ -84,7 +85,7 @@ namespace votes
 	{
 		_electionday.saveDate(out);
 		CountyArray.saveCountyArray(out);
-		partyList.savePartyList(out);
+		savePartyList(out);
 		savePartyLeaders(out);
 		saveCitizenVotes(out);
 		saveCountiesDelegates(out);
@@ -93,16 +94,16 @@ namespace votes
 	{
 		_electionday.loadDate(in);
 		CountyArray.loadCountyArray(in);
-		partyList.loadPartyList(in);
+		loadPartyList(in);
 		loadPartyLeaders(in);
 		loadCitizenVotes(in);
 		loadCountiesDelegates(in);
 	}
 	void App::savePartyLeaders(ostream& out) const
 	{
-		for (int i = 1; i <= partyList.getSize(); i++)
+		for (int i = 1; i <= getPListSize(); i++)
 		{
-			int leaderID = partyList.getData(i)->getLeader()->getID();
+			int leaderID = getPListData(i)->getLeader()->getID();
 			out.write(rcastcc(&leaderID), sizeof(leaderID));
 		}
 	}
@@ -137,7 +138,7 @@ namespace votes
 				in.read(rcastc(&partyvotedto), sizeof(partyvotedto));
 				if (partyvotedto != -1)
 				{
-					Party* PParty = this->partyList.getData(partyvotedto);
+					Party* PParty = getPListData(partyvotedto);
 					current->vote(PParty);
 				}
 			}
@@ -145,11 +146,11 @@ namespace votes
 	}
 	void App::loadPartyLeaders(istream& in)
 	{
-		for (int i = 1; i <= partyList.getSize(); i++)
+		for (int i = 1; i <= getPListSize(); i++)
 		{
 			int leaderID;
 			in.read(rcastc(&leaderID), sizeof(leaderID));
-			Party* current = partyList.getData(i);
+			Party* current = getPListData(i);
 			Citizen* currentLeader = CountyArray.getCitizen(leaderID);
 			current->setLeader(currentLeader);
 		}
@@ -185,18 +186,58 @@ namespace votes
 				Citizen* currentDelegate = CountyArray.getCitizen(delegateID);
 				int partyID;
 				in.read(rcastc(&partyID), sizeof(partyID));
-				Party* currentParty = partyList.getData(partyID);
+				Party* currentParty = getPListData(partyID);
 				CountyDelegate* Delegate = new CountyDelegate(currentDelegate, currentParty);
 				CountyArray.addCDToCounty(Delegate, i);
 			}
 		}
 	}
-
+	//Party:
+	bool App::AddToPlist(Party* party)
+	{
+		partyList.push_back(party);
+		return true;
+	}
+	void App::PrintaParty(int partyserial) const
+	{
+		Party* party = getPListData(partyserial);
+		cout << *party;
+	}
+	void  App::PrintLeader(int partySerial) const
+	{
+		cout << getPListData(partySerial)->getLeader()->getName() << endl;
+	}
+	Party* App::getPListData(int index) const
+	{
+		list<Party*>::const_iterator it = partyList.begin();
+		advance(it, index);
+		return *it;
+	}
+	void App::savePartyList(ostream& out) const
+	{
+		int size = getPListSize();
+		out.write(rcastcc(&size), sizeof(size));
+		std::list<Party*>::const_iterator it;
+		for (int i = 1; i <= size; i++)
+			getPListData(i)->saveParty(out);
+	}
+	void App::loadPartyList(istream& in)
+	{
+		int loadSize = static_cast<int>(partyList.size());
+		in.read(rcastc(&loadSize), sizeof(loadSize));
+		for (int i = 0; i < loadSize; i++)
+		{
+			Party* toadd = new Party();
+			toadd->loadParty(in);
+			AddToPlist(toadd);
+		}
+	}
+	/////////
 	// CALCS: 
 
 	void App::initVotesMatrix()
 	{
-		_partiesSize = partyList.getData(1)->getPartyCounter();
+		_partiesSize = getPListData(1)->getPartyCounter();
 		_countiesSize = CountyArray.getSize();
 		_voteCountMatrix.assign(_countiesSize+1, vector < int >(_partiesSize+1, 0));
 	}

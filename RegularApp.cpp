@@ -35,7 +35,7 @@ namespace votes
 		Citizen* delegate = CountyArray.getCitizen(id);
 		if (delegate == nullptr)
 			throw (errorName = "Citizen ID wasn't found");
-		Party* party = partyList.getData(partynum);
+		Party* party = getPListData(partynum);
 		if (party == nullptr)
 			throw (errorName = "Party number doesn't exist");
 		if (countynum <= 0 || countynum > CountyArray.getSize())
@@ -76,7 +76,7 @@ namespace votes
 			{
 				DeligatesPrinted = 0;
 				int numdeligates = CountyArray.getDelegatesArrSize(i);
-				cout << "The party '" << partyList.getData(j)->getPartyName() << "' received " <<
+				cout << "The party '" << getPListData(j)->getPartyName() << "' received " <<
 					_statisticsMatrix[i][j] * 100 << "% of the votes, and total of " <<
 					_voteCountMatrix[i][j] << " votes for this county." << endl;
 
@@ -84,7 +84,7 @@ namespace votes
 				{
 					if (_delegatesMatrix[i][j] == 0)
 					{
-						cout << "No chosen Delegates from the party '" << partyList.getData(j)->getPartyName() << "' for this county " << endl;
+						cout << "No chosen Delegates from the party '" << getPListData(j)->getPartyName() << "' for this county " << endl;
 						break;
 					}
 					CountyDelegate* currentDelgate = this->CountyArray.getCounty(i)->getDelgate(k);
@@ -92,7 +92,7 @@ namespace votes
 					{
 						DeligatesPrinted++;
 						if (DeligatesPrinted == 1)
-							cout << "The chosen Delegates from the party '" << partyList.getData(j)->getPartyName() << "' are: ";
+							cout << "The chosen Delegates from the party '" << getPListData(j)->getPartyName() << "' are: ";
 						cout << currentDelgate->getName();
 						if (DeligatesPrinted != 0 && DeligatesPrinted != _delegatesMatrix[i][j]) cout << ", ";
 					}
@@ -103,14 +103,14 @@ namespace votes
 					}
 				}
 			}
-			CountyArray.printWinnersOfCounty(_voteCountMatrix[i], _electorsMatrix[i], i, _partiesSize, &partyList);
+			CountyArray.printWinnersOfCounty(_voteCountMatrix[i], _electorsMatrix[i], i, _partiesSize, partyList);
 		}
 		Elector* electorsArray = new Elector[_partiesSize + 1];
 		electorsArray[0].sumElectors = -1;
 		for (int j = 1; j <= _partiesSize; j++)
 		{
 			electorsArray[j].sumElectors = _electorsMatrix[0][j];
-			electorsArray[j].party = partyList.getData(j);
+			electorsArray[j].party = getPListData(j);
 		}
 		bubbleSort(electorsArray, _partiesSize + 1);
 		cout << endl << "The final election results are: " << endl;

@@ -16,15 +16,17 @@ namespace votes
 		}
 		countyElectors[winningParty] = this->_numdelegates;
 	}
-	void SimpleCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, PartyList* partylist)const
+	void SimpleCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, list <Party*> partylist)const
 	{
+		list<Party*>::const_iterator it = partylist.begin();
 		for (int i = 1; i <= partiesSize; i++)
 		{
 			if (Electors[i] > 0)
 			{
-				cout << "The winner in this county is:"; partylist->PrintLeader(i);
+				cout << "The winner in this county is:" << (*it)->getLeader()->getName() << endl;
 				break;
 			}
+			advance(it, 1);
 		}
 	}
 	void SimpleCounty::printCountyType() const

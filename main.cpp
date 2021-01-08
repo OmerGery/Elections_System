@@ -12,8 +12,6 @@
 #include "RegularApp.h"
 #include <iostream>
 #include <fstream>
-//#define rcastcc reinterpret_cast<const char*>
-//#define rcastc reinterpret_cast<char*>
 using namespace std;
 using namespace votes;
 static const int maxDayPerMonth[13] = { -1,31,28,31,30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -138,7 +136,7 @@ int main()
                 cout << "Please Enter year of birth" << endl;
                 cin >> year;
                 if (year > mainApp->getElectionYear() - MIN_AGE)
-                    throw (errorName = "Year is invalid, in order to vote you need to be at least 18 years old");
+                    throw (errorName = "Year is invalid, in order to vote, one must need to be at least 18 years old");
                 cout << "Please Enter serial number of county" << endl;
                 cin >> countyNum;
                 mainApp->AddCitizen(name, id, year, countyNum);

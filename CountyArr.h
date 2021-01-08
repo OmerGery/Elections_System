@@ -3,6 +3,7 @@
 #include "DynamicArray.h"
 #include <iostream>
 #include <vector>
+#include <list>
 using namespace std;
 namespace votes
 {
@@ -29,7 +30,7 @@ namespace votes
       const int getDelegatesArrSize(int countyNum) const;
 
       void printCountyName(int countyNum) const;
-      void printWinnersOfCounty(vector<int>& voteCount, vector<int>& electors, int countyNum, int partiesSize, PartyList* partylist) const;
+      void printWinnersOfCounty(vector<int>& voteCount, vector<int>& electors, int countyNum, int partiesSize, list <Party*> partylist) const;
       void printDelegatesNum(int countyNum) const;
       void printDelegatesOfAParty(int countynum, int partynum) const;
       void printAllCounties()const;

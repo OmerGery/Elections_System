@@ -25,7 +25,7 @@ namespace votes
 	protected:
 		Date _electionday;
 		countyArr CountyArray;
-		PartyList partyList;
+		list <Party*> partyList;
 
 		// Calcing:
 		int _partiesSize;
@@ -67,5 +67,17 @@ namespace votes
 		void loadCitizenVotes(istream& in);
 		void saveCountiesDelegates(ostream& out) const;
 		void loadCountiesDelegates(istream& in);
+
+		//party:
+		bool AddToPlist(Party* party);
+		Party* getPListData(int index) const;
+		const int getPListSize() const { return static_cast<int>(partyList.size() - 1); }
+
+		void PrintaParty(int partyserial) const;
+		void PrintLeader(int partySerial) const;
+
+		void savePartyList(ostream& out) const;
+		void loadPartyList(istream& in);
+		/////
 	};
 }

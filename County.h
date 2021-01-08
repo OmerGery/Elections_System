@@ -49,7 +49,7 @@ namespace votes
 		Citizen* searchCitizen(int id)const;
 		void resetCounter() { countyCounter = 0; }
 
-		virtual void sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors,int partiesSize,PartyList* partylist)const = 0;
+		virtual void sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors,int partiesSize, list <Party*> partylist)const = 0;
 		void PrintCitizenList() const;
 		virtual void printCountyType() const=0;
 

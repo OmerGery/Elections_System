@@ -1,4 +1,5 @@
 #include "ComplexCounty.h"
+#include <iterator>
 namespace votes
 {
 	void ComplexCounty::GetPartiesElectors(vector<float> &statisticsArray, vector<int> &countyElectors, int partiesSize)const
@@ -20,16 +21,19 @@ namespace votes
 		remainingDelegates = _numdelegates - tempElectorsNum;
 		countyElectors[place] += remainingDelegates;
 	}
-	void ComplexCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, PartyList* partylist)const
+	void ComplexCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, list <Party*> partylist)const
 	{
 
 		int size = partiesSize + 1;
 		Elector* electorsArray = new Elector[size];
 		electorsArray[0].sumElectors = -1;
+		list<Party*>::const_iterator it = partylist.begin();
 		for (int i = 1; i <= partiesSize; i++)
 		{
 			electorsArray[i].sumElectors = Electors[i];
-			electorsArray[i].party = partylist->getData(i);
+			electorsArray[i].party = *it;
+			advance(it, 1);
+			
 		}
 
 		bubbleSort(electorsArray, size);

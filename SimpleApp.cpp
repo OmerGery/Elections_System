@@ -37,7 +37,7 @@ namespace votes
 		Citizen* delegate = CountyArray.getCitizen(id);
 		if (delegate == nullptr)
 			throw (errorName = "Citizen ID wasn't found");
-		Party* party = partyList.getData(partynum);
+		Party* party = getPListData(partynum);
 		if (party == nullptr)
 			throw (errorName = "Party number doesn't exist");
 		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
@@ -63,7 +63,7 @@ namespace votes
 		for (int j = 1; j <= _partiesSize; j++)
 		{
 			voteDataArr[j].sumDelegates = _electorsMatrix[1][j];
-			voteDataArr[j].party = partyList.getData(j);
+			voteDataArr[j].party = getPListData(j);
 			voteDataArr[j].precentage =_statisticsMatrix[1][j]*100;
 			voteDataArr[j].numVotes = _voteCountMatrix[0][j];
 		}
@@ -90,7 +90,7 @@ namespace votes
 			{
 				DeligatesPrinted++;
 				if (DeligatesPrinted == 1)
-					cout << "The chosen Delegates from the party '" << partyList.getData(partyNumber)->getPartyName() << "' are: ";
+					cout << "The chosen Delegates from the party '" << getPListData(partyNumber)->getPartyName() << "' are: ";
 				cout << currentDelgate->getName();
 				if (DeligatesPrinted != 0 && DeligatesPrinted < totalDels) cout << ", ";
 			}

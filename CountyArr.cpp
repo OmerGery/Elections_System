@@ -32,7 +32,7 @@ namespace votes
     {
         cout << (*countyArray[countyNum]).getCountyName() << endl;
     }
-    void countyArr::printWinnersOfCounty(vector<int>& voteCount, vector<int>& electors,int countyNum,int partiesSize,PartyList* partylist) const
+    void countyArr::printWinnersOfCounty(vector<int>& voteCount, vector<int>& electors,int countyNum,int partiesSize, list <Party*> partylist) const
     {
         countyArray[countyNum]->sortAndPrintWinners(voteCount,electors, partiesSize, partylist);
     }
