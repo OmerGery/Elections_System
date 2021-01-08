@@ -18,7 +18,7 @@ namespace votes
 		//getters:
 		void getVotes(vector<int>& voteArr) const;
 		Citizen* getData(int index) const;
-		const int getSize() const { return CList.size(); }
+		const int getSize() const { return static_cast<int>(CList.size()); }
 
 		bool AddCitizen(Citizen* toadd);
 		Citizen* findCitizen(int id) const;

@@ -71,7 +71,7 @@ namespace votes
 	}
 	void CitizenList::loadCitizensList(istream& in)
 	{
-		int loadSize = CList.size();
+		int loadSize = static_cast<int>(CList.size());
 		in.read(rcastc(&loadSize), sizeof(loadSize));
 		for (int i = 0; i < loadSize; i++)
 		{

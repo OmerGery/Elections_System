@@ -13,7 +13,7 @@ namespace votes
 
 		bool Add(Party* party);
 		Party* getData(int index) const;
-		const int getSize() const { return PList.size()-1; }
+		const int getSize() const { return static_cast<int>(PList.size()-1); }
 
 		void PrintaParty(int partyserial) const;
 		void PrintLeader(int partySerial) const;

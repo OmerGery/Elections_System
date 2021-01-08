@@ -49,7 +49,7 @@ namespace votes
 	}
 	void PartyList::loadPartyList(istream& in)
 	{
-		int loadSize = PList.size();
+		int loadSize = static_cast<int>(PList.size());
 		in.read(rcastc(&loadSize), sizeof(loadSize));
 		for (int i = 0; i < loadSize; i++)
 		{

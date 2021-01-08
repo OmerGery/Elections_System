@@ -53,7 +53,7 @@ namespace votes
 		virtual void AddCounty(string name, int delegatesNum, bool simple) = 0;
 		virtual bool AddCitizen(string name, int id, int year, int countynum) = 0;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;
-
+		const int getElectionYear()const { return _electionday.getYear(); }
 		void PrintAllCitizens()const;
 		void PrintAllParties() const;
 		virtual void PrintAllCounties() const = 0;

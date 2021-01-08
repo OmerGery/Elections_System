@@ -12,11 +12,11 @@
 #include "RegularApp.h"
 #include <iostream>
 #include <fstream>
-#define rcastcc reinterpret_cast<const char*>
-#define rcastc reinterpret_cast<char*>
-
+//#define rcastcc reinterpret_cast<const char*>
+//#define rcastc reinterpret_cast<char*>
 using namespace std;
 using namespace votes;
+static const int maxDayPerMonth[13] = { -1,31,28,31,30, 31, 30, 31, 31, 30, 31, 30, 31 };
 enum options {
     AddCounty=1, AddCitizen, AddParty, AddDelegate, DisplayCounties, DisplayCitizens, DisplayParties, Vote, ShowRes, Exit, Save, Load
 }option;
@@ -34,11 +34,9 @@ int main()
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
     string name, fname, errorName;
     int option, delegatesNum, id, day, month, year, countyNum, partyNum, type;
-    bool correctInput; // used for input checks 
     bool exit=false, prexit=false;
     App* mainApp = nullptr;
     Date date;
-    
     while (!prexit)
     {
         try {
@@ -56,8 +54,8 @@ int main()
                 cin >> day;
                 cout << "Please enter election month" << endl;
                 cin >> month;
-                //if (need to use Avi's calander and check date and month)
-                    //throw (errorName = "Date wasn't valid, out of the calander");
+                if (month < 1 || day > maxDayPerMonth[month] || day<1)
+                    throw (errorName = "Date wasn't valid, out of the calander");
                 cout << "Please enter election year" << endl;
                 cin >> year;
                 if (year < 0)
@@ -139,7 +137,7 @@ int main()
                         throw (errorName = "The ID is invalid, must be 9 digits length");
                 cout << "Please Enter year of birth" << endl;
                 cin >> year;
-                if (year > date.getYear() - MIN_AGE) // need to fix, get year via app 
+                if (year > mainApp->getElectionYear() - MIN_AGE)
                     throw (errorName = "Year is invalid, in order to vote you need to be at least 18 years old");
                 cout << "Please Enter serial number of county" << endl;
                 cin >> countyNum;
