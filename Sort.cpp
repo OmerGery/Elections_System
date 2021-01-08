@@ -1,7 +1,7 @@
 #include "Sort.h"
 namespace votes
 {
-	void bubbleSort(Elector* Electors, int size)
+	void bubbleSort(vector<Elector>& Electors, int size)
 	{
 		int i, j;
 		for (i = 0; i < size - 1; i++)
@@ -9,7 +9,7 @@ namespace votes
 				if (Electors[j].sumElectors > Electors[j + 1].sumElectors)
 					swap(Electors[j], Electors[j + 1]);
 	}
-	void bubbleSort(voteData* voteDataArr, int size)
+	void bubbleSort(vector <voteData>& voteDataArr, int size)
 	{
 		int i, j;
 		for (i = 0; i < size - 1; i++)

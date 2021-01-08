@@ -58,7 +58,8 @@ namespace votes
 		int DeligatesPrinted,partyNumber,totalDels;
 		int numdeligates = CountyArray.getDelegatesArrSize(1);
 		cout << "The total voting precntage is: " << _statisticsMatrix[1][0] * 100 << "%" << endl;
-		voteData* voteDataArr = new voteData[_partiesSize + 1];
+		vector <voteData> voteDataArr;
+		voteDataArr.resize(_partiesSize + 1);
 		voteDataArr[0].sumDelegates = -1;
 		for (int j = 1; j <= _partiesSize; j++)
 		{
@@ -101,7 +102,6 @@ namespace votes
 				}
 			}
 		}
-		delete[] voteDataArr;
 		return true;
 	}
 }

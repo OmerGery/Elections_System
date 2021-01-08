@@ -24,6 +24,6 @@ namespace votes
 		a = b;
 		b = c;
 	}
-	void bubbleSort(Elector* Electors, int size);
-	void bubbleSort(voteData* voteDataArr, int size);	
+	void bubbleSort(vector<Elector>& Electors, int size);
+	void bubbleSort(vector<voteData>& voteDataArr, int size);	
 }

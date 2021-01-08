@@ -105,7 +105,9 @@ namespace votes
 			}
 			CountyArray.printWinnersOfCounty(_voteCountMatrix[i], _electorsMatrix[i], i, _partiesSize, partyList);
 		}
-		Elector* electorsArray = new Elector[_partiesSize + 1];
+		
+		vector <Elector> electorsArray;
+		electorsArray.resize(_partiesSize + 1);
 		electorsArray[0].sumElectors = -1;
 		for (int j = 1; j <= _partiesSize; j++)
 		{
@@ -119,7 +121,6 @@ namespace votes
 			cout << "#" << _partiesSize - i + 1 << ". " << electorsArray[i].party->getLeader()->getName() << " Has got: "
 			<< electorsArray[i].sumElectors << " Electors and his party got " <<
 			this->_voteCountMatrix[0][electorsArray[i].party->getPartySerial()] << " votes" << endl;
-		delete[] electorsArray;
 		return true;
 		
 	}

@@ -25,7 +25,8 @@ namespace votes
 	{
 
 		int size = partiesSize + 1;
-		Elector* electorsArray = new Elector[size];
+		vector <Elector> electorsArray;
+		electorsArray.resize(partiesSize + 1);
 		electorsArray[0].sumElectors = -1;
 		list<Party*>::const_iterator it = partylist.begin();
 		advance(it, 1);
