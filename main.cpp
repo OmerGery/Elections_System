@@ -6,7 +6,6 @@
 #include "County.h"
 #include "CountyArr.h"
 #include "CountyDelegate.h"
-#include "PartyList.h"  
 #include "App.h"
 #include "SimpleApp.h"
 #include "RegularApp.h"
@@ -35,6 +34,7 @@ int main()
     bool exit=false, prexit=false;
     App* mainApp = nullptr;
     Date date;
+    int loaded = 0;
     while (!prexit)
     {
         try {
@@ -174,6 +174,8 @@ int main()
                 mainApp->Vote(id, partyNum);
                 break;
             case options::ShowRes:
+                if (loaded)
+                    int x = 1;
                 mainApp->printVotes();
                 break;
             case options::Exit:
@@ -203,6 +205,7 @@ int main()
                     mainApp = new RegularApp(date);
                 mainApp->loadApp(infile);
                 infile.close();
+                loaded = 1;
                 break;
             default:
                 cout << "Please select an option between 1-12." << endl;

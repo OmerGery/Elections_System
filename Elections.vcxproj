@@ -149,7 +149,6 @@
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Party.cpp" />
-    <ClCompile Include="PartyList.cpp" />
     <ClCompile Include="RegularApp.cpp" />
     <ClCompile Include="SimpleApp.cpp" />
     <ClCompile Include="SimpleCounty.cpp" />
@@ -167,7 +166,6 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="Party.h" />
-    <ClInclude Include="PartyList.h" />
     <ClInclude Include="RegularApp.h" />
     <ClInclude Include="SimpleApp.h" />
     <ClInclude Include="SimpleCounty.h" />

@@ -5,7 +5,6 @@
 #include "County.h"
 #include "CountyArr.h"
 #include "CountyDelegate.h"
-#include "PartyList.h"
 #include "App.h"
 #include "Sort.h"
 #include <vector>
@@ -33,12 +32,14 @@ namespace votes
 	}
 	void App::PrintAllParties() const
 	{
-		if (getPListData(1)==nullptr)
+			list<Party*>::const_iterator it = partyList.begin();
+			advance(it, 1);
+		if (*it==nullptr)
 		{
 			cout << "You haven't entered any parties." << endl;
 			return;
 		}
-		int partiesSize = getPListData(1)->getPartyCounter();
+		int partiesSize = (*it)->getPartyCounter();
 		int countiesSize = CountyArray.getSize();
 		for (int i = 1; i <= partiesSize; i++)
 		{
@@ -58,7 +59,7 @@ namespace votes
 		if (leader == nullptr)
 			throw (errorName = "This Party leader ID doesn't match any Citizen's ID");
 		Party* newparty=new Party(partyname, leader);
-		AddToPlist(newparty);
+		partyList.push_back(newparty);
 		return true;
 	}
 	bool App::Vote(int id, int partyNum)
@@ -77,7 +78,7 @@ namespace votes
 	bool App::printVotes()
 	{
 		string errorName;
-		if (getPListSize() < 1)
+		if (static_cast<int>(partyList.size() - 1) < 1)
 			throw (errorName = "Can't show elections results, need to add parties before");
 		cout << _electionday;
 		calcVotes();
@@ -103,10 +104,13 @@ namespace votes
 	}
 	void App::savePartyLeaders(ostream& out) const
 	{
-		for (int i = 1; i <= getPListSize(); i++)
+		list<Party*>::const_iterator runner = partyList.begin();
+		advance(runner, 1);
+		for (int i = 1; i <= static_cast<int>(partyList.size() - 1); i++)
 		{
-			int leaderID = getPListData(i)->getLeader()->getID();
+			int leaderID = (*runner)->getLeader()->getID();
 			out.write(rcastcc(&leaderID), sizeof(leaderID));
+			advance(runner, 1);
 		}
 	}
 	
@@ -116,7 +120,7 @@ namespace votes
 		{
 			County* currentCounty = CountyArray.getCounty(i);
 			int citizensInCounty = currentCounty->getCountySize();
-			for (int j = 1; j < citizensInCounty; j++) // was <= , don't know why, there's a correletion problem and there are a lot of things we need to change in order it would make sense with list type
+			for (int j = 0; j < citizensInCounty; j++) 
 			{
 				Citizen* current=currentCounty->getCitizenByIndex(j);
 				int partyvotedto=-1;
@@ -133,7 +137,7 @@ namespace votes
 		{
 			County* currentCounty = CountyArray.getCounty(i);
 			int citizensInCounty = currentCounty->getCountySize();
-			for (int j = 1; j < citizensInCounty; j++) // was <= , don't know why, there's a correletion problem and there are a lot of things we need to change in order it would make sense with list type
+			for (int j = 0; j < citizensInCounty; j++) 
 			{
 				Citizen* current = currentCounty->getCitizenByIndex(j);
 				int partyvotedto;
@@ -148,13 +152,16 @@ namespace votes
 	}
 	void App::loadPartyLeaders(istream& in)
 	{
-		for (int i = 1; i <= getPListSize(); i++)
+		list<Party*>::const_iterator partyRunner = partyList.begin();
+		advance(partyRunner, 1);
+		for (int i = 1; i <= static_cast<int>(partyList.size() - 1); i++)
 		{
 			int leaderID;
 			in.read(rcastc(&leaderID), sizeof(leaderID));
-			Party* current = getPListData(i);
+			Party* current = *partyRunner;
 			Citizen* currentLeader = CountyArray.getCitizen(leaderID);
 			current->setLeader(currentLeader);
+			advance(partyRunner, 1);
 		}
 	}
 	void App::saveCountiesDelegates(ostream& out) const
@@ -195,11 +202,6 @@ namespace votes
 		}
 	}
 	//Party:
-	bool App::AddToPlist(Party* party)
-	{
-		partyList.push_back(party);
-		return true;
-	}
 	void App::PrintaParty(int partyserial) const
 	{
 		Party* party = getPListData(partyserial);
@@ -217,11 +219,15 @@ namespace votes
 	}
 	void App::savePartyList(ostream& out) const
 	{
-		int size = getPListSize();
+		int size = static_cast<int>(partyList.size() - 1);
 		out.write(rcastcc(&size), sizeof(size));
-		std::list<Party*>::const_iterator it;
+		std::list<Party*>::const_iterator PListRunner= partyList.begin();
+		advance(PListRunner, 1);
 		for (int i = 1; i <= size; i++)
-			getPListData(i)->saveParty(out);
+		{
+			(*PListRunner)->saveParty(out);
+			advance(PListRunner, 1);
+		}
 	}
 	void App::loadPartyList(istream& in)
 	{
@@ -231,7 +237,7 @@ namespace votes
 		{
 			Party* toadd = new Party();
 			toadd->loadParty(in);
-			AddToPlist(toadd);
+			partyList.push_back(toadd);
 		}
 	}
 	/////////

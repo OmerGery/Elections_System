@@ -6,7 +6,6 @@
 #include "County.h"
 #include "CountyArr.h"
 #include "CountyDelegate.h"
-#include "PartyList.h"
 #include "SimpleCounty.h"
 #include "ComplexCounty.h"
 #include <vector>
@@ -69,10 +68,7 @@ namespace votes
 		void loadCountiesDelegates(istream& in);
 
 		//party:
-		bool AddToPlist(Party* party);
 		Party* getPListData(int index) const;
-		const int getPListSize() const { return static_cast<int>(partyList.size() - 1); }
-
 		void PrintaParty(int partyserial) const;
 		void PrintLeader(int partySerial) const;
 

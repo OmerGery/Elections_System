@@ -2,7 +2,6 @@
 
 #include "Party.h"
 #include "CitizenList.h"
-#include "PartyList.h"
 #include "Citizen.h"
 #include "CountyDelegateArr.h"
 #include "CountyDelegate.h"
