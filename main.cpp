@@ -135,11 +135,11 @@ int main()
                 cin >> name;
                 cout << "Please Enter ID number" << endl;
                 cin >> id;
-                    if (id < 111111111 || id > 999999999)
+                    if (id < 100000000 || id > 999999999)
                         throw (errorName = "The ID is invalid, must be 9 digits length");
                 cout << "Please Enter year of birth" << endl;
                 cin >> year;
-                if (year > date.getYear() - MIN_AGE)
+                if (year > date.getYear() - MIN_AGE) // need to fix, get year via app 
                     throw (errorName = "Year is invalid, in order to vote you need to be at least 18 years old");
                 cout << "Please Enter serial number of county" << endl;
                 cin >> countyNum;

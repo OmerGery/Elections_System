@@ -73,8 +73,9 @@ namespace votes
 	}
 	bool App::printVotes()
 	{
+		string errorName;
 		if (this->partyList.getSize() < 1)
-			return false;
+			throw (errorName = "Can't show elections results, need to add parties before");
 		cout << _electionday;
 		calcVotes();
 		return true;
