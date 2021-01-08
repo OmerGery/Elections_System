@@ -67,7 +67,7 @@ namespace votes
 			voteDataArr[j].precentage =_statisticsMatrix[1][j]*100;
 			voteDataArr[j].numVotes = _voteCountMatrix[0][j];
 		}
-		bubbleSortvoteData(voteDataArr, _partiesSize + 1);
+		bubbleSort(voteDataArr, _partiesSize + 1);
 		cout << "The final election results are: " << endl;
 
 		for (int i = _partiesSize; i > 0; i--)

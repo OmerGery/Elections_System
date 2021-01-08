@@ -17,8 +17,13 @@ namespace votes
 		int numVotes;
 		float precentage;
 	};
-	void swap(Elector& a, Elector& b);
+	template<class T>
+	void swap(T& a, T& b)
+	{
+		T c = a;
+		a = b;
+		b = c;
+	}
 	void bubbleSort(Elector* Electors, int size);
-	void swapvoteData(voteData& a, voteData& b);
-	void bubbleSortvoteData(voteData* voteDataArr, int size);
+	void bubbleSort(voteData* voteDataArr, int size);	
 }

@@ -36,7 +36,7 @@ namespace votes
 			advance(it, 1);
 		}
 
-		bubbleSort(electorsArray, size);
+		bubbleSort(electorsArray,size);
 		for (int i = partiesSize; i > 0; i--)
 			cout << "#" << partiesSize - i + 1 << ". " << electorsArray[i].party->getLeader()->getName() << " Has got: "
 			<< electorsArray[i].sumElectors << " Electors and his party got " <<
