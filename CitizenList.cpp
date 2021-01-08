@@ -3,81 +3,43 @@
 #include "CitizenList.h"
 #include <string.h>
 #include <vector>
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
 namespace votes
 {
-	CitizenList::~CitizenList()
-	{
-		CzListNode* deleter = this->_head;
-		if (deleter == nullptr)
-			return;
-		if (deleter->_next == nullptr)
-		{
-			delete deleter->_data;
-			delete deleter;
-			return;
-		}
-		CzListNode* runner = deleter;
-		while (runner != nullptr)
-		{
-			deleter = runner;
-			runner = runner->_next;
- 			delete deleter->_data;
-			delete deleter;
-		}
-	}
+	
 	bool CitizenList::AddCitizen(Citizen* toadd)
 	{
-		CzListNode* newTail = new CzListNode(toadd, nullptr, _tail);
-		if (_head == nullptr)
-		{
-			_head = newTail;
-			_tail = newTail;
-		}
-		else 
-		{
-			_tail->_next = newTail;
-			_tail = newTail;
-		}
-		_size++;
+		CList.push_back(toadd);
 		return true;
 	}
 	Citizen* CitizenList::getData(int index) const
 	{
-		CzListNode* toReturn = _head;
-		if (index < 1 || toReturn == nullptr)
-			return nullptr;
-		for (int i = 1; i < index; i++)
-		{
-			if (toReturn == NULL)
-				return nullptr;
-			toReturn = toReturn->_next;
-		}
-		return toReturn->_data;
+		list<Citizen*>::const_iterator it = CList.begin();
+		advance(it, index);
+		return *it;
 	}
 	void CitizenList::PrintList(string countyName) const
 	{
-		CzListNode* current = _head;
-		while (current != nullptr)
+		int size = getSize();
+		for (int i = 0; i < size; i++)
 		{
-			Citizen* C_Citizen = current->_data;
-			cout << *(C_Citizen);
+			Citizen* c_citizen = this->getData(i);
+			cout << *c_citizen;
 			cout << " County: " << countyName << endl;
-			
-			current = current->_next;
 		}
 	}
 	
 	void CitizenList::getVotes(vector<int>& voteArr) const
 	{
-		CzListNode* current = _head;
 		int currentVote;
+		int size = getSize();
 		const Party* PartyVotedTo;
-		while (current != nullptr)
+		for (int i = 0; i < size; i++)
 		{
-			PartyVotedTo = current->_data->getVote();
+			PartyVotedTo = this->getData(i)->getVote();
 			if (PartyVotedTo)
 				currentVote = PartyVotedTo->getPartySerial();
 			else
@@ -87,40 +49,35 @@ namespace votes
 				voteArr[currentVote]++;
 				voteArr[0]++;
 			}
-			current = current->_next;
 		}
 	}
 	Citizen* CitizenList::findCitizen(int id) const
 	{
-		CzListNode* toReturn = _head;
-		while (toReturn!=nullptr)
+		int size = getSize();
+		for (int i = 0; i < size; i++)
 		{
-			if (toReturn->_data->getID() == id)
-				return toReturn->_data;
-			toReturn = toReturn->_next;
+			if (this->getData(i)->getID() == id)
+				return this->getData(i);
 		}
 		return nullptr;
 	}
 	void CitizenList::saveCitizensList(ostream& out) const
 	{
-		CzListNode* saver =_head;
-		out.write(rcastcc(&_size), sizeof(_size));
-		while(saver!=nullptr)
-		{
-			saver->_data->saveCitizen(out);
-			saver = saver->_next;
-		}
+		int size = getSize();
+		out.write(rcastcc(&size), sizeof(size));
+		std::list<Citizen*>::const_iterator it;
+		for (int i = 0; i <size; i++)
+			this->getData(i)->saveCitizen(out);
 	}
 	void CitizenList::loadCitizensList(istream& in)
 	{
-		int loadSize=_size;
+		int loadSize = CList.size();
 		in.read(rcastc(&loadSize), sizeof(loadSize));
-		for(int i=0;i<loadSize;i++)
+		for (int i = 0; i < loadSize; i++)
 		{
-			Citizen* toadd =new Citizen();
+			Citizen* toadd = new Citizen();
 			toadd->loadCitizen(in);
 			this->AddCitizen(toadd);
 		}
 	}
-
 }

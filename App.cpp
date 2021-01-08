@@ -111,7 +111,7 @@ namespace votes
 		{
 			County* currentCounty = CountyArray.getCounty(i);
 			int citizensInCounty = currentCounty->getCountySize();
-			for (int j = 1; j <= citizensInCounty; j++)
+			for (int j = 1; j < citizensInCounty; j++) // was <= , don't know why, there's a correletion problem and there are a lot of things we need to change in order it would make sense with list type
 			{
 				Citizen* current=currentCounty->getCitizenByIndex(j);
 				int partyvotedto=-1;
@@ -128,7 +128,7 @@ namespace votes
 		{
 			County* currentCounty = CountyArray.getCounty(i);
 			int citizensInCounty = currentCounty->getCountySize();
-			for (int j = 1; j <= citizensInCounty; j++)
+			for (int j = 1; j < citizensInCounty; j++) // was <= , don't know why, there's a correletion problem and there are a lot of things we need to change in order it would make sense with list type
 			{
 				Citizen* current = currentCounty->getCitizenByIndex(j);
 				int partyvotedto;
