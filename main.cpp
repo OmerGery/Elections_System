@@ -206,7 +206,6 @@ int main()
                 }
                 mainApp->loadApp(infile);
                 infile.close();
-                loaded = 1;
                 break;
             default:
                 cout << "Please select an option between 1-12." << endl;

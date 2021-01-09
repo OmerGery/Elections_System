@@ -165,7 +165,6 @@
     <ClInclude Include="CountyDelegateArr.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="DynamicArray.h" />
-    <ClInclude Include="Global.h" />
     <ClInclude Include="Party.h" />
     <ClInclude Include="RegularApp.h" />
     <ClInclude Include="SimpleApp.h" />

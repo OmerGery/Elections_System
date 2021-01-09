@@ -18,7 +18,7 @@ namespace votes
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) override;
 
 		virtual void PrintAllCounties() const override;
-		virtual bool printVotes() override;
+		virtual void printVotes() override;
 
 		virtual void saveApp(ostream& out) const override;
 		

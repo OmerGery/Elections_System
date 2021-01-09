@@ -62,7 +62,7 @@ namespace votes
 		void PrintAllCitizens()const;
 		void PrintAllParties() const;
 		virtual void PrintAllCounties() const = 0;
-		virtual bool printVotes() = 0;
+		virtual void printVotes() = 0;
 
 		virtual void saveApp(ostream& out)const=0;
 		void loadApp(istream& in);

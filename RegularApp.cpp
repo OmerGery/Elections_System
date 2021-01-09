@@ -71,11 +71,9 @@ namespace votes
 	}
 
 	// print for each county : name , amount of Delegates that the county gives , leader name of the winning party.
-	bool RegularApp::printVotes()
+	void RegularApp::printVotes()
 	{
-		bool votes = App::printVotes();
-		if (!votes)
-			return false;
+		App::printVotes();
 		int i, j, DeligatesPrinted, max = -1, partyNum = -1;
 		for (i = 1; i <= _countiesSize; i++)
 		{
@@ -131,7 +129,5 @@ namespace votes
 			cout << "#" << _partiesSize - i + 1 << ". " << electorsArray[i].party->getLeader()->getName() << " Has got: "
 			<< electorsArray[i].sumElectors << " Electors and his party got " <<
 			this->_voteCountMatrix[0][electorsArray[i].party->getPartySerial()] << " votes" << endl;
-		return true;
-		
 	}
 }

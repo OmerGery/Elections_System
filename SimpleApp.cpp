@@ -58,11 +58,9 @@ namespace votes
 		out.write(rcastcc(&SIMPLE), sizeof(SIMPLE));
 		App::saveApp(out);
 	}
-	bool SimpleApp::printVotes()
+	void SimpleApp::printVotes()
 	{
-		bool votes = App::printVotes();
-		if (!votes)
-			return false;
+		App::printVotes();
 		int DeligatesPrinted,partyNumber,totalDels;
 		int numdeligates = CountyArray.getDelegatesArrSize(1);
 		cout << "The total voting precntage is: " << _statisticsMatrix[1][0] * 100 << "%" << endl;
@@ -110,6 +108,5 @@ namespace votes
 				}
 			}
 		}
-		return true;
 	}
 }

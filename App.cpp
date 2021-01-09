@@ -72,14 +72,13 @@ namespace votes
 			throw (errorName = "Party Serial number is invalid");
 		citizen->vote(PartyVote);
 	}
-	bool App::printVotes()
+	void App::printVotes()
 	{
 		string errorName;
 		if (static_cast<int>(partyList.size() - 1) < 1)
 			throw (errorName = "Can't show elections results, need to add parties before");
 		cout << _electionday;
 		calcVotes();
-		return true;
 	}
 	void App::saveApp(ostream& out)const
 	{
