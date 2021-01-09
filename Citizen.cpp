@@ -2,7 +2,7 @@
 #include "Citizen.h"
 #include "Party.h"
 #include <iostream>
-#include <string.h>
+ 
 using namespace std;
 namespace votes
 {

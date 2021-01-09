@@ -5,7 +5,7 @@
 #include "CountyArr.h"
 #include "CountyDelegate.h"
 #include <iostream>
-#include <string.h>
+ 
 
 using namespace std;
 

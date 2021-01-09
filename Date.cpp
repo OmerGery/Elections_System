@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Date.h"
-#include <string.h>
+ 
 #include <iostream>
 using namespace std;
 namespace votes

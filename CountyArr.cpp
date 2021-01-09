@@ -3,7 +3,7 @@
 #include "CountyArr.h"
 #include "SimpleCounty.h"
 #include "ComplexCounty.h"
-#include <string.h>
+ 
 #include <iostream>
 
 using namespace std;
@@ -150,6 +150,7 @@ namespace votes
     }
     void countyArr::loadCountyArray(istream& in)
     {
+        string errorName;
         int loadedCounites;
         in.read(rcastc(&loadedCounites), sizeof(loadedCounites));
         for (int i = 1; i < loadedCounites; ++i)
@@ -157,10 +158,18 @@ namespace votes
             int type;
             in.read(rcastc(&type), sizeof(type));
             County* county = nullptr;
-            if (type==SIMPLE)
+            if (type == SIMPLE)
+            {
                 county = new SimpleCounty();
+                if (!county)
+                    throw (errorName = "Memory Allocation failed.");
+            }
             else
+            {
                 county = new ComplexCounty();
+                if (!county)
+                    throw (errorName = "Memory Allocation failed.");
+            }
            county->loadCounty(in);
            countyArray.push_back(county);
         }

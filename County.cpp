@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "County.h"
 #include <iostream>
-#include <string.h>
+ 
 
 
 using namespace std;

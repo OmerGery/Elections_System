@@ -56,7 +56,7 @@ int main()
                     cin >> delegatesNum;
                     mainApp = new SimpleApp(date, delegatesNum);
                     if(!mainApp)
-                        throw (errorName = "Memory Allocation Of App failed.");
+                        throw (errorName = "Memory Allocation failed.");
                 }
                 else//type == COMPLEX
                 {

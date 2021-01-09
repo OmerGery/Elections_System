@@ -20,8 +20,13 @@ namespace votes
 	public:
 		DynamicArray(int size = 2) : _logical(0), _physical(size)
 		{
+			string errorName;
 			if (size > 0)
+			{
 				_array = new T[size];
+					if (!_array)
+						throw (errorName = "Memory Allocation failed.");
+			}
 			else
 				_array = nullptr;
 
@@ -38,12 +43,15 @@ namespace votes
 
 		const DynamicArray& operator=(const DynamicArray& other)
 		{
+			string errorName;
 			if (this != &other)
 			{
 				_logical = other._logical;
 				_physical = other._physical;
 				delete[] _array;
 				_array = new T[_physical];
+				if (!_array)
+					throw (errorName = "Memory Allocation failed.");
 				for (int i = 0; i < _logical; i++)
 					_array[i] = other._array[i];
 			}
@@ -360,8 +368,11 @@ namespace votes
 
 	private:
 		void resize() {
+			string errorName;
 			_physical *= 2;
 			T* temp = new T[_physical];
+			if (!temp)
+				throw (errorName = "Memory Allocation failed.");
 			for (int i = 0; i < _logical; i++)
 				temp[i] = _array[i];
 

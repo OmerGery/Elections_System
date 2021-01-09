@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Citizen.h"
 #include "CitizenList.h"
-#include <string.h>
+ 
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -70,11 +70,14 @@ namespace votes
 	}
 	void CitizenList::loadCitizensList(istream& in)
 	{
+		string errorName;
 		int loadSize = static_cast<int>(CList.size());
 		in.read(rcastc(&loadSize), sizeof(loadSize));
 		for (int i = 0; i < loadSize; i++)
 		{
 			Citizen* toadd = new Citizen();
+			if (!toadd)
+				throw (errorName = "Memory Allocation failed.");
 			toadd->loadCitizen(in);
 			this->AddCitizen(toadd);
 		}

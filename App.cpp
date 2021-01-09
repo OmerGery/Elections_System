@@ -9,7 +9,7 @@
 //#include "Sort.h"
 #include <vector>
 #include <iostream>
-#include <string.h>
+ 
 using namespace std;
 namespace votes
 {
@@ -59,6 +59,8 @@ namespace votes
 		if (leader == nullptr)
 			throw (errorName = "This Party leader ID doesn't match any Citizen's ID");
 		Party* newparty=new Party(partyname, leader);
+		if (!newparty)
+			throw (errorName = "Memory Allocation failed.");
 		partyList.push_back(newparty);
 		return true;
 	}
@@ -182,6 +184,7 @@ namespace votes
 	}
 	void App::loadCountiesDelegates(istream& in) 
 	{
+		string errorName;
 		for (int i = 1; i <= CountyArray.getSize(); i++)
 		{
 			County* currentCounty = CountyArray.getCounty(i);
@@ -196,6 +199,8 @@ namespace votes
 				in.read(rcastc(&partyID), sizeof(partyID));
 				Party* currentParty = getPListData(partyID);
 				CountyDelegate* Delegate = new CountyDelegate(currentDelegate, currentParty);
+				if (!Delegate)
+					throw (errorName = "Memory Allocation failed.");
 				CountyArray.addCDToCounty(Delegate, i);
 			}
 		}
@@ -230,11 +235,14 @@ namespace votes
 	}
 	void App::loadPartyList(istream& in)
 	{
+		string errorName;
 		int loadSize = static_cast<int>(partyList.size());
 		in.read(rcastc(&loadSize), sizeof(loadSize));
 		for (int i = 0; i < loadSize; i++)
 		{
 			Party* toadd = new Party();
+			if (!toadd)
+				throw (errorName = "Memory Allocation failed.");
 			toadd->loadParty(in);
 			partyList.push_back(toadd);
 		}

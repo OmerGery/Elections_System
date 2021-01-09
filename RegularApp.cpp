@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "RegularApp.h"
 #include <iostream>
-#include <string.h>
+ 
 using namespace std;
 namespace votes
 {
@@ -13,16 +13,27 @@ namespace votes
 		if (delegatesNum <= 0)
 			throw (errorName = "Number of delegate must be a positive number");
 		County* county = nullptr;
-		if (type==SIMPLE)
+		if (type == SIMPLE)
+		{
 			county = new SimpleCounty(name, delegatesNum);
+			if (!county)
+				throw (errorName = "Memory Allocation failed.");
+		}
 		else
+		{
 			county = new ComplexCounty(name, delegatesNum);
-		CountyArray.insert(county);
+			if (!county)
+				throw (errorName = "Memory Allocation failed.");
+			CountyArray.insert(county);
+		}
 	}
 	bool RegularApp::AddCitizen(string name, int id, int year, int countynum)
 	{
+		string errorName;
 		App::AddCitizen(name, id, year, countynum);
 		Citizen* newCitizen = new Citizen(name, id, year);
+		if (!newCitizen)
+			throw (errorName = "Memory Allocation failed.");
 		CountyArray.addCitizenToCounty(newCitizen, countynum);
 		return true;
 	}
@@ -40,6 +51,8 @@ namespace votes
 		if (countynum <= 0 || countynum > CountyArray.getSize())
 			throw (errorName = "County Number is invalid");
 		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
+		if (!Delegate)
+			throw (errorName = "Memory Allocation failed.");
 		CountyArray.addCDToCounty(Delegate, countynum);
 		return true;
 	}
