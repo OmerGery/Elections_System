@@ -11,15 +11,9 @@
 using namespace std;
 namespace votes
 {
-	App::App()
-	{
-		CountyArray.push_back(nullptr);
-		partyList.push_back(nullptr);
-		_partiesSize = 0;
-		_countiesSize = 0;
-	}
 	App::App(Date& electionday)
 	{
+		CountyArray.push_back(nullptr);
 		partyList.push_back(nullptr);
 		_partiesSize = 0;
 		_countiesSize = 0;
@@ -238,7 +232,7 @@ namespace votes
 			partyList.push_back(toadd);
 		}
 	}
-	bool App::AddCitizen(string name, int id, int year, int countynum)
+	void App::AddCitizen(string name, int id, int year, int countynum)
 	{
 		string errorName;
 		if (year > getElectionYear() - MIN_AGE)
@@ -246,7 +240,6 @@ namespace votes
 		Citizen* citizen = getCitizen(id);
 		if (citizen != nullptr)
 			throw (errorName = "Citizen ID already exists");
-		return true;
 	}
 	/////////
 		///COUNTY ARRAY______

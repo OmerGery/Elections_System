@@ -10,8 +10,8 @@ namespace votes
 		RegularApp(Date electionday) :App(electionday) {};
 
 		virtual void AddCounty(string name, int delegatesNum, int type) override;
-		virtual bool AddCitizen(string name, int id, int year, int countynum) override;
-		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) override;
+		virtual void AddCitizen(string name, int id, int year, int countynum) override;
+		virtual void AddCitizenAsDelegate(int id, int partynum, int countynum) override;
 
 		virtual void PrintAllCounties() const override;
 		void printVotes() override;

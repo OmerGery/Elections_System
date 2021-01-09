@@ -24,12 +24,6 @@
     <ClCompile Include="County.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CountyArr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CountyDelegate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Date.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,9 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="County.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CountyArr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CountyDelegate.h">

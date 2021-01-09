@@ -10,7 +10,7 @@ namespace votes
 		Party* _party;
 	public:
 		//ctors/dtors:
-		CountyDelegate(Citizen* delegate,Party* party);
+		CountyDelegate(Citizen* delegate, Party* party) : _delegate(delegate), _party(party) {}
 		CountyDelegate() { _delegate = nullptr; _party = nullptr; };
 		~CountyDelegate() {};
 		// we don't use a "CountyDelegate" by-val initing, but we make sure no code will be using default operator '=' or 'copy ctor' by cancelling them. 

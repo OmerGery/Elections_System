@@ -143,8 +143,6 @@
     <ClCompile Include="Citizen.cpp" />
     <ClCompile Include="ComplexCounty.cpp" />
     <ClCompile Include="County.cpp" />
-    <ClCompile Include="CountyArr.cpp" />
-    <ClCompile Include="CountyDelegate.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Party.cpp" />
@@ -158,7 +156,6 @@
     <ClInclude Include="Citizen.h" />
     <ClInclude Include="ComplexCounty.h" />
     <ClInclude Include="County.h" />
-    <ClInclude Include="CountyArr.h" />
     <ClInclude Include="CountyDelegate.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="DynamicArray.h" />

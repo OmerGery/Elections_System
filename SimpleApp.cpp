@@ -25,7 +25,7 @@ namespace votes
 		string errorName;
 		throw (errorName = "Can't add counties in this type of elections.");
 	}
-	bool SimpleApp::AddCitizen(string name, int id, int year, int countynum)
+	void SimpleApp::AddCitizen(string name, int id, int year, int countynum)
 	{
 		string errorName;
 		App::AddCitizen(name, id, year, countynum);
@@ -33,9 +33,8 @@ namespace votes
 		if (!newCitizen)
 			throw (errorName = "Memory Allocation failed.");
 		addCitizenToCounty(newCitizen, 1);
-		return true;
 	}
-	bool SimpleApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
+	void SimpleApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		string errorName;
 		if (searchDelegate(id))
@@ -50,7 +49,6 @@ namespace votes
 		if (!Delegate)
 			throw (errorName = "Memory Allocation failed.");
 		addCDToCounty(Delegate, 1);
-		return true;
 	}
 
 	void SimpleApp::saveApp(ostream& out)const

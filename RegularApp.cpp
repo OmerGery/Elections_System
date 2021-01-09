@@ -25,7 +25,7 @@ namespace votes
 		}
 		CountyArray.push_back(county);
 	}
-	bool RegularApp::AddCitizen(string name, int id, int year, int countynum)
+	void RegularApp::AddCitizen(string name, int id, int year, int countynum)
 	{
 		string errorName;
 		if (countynum > getSize() || countynum <= 0)
@@ -35,9 +35,8 @@ namespace votes
 		if (!newCitizen)
 			throw (errorName = "Memory Allocation failed.");
 		addCitizenToCounty(newCitizen, countynum);
-		return true;
 	}
-	bool RegularApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
+	void RegularApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		string errorName;
 		if (searchDelegate(id))
@@ -54,7 +53,6 @@ namespace votes
 		if (!Delegate)
 			throw (errorName = "Memory Allocation failed.");
 		addCDToCounty(Delegate, countynum);
-		return true;
 	}
 	void RegularApp::PrintAllCounties()const
 	{
