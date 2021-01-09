@@ -1,7 +1,12 @@
+
 #pragma once
 #include <fstream>
 #define rcastcc reinterpret_cast<const char*>
 #define rcastc reinterpret_cast<char*>
+using namespace std;
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
+static const int maxDayPerMonth[13] = { -1,31,28,31,30, 31, 30, 31, 31, 30, 31, 30, 31 };
 using namespace std;
 namespace votes
 {

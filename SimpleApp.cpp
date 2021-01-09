@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "SimpleApp.h"
-#include "Sort.h"
 #include <iostream>
 #include <string.h>
 using namespace std;
@@ -8,6 +7,9 @@ namespace votes
 {
 	SimpleApp::SimpleApp(Date electionday, int delegatesNum):App(electionday)
 	{
+		string errorName;
+		if (delegatesNum <= 0)
+			throw (errorName = "number of delegates must be positive");
 		County* county = new ComplexCounty(defaultName, delegatesNum);
 		CountyArray.insert(county);
 	}
@@ -15,16 +17,13 @@ namespace votes
 	{
 		cout << "There are no counties in this type of elections";
 	}
-	void SimpleApp::AddCounty(string name, int delegatesNum, bool simple)
+	void SimpleApp::AddCounty(string name, int delegatesNum, int type)
 	{
 		cout << "Can't add counties in this type of elections";
 	}
 	bool SimpleApp::AddCitizen(string name, int id, int year, int countynum)
 	{
-		string errorName;
-		Citizen* citizen = CountyArray.getCitizen(id);
-		if (citizen != nullptr)
-			throw (errorName = "Citizen ID already exists");
+		App::AddCitizen(name, id, year, countynum);
 		Citizen* newCitizen = new Citizen(name, id, year);
 		CountyArray.addCitizenToCounty(newCitizen, 1);
 		return true;

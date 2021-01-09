@@ -26,7 +26,5 @@ namespace votes
 
 		void saveCitizensList(ostream& out) const;
 		void loadCitizensList(istream& in);
-
-
 	};
 }

@@ -31,7 +31,6 @@ namespace votes
 			cout << " County: " << countyName << endl;
 		}
 	}
-	
 	void CitizenList::getVotes(vector<int>& voteArr) const
 	{
 		int currentVote;

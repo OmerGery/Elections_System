@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Party.h"
 #include "CitizenList.h"
 #include "Citizen.h"

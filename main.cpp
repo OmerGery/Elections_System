@@ -13,17 +13,12 @@
 #include <fstream>
 using namespace std;
 using namespace votes;
-static const int maxDayPerMonth[13] = { -1,31,28,31,30, 31, 30, 31, 31, 30, 31, 30, 31 };
 enum options {
     AddCounty=1, AddCitizen, AddParty, AddDelegate, DisplayCounties, DisplayCitizens, DisplayParties, Vote, ShowRes, Exit, Save, Load
 }option;
 enum preOptions {
     NewRound = 1, LoadVotes, PreExit
 }preoption;
-
-//MIN and MAX - modify the maximum and minimum age for a citizen to vote:
-static const int MIN_AGE = 18;
-
 int main()
 { 
     ifstream infile;
@@ -52,23 +47,23 @@ int main()
                 cin >> day;
                 cout << "Please enter election month" << endl;
                 cin >> month;
-                if (month < 1 || day > maxDayPerMonth[month] || day<1)
-                    throw (errorName = "Date wasn't valid, out of the calander");
                 cout << "Please enter election year" << endl;
                 cin >> year;
-                if (year < 0)
-                    throw (errorName = "Year can't be a negative number");
                 date = Date(day, month, year);
                 if (type == SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
                 {
                     cout << "Enter number of delegates" << endl;
                     cin >> delegatesNum;
-                    if (delegatesNum <= 0)
-                        throw (errorName = "number of delegates must be positive");
                     mainApp = new SimpleApp(date, delegatesNum);
+                    if(!mainApp)
+                        throw (errorName = "Memory Allocation Of App failed.");
                 }
                 else//type == COMPLEX
+                {
                     mainApp = new RegularApp(date);
+                    if (!mainApp)
+                        throw (errorName = "Memory Allocation Of App failed.");
+                }
                 prexit = true;
                 break;
             case preOptions::LoadVotes:
@@ -80,9 +75,17 @@ int main()
                 infile.read(rcastc(&type), sizeof(type));
                 date = Date();
                 if (type == SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
+                {
                     mainApp = new SimpleApp(date);
+                    if (!mainApp)
+                        throw (errorName = "Memory Allocation Of App failed.");
+                }
                 else//type == COMPLEX
+                {
                     mainApp = new RegularApp(date);
+                    if (!mainApp)
+                        throw (errorName = "Memory Allocation Of App failed.");
+                }
                 mainApp->loadApp(infile);
                 infile.close();
                 prexit = true;
@@ -116,14 +119,10 @@ int main()
             case options::AddCounty:
                 cout << "Please Enter 1 for simple county or 0 for split county" << endl;
                 cin >> type;
-                if (type != SIMPLE && type != COMPLEX)
-                    throw (errorName = "County Type isn't valid (need to be 0 or 1)");
                 cout << "Enter the County name" << endl;
                 cin >> name;
                 cout << "Enter number of delegates" << endl;
                 cin >> delegatesNum;
-                if (delegatesNum <= 0)
-                    throw (errorName = "Number of delegate must be a positive number");
                 mainApp->AddCounty(name, delegatesNum, type);
                 break;
             case options::AddCitizen:
@@ -131,12 +130,8 @@ int main()
                 cin >> name;
                 cout << "Please Enter ID number" << endl;
                 cin >> id;
-                    if (id < 100000000 || id > 999999999)
-                        throw (errorName = "The ID is invalid, must be 9 digits length");
                 cout << "Please Enter year of birth" << endl;
                 cin >> year;
-                if (year > mainApp->getElectionYear() - MIN_AGE)
-                    throw (errorName = "Year is invalid, in order to vote, one must need to be at least 18 years old");
                 cout << "Please Enter serial number of county" << endl;
                 cin >> countyNum;
                 mainApp->AddCitizen(name, id, year, countyNum);
@@ -200,9 +195,17 @@ int main()
                 date = Date();
                 infile.read(rcastc(&type), sizeof(type));
                 if (type == SIMPLE)
+                {
                     mainApp = new SimpleApp(date);
+                    if (!mainApp)
+                        throw (errorName = "Memory Allocation Of App failed.");
+                }
                 else
+                {
                     mainApp = new RegularApp(date);
+                           if(!mainApp)
+                        throw (errorName = "Memory Allocation Of App failed.");
+                }
                 mainApp->loadApp(infile);
                 infile.close();
                 loaded = 1;

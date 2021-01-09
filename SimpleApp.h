@@ -13,7 +13,7 @@ namespace votes
 		SimpleApp(Date electionday, int delegatesNum); 
 		SimpleApp(Date electionday) :App(electionday) {}// CTOR to make an "empty simple app"
 
-		virtual void AddCounty(string name, int delegatesNum, bool simple) override;
+		virtual void AddCounty(string name, int delegatesNum, int type) override;
 		virtual bool AddCitizen(string name, int id, int year, int countynum) override;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) override;
 

@@ -1,15 +1,19 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "RegularApp.h"
-#include "Sort.h"
 #include <iostream>
 #include <string.h>
 using namespace std;
 namespace votes
 {
-	void RegularApp::AddCounty(string name, int delegatesNum, bool simple)
+	void RegularApp::AddCounty(string name, int delegatesNum, int type)
 	{
+		string errorName;
+		if (type != SIMPLE && type != COMPLEX)
+			throw (errorName = "County Type isn't valid (need to be 0 or 1)");
+		if (delegatesNum <= 0)
+			throw (errorName = "Number of delegate must be a positive number");
 		County* county = nullptr;
-		if (simple)
+		if (type==SIMPLE)
 			county = new SimpleCounty(name, delegatesNum);
 		else
 			county = new ComplexCounty(name, delegatesNum);
@@ -17,12 +21,7 @@ namespace votes
 	}
 	bool RegularApp::AddCitizen(string name, int id, int year, int countynum)
 	{
-		string errorName;
-		if (countynum > CountyArray.getSize() || countynum <= 0)
-			throw (errorName = "County number doesn't exist/negative");
-		Citizen* citizen = CountyArray.getCitizen(id);
-		if (citizen != nullptr)
-			throw (errorName = "Citizen ID already exists");
+		App::AddCitizen(name, id, year, countynum);
 		Citizen* newCitizen = new Citizen(name, id, year);
 		CountyArray.addCitizenToCounty(newCitizen, countynum);
 		return true;

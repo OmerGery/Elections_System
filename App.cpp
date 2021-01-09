@@ -6,7 +6,7 @@
 #include "CountyArr.h"
 #include "CountyDelegate.h"
 #include "App.h"
-#include "Sort.h"
+//#include "Sort.h"
 #include <vector>
 #include <iostream>
 #include <string.h>
@@ -113,7 +113,6 @@ namespace votes
 			advance(runner, 1);
 		}
 	}
-	
 	void App::saveCitizenVotes(ostream& out) const
 	{
 		for (int i = 1; i <= CountyArray.getSize(); i++)
@@ -239,6 +238,18 @@ namespace votes
 			toadd->loadParty(in);
 			partyList.push_back(toadd);
 		}
+	}
+	bool App::AddCitizen(string name, int id, int year, int countynum)
+	{
+		string errorName;
+		if (id < 100000000 || id > 999999999)
+			throw (errorName = "The ID is invalid, must be 9 digits length");
+		if (year > getElectionYear() - MIN_AGE)
+			throw (errorName = "Year is invalid, in order to vote, one must need to be at least 18 years old");
+		Citizen* citizen = CountyArray.getCitizen(id);
+		if (citizen != nullptr)
+			throw (errorName = "Citizen ID already exists");
+		return true;
 	}
 	/////////
 	// CALCS: 

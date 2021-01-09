@@ -1,3 +1,4 @@
+
 #pragma once
 #include "Citizen.h"
 #include "Party.h"
@@ -14,6 +15,11 @@
 #include <fstream>
 #define rcastcc reinterpret_cast<const char*>
 #define rcastc reinterpret_cast<char*>
+using namespace std;
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
+//MIN and MAX - modify the maximum and minimum age for a citizen to vote:
+static const int MIN_AGE = 18;
 using namespace std;
 namespace votes
 {
@@ -49,7 +55,7 @@ namespace votes
 
 		bool AddParty(string partyname, int idCandidate);
 		bool Vote(int id, int partyNum);
-		virtual void AddCounty(string name, int delegatesNum, bool simple) = 0;
+		virtual void AddCounty(string name, int delegatesNum, int type) = 0;
 		virtual bool AddCitizen(string name, int id, int year, int countynum) = 0;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;
 		const int getElectionYear()const { return _electionday.getYear(); }
@@ -68,6 +74,7 @@ namespace votes
 		void loadCountiesDelegates(istream& in);
 
 		//party:
+
 		Party* getPListData(int index) const;
 		void PrintaParty(int partyserial) const;
 		void PrintLeader(int partySerial) const;

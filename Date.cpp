@@ -2,7 +2,6 @@
 #include "Date.h"
 #include <string.h>
 #include <iostream>
-
 using namespace std;
 namespace votes
 {
@@ -14,6 +13,11 @@ namespace votes
 	}
 	Date::Date(int day ,int month , int year)
 	{
+		string errorName;
+		if (year < 0)
+			throw (errorName = "Year can't be a negative number");
+		if (month < 1 || day > maxDayPerMonth[month] || day < 1)
+			throw (errorName = "Date wasn't valid, out of the calander");
 		_day = day;
 		_month = month;
 		_year = year;
