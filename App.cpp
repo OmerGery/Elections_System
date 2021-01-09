@@ -36,10 +36,8 @@ namespace votes
 		int partiesSize =static_cast<int>(partyList.size());
 		if (partiesSize<=1)
 			throw (errorName = "You haven't entered any parties.");
-		list<Party*>::const_iterator it = partyList.begin();
-		advance(it, 1);
 		int countiesSize = CountyArray.getSize();
-		for (int i = 1; i <= partiesSize; i++)
+		for (int i = 1; i < partiesSize; i++) 
 		{
 			PrintaParty(i);
 			for(int j=1;j<=countiesSize;j++)
