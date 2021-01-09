@@ -10,21 +10,4 @@ using namespace std;
 namespace votes
 {
 	class Citizen;
-	class CitizenList
-	{
-	private:
-		list <Citizen*> CList;
-	public:
-		//getters:
-		void getVotes(vector<int>& voteArr) const;
-		Citizen* getData(int index) const;
-		const int getSize() const { return static_cast<int>(CList.size()); }
-
-		bool AddCitizen(Citizen* toadd);
-		Citizen* findCitizen(int id) const;
-		void PrintList(string countyName) const;
-
-		void saveCitizensList(ostream& out) const;
-		void loadCitizensList(istream& in);
-	};
 }

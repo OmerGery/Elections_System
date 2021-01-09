@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "County.h"
 #include <iostream>
- 
 
 
 using namespace std;
@@ -36,25 +35,21 @@ namespace votes
 		_numdelegates =-1;
 		_countySerial =-1;
 	}
-	void County::AddCitizen(Citizen* citizen)
-	{
-		_citizenAllowed.AddCitizen(citizen);
-	}
 	void County::AddCD(CountyDelegate* delegate)
 	{
 		CDArr.push_back(delegate);
 	}
 	Citizen* County::searchCitizen(int id)const
 	{
-		return _citizenAllowed.findCitizen(id);
+		return findCitizen(id);
 	}
 	void County::getCountyVotes(vector<int> &votearr)
 	{
-		_citizenAllowed.getVotes(votearr);
+		getVotes(votearr);
 	}
 	void County::PrintCitizenList() const
 	{
-		this->_citizenAllowed.PrintList(_countyName);
+		PrintList(_countyName);
 	}
 	void County::saveCounty(ostream& out) const
 	{
@@ -64,7 +59,7 @@ namespace votes
 		int countyNamelen = static_cast<int> (_countyName.size());
 		out.write(rcastcc(&countyNamelen), sizeof(countyNamelen));
 		out.write(rcastcc(&_countyName[0]), sizeof(char) * countyNamelen);
-		_citizenAllowed.saveCitizensList(out);
+		saveCitizensList(out);
 	}
 	void County::loadCounty(istream& in)
 	{
@@ -75,6 +70,78 @@ namespace votes
 		in.read(rcastc(&countyNamelen), sizeof(countyNamelen));
 		_countyName.resize(countyNamelen);
 		in.read(rcastc(&_countyName[0]), sizeof(char) * countyNamelen);
-		_citizenAllowed.loadCitizensList(in);
+		loadCitizensList(in);
+	}
+	//citizenlist:
+	void County::AddCitizen(Citizen* toadd)
+	{
+		_citizenAllowed.push_back(toadd);
+	}
+	Citizen* County::getData(int index) const
+	{
+		list<Citizen*>::const_iterator it = _citizenAllowed.begin();
+		advance(it, index);
+		return *it;
+	}
+	void County::PrintList(string countyName) const
+	{
+		int size = _citizenAllowed.size();
+		for (int i = 0; i < size; i++)
+		{
+			Citizen* c_citizen = getData(i);
+			cout << *c_citizen;
+			cout << " County: " << countyName << endl;
+		}
+	}
+	void County::getVotes(vector<int>& voteArr) const
+	{
+		int currentVote;
+		int size = _citizenAllowed.size();
+		const Party* PartyVotedTo;
+		for (int i = 0; i < size; i++)
+		{
+			PartyVotedTo = this->getData(i)->getVote();
+			if (PartyVotedTo)
+				currentVote = PartyVotedTo->getPartySerial();
+			else
+				currentVote = -1;
+			if (currentVote != -1)
+			{
+				voteArr[currentVote]++;
+				voteArr[0]++;
+			}
+		}
+	}
+	Citizen* County::findCitizen(int id) const
+	{
+		int size = _citizenAllowed.size();
+		for (int i = 0; i < size; i++)
+		{
+			if (getData(i)->getID() == id)
+				return this->getData(i);
+		}
+		return nullptr;
+	}
+	void County::saveCitizensList(ostream& out) const
+	{
+		int size = _citizenAllowed.size();
+		out.write(rcastcc(&size), sizeof(size));
+		std::list<Citizen*>::const_iterator it;
+		for (int i = 0; i < size; i++)
+			this->getData(i)->saveCitizen(out);
+	}
+	void County::loadCitizensList(istream& in)
+	{
+		string errorName;
+		int loadSize = static_cast<int>(_citizenAllowed.size());
+		in.read(rcastc(&loadSize), sizeof(loadSize));
+		for (int i = 0; i < loadSize; i++)
+		{
+			Citizen* toadd = new Citizen();
+			if (!toadd)
+				throw (errorName = "Memory Allocation failed.");
+			toadd->loadCitizen(in);
+			AddCitizen(toadd);
+		}
 	}
 }

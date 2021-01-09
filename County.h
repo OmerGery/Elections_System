@@ -18,8 +18,7 @@ namespace votes
 		int _countySerial;
 		string _countyName;
 		int _numdelegates;
-		CitizenList _citizenAllowed;
-		list <Citizen*> x;
+		list <Citizen*> _citizenAllowed;
 		static int countyCounter;
 
 	public:
@@ -32,13 +31,24 @@ namespace votes
 		County& operator=(const County& other) = delete;
 
 		//getters:
+				//citizenlist:
+		void getVotes(vector<int>& voteArr) const;
+		Citizen* getData(int index) const;
+		const int getSize() const { return static_cast<int>(_citizenAllowed.size()); }
+
+		Citizen* findCitizen(int id) const;
+		void PrintList(string countyName) const;
+
+		void saveCitizensList(ostream& out) const;
+		void loadCitizensList(istream& in);
+		///
 		CountyDelegate* getDelgate(int delgatePlace)const;
 		const string getCountyName() const { return _countyName; }
 		int getCountySerial() const { return _countySerial; }
 		const int getdelegatesNum() const { return this->_numdelegates; }
 		const int getDelgatesarrSize()const { return static_cast<const int>(CDArr.size()); }
-		const int getCountySize()const { return _citizenAllowed.getSize(); };
-		Citizen* getCitizenByIndex(int index)const { return this->_citizenAllowed.getData(index); }
+		const int getCountySize()const { return _citizenAllowed.size(); };
+		Citizen* getCitizenByIndex(int index)const { return getData(index); }
 		void getCountyVotes(vector<int> &votearr);
 		virtual void GetPartiesElectors(vector<float>& statisticsArray, vector<int>& countyElectors, int partiesSize)const = 0;
 
@@ -56,6 +66,6 @@ namespace votes
 		void loadCounty(istream& in);
 
 		CountyDelegate* getDel(int place)const { return CDArr.at(place); }
-		//void insert(CountyDelegate* cd) { CDArr.push_back(cd); };
+
 	};
 }
