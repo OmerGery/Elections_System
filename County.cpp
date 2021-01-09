@@ -77,7 +77,7 @@ namespace votes
 	{
 		_citizenAllowed.push_back(toadd);
 	}
-	Citizen* County::getData(int index) const
+	Citizen* County::getCitizenByIndex(int index) const
 	{
 		list<Citizen*>::const_iterator it = _citizenAllowed.begin();
 		advance(it, index);
@@ -85,22 +85,23 @@ namespace votes
 	}
 	void County::PrintList(string countyName) const
 	{
-		int size = _citizenAllowed.size();
-		for (int i = 0; i < size; i++)
+		list<Citizen*>::const_iterator itr = _citizenAllowed.begin();
+		list<Citizen*>::const_iterator end = _citizenAllowed.end();
+		for (; itr != end; ++itr) 
 		{
-			Citizen* c_citizen = getData(i);
-			cout << *c_citizen;
+			cout << **itr;
 			cout << " County: " << countyName << endl;
 		}
 	}
 	void County::getVotes(vector<int>& voteArr) const
 	{
 		int currentVote;
-		int size = _citizenAllowed.size();
+		list<Citizen*>::const_iterator itr = _citizenAllowed.begin();
+		list<Citizen*>::const_iterator end = _citizenAllowed.end();
 		const Party* PartyVotedTo;
-		for (int i = 0; i < size; i++)
+		for (; itr != end; ++itr)
 		{
-			PartyVotedTo = this->getData(i)->getVote();
+			PartyVotedTo = (*itr)->getVote();
 			if (PartyVotedTo)
 				currentVote = PartyVotedTo->getPartySerial();
 			else
@@ -114,11 +115,12 @@ namespace votes
 	}
 	Citizen* County::findCitizen(int id) const
 	{
-		int size = _citizenAllowed.size();
-		for (int i = 0; i < size; i++)
+		list<Citizen*>::const_iterator itr = _citizenAllowed.begin();
+		list<Citizen*>::const_iterator end = _citizenAllowed.end();
+		for (; itr != end; ++itr)
 		{
-			if (getData(i)->getID() == id)
-				return this->getData(i);
+			if ((*itr)->getID() == id)
+				return *itr;
 		}
 		return nullptr;
 	}
@@ -126,9 +128,10 @@ namespace votes
 	{
 		int size = _citizenAllowed.size();
 		out.write(rcastcc(&size), sizeof(size));
-		std::list<Citizen*>::const_iterator it;
-		for (int i = 0; i < size; i++)
-			this->getData(i)->saveCitizen(out);
+		list<Citizen*>::const_iterator itr = _citizenAllowed.begin();
+		list<Citizen*>::const_iterator end = _citizenAllowed.end();
+		for (; itr != end; ++itr)
+			(*itr)->saveCitizen(out);
 	}
 	void County::loadCitizensList(istream& in)
 	{
