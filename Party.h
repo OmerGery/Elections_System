@@ -1,10 +1,11 @@
 #pragma once
-#include "CitizenList.h"
+//#include "CitizenList.h"
 #include "Citizen.h"
 #include <iostream>
 using namespace std;
 namespace votes
 {
+	class Citizen;
 	class Party
 	{
 	private:

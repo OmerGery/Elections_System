@@ -1,7 +1,7 @@
 #pragma once
 #include "Party.h"
-#include "CitizenList.h"
 #include "Citizen.h"
+#include "CitizenList.h"
 #include "CountyDelegate.h"
 #include "Sort.h"
 #include "DynamicArray.h"
@@ -19,6 +19,7 @@ namespace votes
 		string _countyName;
 		int _numdelegates;
 		CitizenList _citizenAllowed;
+		list <Citizen*> x;
 		static int countyCounter;
 
 	public:

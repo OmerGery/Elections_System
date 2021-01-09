@@ -1,6 +1,7 @@
 #pragma once
 #include "Party.h"
 #include <string>
+#include <vector>
 using namespace std;
 namespace votes
 {
