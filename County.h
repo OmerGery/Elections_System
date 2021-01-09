@@ -5,6 +5,7 @@
 #include "CountyDelegateArr.h"
 #include "CountyDelegate.h"
 #include "Sort.h"
+#include "DynamicArray.h"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -14,11 +15,11 @@ namespace votes
 	class County
 	{
 	protected:
+		DynamicArray <CountyDelegate*> CDArr;
 		int _countySerial;
 		string _countyName;
 		int _numdelegates;
 		CitizenList _citizenAllowed;
-		countyDelegateArr CDArr;
 		static int countyCounter;
 
 	public:
@@ -35,7 +36,7 @@ namespace votes
 		const string getCountyName() const { return _countyName; }
 		int getCountySerial() const { return _countySerial; }
 		const int getdelegatesNum() const { return this->_numdelegates; }
-		const int getDelgatesarrSize()const { return CDArr.getSize(); }
+		const int getDelgatesarrSize()const { return static_cast<const int>(CDArr.size()); }
 		const int getCountySize()const { return _citizenAllowed.getSize(); };
 		Citizen* getCitizenByIndex(int index)const { return this->_citizenAllowed.getData(index); }
 		void getCountyVotes(vector<int> &votearr);
@@ -53,5 +54,8 @@ namespace votes
 
 		virtual void saveCounty(ostream& out) const=0;
 		void loadCounty(istream& in);
+
+		CountyDelegate* getDel(int place)const { return CDArr.at(place); }
+		void insert(CountyDelegate* cd) { CDArr.push_back(cd); };
 	};
 }

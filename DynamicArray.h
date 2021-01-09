@@ -57,6 +57,13 @@ namespace votes
 			}
 			return *this;
 		}
+		T& at(int i)const
+		{
+			string errorName;
+			if(i>_logical)
+				throw (errorName = "array out of bounds.");
+			return _array[i];
+		}
 		const T& operator[](int i) const { return _array[i]; }
 		T& operator[](int i) { return _array[i]; }
 
