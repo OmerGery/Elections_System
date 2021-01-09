@@ -13,7 +13,7 @@ namespace votes
 		County* county = new ComplexCounty(defaultName, delegatesNum);
 		if (!county)
 			throw (errorName = "Memory Allocation failed.");
-		CountyArray.insert(county);
+		CountyArray.push_back(county);
 	}
 	void SimpleApp::PrintAllCounties()const
 	{
@@ -32,15 +32,15 @@ namespace votes
 		Citizen* newCitizen = new Citizen(name, id, year);
 		if (!newCitizen)
 			throw (errorName = "Memory Allocation failed.");
-		CountyArray.addCitizenToCounty(newCitizen, 1);
+		addCitizenToCounty(newCitizen, 1);
 		return true;
 	}
 	bool SimpleApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		string errorName;
-		if (CountyArray.searchDelegate(id))
+		if (searchDelegate(id))
 			throw (errorName = "Citizen is already a delegate");
-		Citizen* delegate = CountyArray.getCitizen(id);
+		Citizen* delegate = getCitizen(id);
 		if (delegate == nullptr)
 			throw (errorName = "Citizen ID wasn't found");
 		Party* party = getPListData(partynum);
@@ -49,7 +49,7 @@ namespace votes
 		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
 		if (!Delegate)
 			throw (errorName = "Memory Allocation failed.");
-		CountyArray.addCDToCounty(Delegate, 1);
+		addCDToCounty(Delegate, 1);
 		return true;
 	}
 
@@ -62,7 +62,7 @@ namespace votes
 	{
 		App::printVotes();
 		int DeligatesPrinted,partyNumber,totalDels;
-		int numdeligates = CountyArray.getDelegatesArrSize(1);
+		int numdeligates = getDelegatesArrSize(1);
 		cout << "The total voting precntage is: " << _statisticsMatrix[1][0] * 100 << "%" << endl;
 		vector <voteData> voteDataArr;
 		voteDataArr.resize(_partiesSize + 1);
@@ -76,7 +76,6 @@ namespace votes
 		}
 		bubbleSort(voteDataArr, _partiesSize + 1);
 		cout << "The final election results are: " << endl;
-
 		for (int i = _partiesSize; i > 0; i--)
 		{
 			partyNumber = voteDataArr[i].party->getPartySerial();
@@ -92,7 +91,7 @@ namespace votes
 				cout << "No chosen Delegates from the party '" << voteDataArr[i].party->getPartyName() << "." << endl;
 				break;
 				}
-			CountyDelegate* currentDelgate = this->CountyArray.getCounty(1)->getDelgate(k);
+			CountyDelegate* currentDelgate = getCounty(1)->getDelgate(k);
 			if (currentDelgate->GetPartySerialOfDeligate() == partyNumber)// if the delegate is from the current party , print him
 			{
 				DeligatesPrinted++;

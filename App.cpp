@@ -13,6 +13,7 @@ namespace votes
 {
 	App::App()
 	{
+		CountyArray.push_back(nullptr);
 		partyList.push_back(nullptr);
 		_partiesSize = 0;
 		_countiesSize = 0;
@@ -26,7 +27,8 @@ namespace votes
 	}
 	App::~App()
 	{
-
+		CountyArray[0]->resetCounter();
+		CountyArray.clear();
 	}
 	void App::PrintAllParties() const
 	{
@@ -34,7 +36,7 @@ namespace votes
 		int partiesSize =static_cast<int>(partyList.size());
 		if (partiesSize<=1)
 			throw (errorName = "You haven't entered any parties.");
-		int countiesSize = CountyArray.getSize();
+		int countiesSize = getSize();
 		list<Party*>::const_iterator itr = partyList.begin();
 		itr++;
 		list<Party*>::const_iterator end = partyList.end();	
@@ -42,17 +44,17 @@ namespace votes
 		{
 			cout << *(*itr);
 			for (int j = 1; j <= countiesSize; j++)
-				CountyArray.printDelegatesOfAParty(j, i);
+				printDelegatesOfAParty(j, i);
 		}
 	}
 	void App::PrintAllCitizens()const
 	{
-		CountyArray.printAllCitizens();
+		printAllCitizens();
 	}
 	void App::AddParty(string partyname, int idCandidate)
 	{
 		string errorName;
-		Citizen* leader=CountyArray.getCitizen(idCandidate);
+		Citizen* leader=getCitizen(idCandidate);
 		if (leader == nullptr)
 			throw (errorName = "This Party leader ID doesn't match any Citizen's ID");
 		Party* newparty=new Party(partyname, leader);
@@ -63,7 +65,7 @@ namespace votes
 	void App::Vote(int id, int partyNum)
 	{
 		string errorName;
-		Citizen* citizen = CountyArray.getCitizen(id);
+		Citizen* citizen = getCitizen(id);
 		if (citizen == nullptr)
 			throw (errorName = "A Citizen with this ID doesn't exist.");
 		Party* PartyVote = getPListData(partyNum);
@@ -82,7 +84,7 @@ namespace votes
 	void App::saveApp(ostream& out)const
 	{
 		_electionday.saveDate(out);
-		CountyArray.saveCountyArray(out);
+		saveCountyArray(out);
 		savePartyList(out);
 		savePartyLeaders(out);
 		saveCitizenVotes(out);
@@ -91,7 +93,7 @@ namespace votes
 	void App::loadApp(istream& in)
 	{
 		_electionday.loadDate(in);
-		CountyArray.loadCountyArray(in);
+		loadCountyArray(in);
 		loadPartyList(in);
 		loadPartyLeaders(in);
 		loadCitizenVotes(in);
@@ -110,9 +112,9 @@ namespace votes
 	}
 	void App::saveCitizenVotes(ostream& out) const
 	{
-		for (int i = 1; i <= CountyArray.getSize(); i++)
+		for (int i = 1; i <= getSize(); i++)
 		{
-			County* currentCounty = CountyArray.getCounty(i);
+			County* currentCounty = getCounty(i);
 			int citizensInCounty = currentCounty->getCountySize();
 			for (int j = 0; j < citizensInCounty; j++) 
 			{
@@ -127,9 +129,9 @@ namespace votes
 	}
 	void App::loadCitizenVotes(istream& in)
 	{
-		for (int i = 1; i <= CountyArray.getSize(); i++)
+		for (int i = 1; i <= getSize(); i++)
 		{
-			County* currentCounty = CountyArray.getCounty(i);
+			County* currentCounty = getCounty(i);
 			int citizensInCounty = currentCounty->getCountySize();
 			for (int j = 0; j < citizensInCounty; j++) 
 			{
@@ -153,16 +155,16 @@ namespace votes
 			int leaderID;
 			in.read(rcastc(&leaderID), sizeof(leaderID));
 			Party* current = *partyRunner;
-			Citizen* currentLeader = CountyArray.getCitizen(leaderID);
+			Citizen* currentLeader = getCitizen(leaderID);
 			current->setLeader(currentLeader);
 			advance(partyRunner, 1);
 		}
 	}
 	void App::saveCountiesDelegates(ostream& out) const
 	{
-		for (int i = 1; i <= CountyArray.getSize(); i++)
+		for (int i = 1; i <= getSize(); i++)
 		{
-			County* currentCounty = CountyArray.getCounty(i);
+			County* currentCounty = getCounty(i);
 			int delegatesInCounty = currentCounty->getDelgatesarrSize();
 			out.write(rcastcc(&delegatesInCounty), sizeof(delegatesInCounty));
 			for (int j = 0; j < delegatesInCounty; j++)
@@ -178,23 +180,23 @@ namespace votes
 	void App::loadCountiesDelegates(istream& in) 
 	{
 		string errorName;
-		for (int i = 1; i <= CountyArray.getSize(); i++)
+		for (int i = 1; i <= getSize(); i++)
 		{
-			County* currentCounty = CountyArray.getCounty(i);
+			County* currentCounty = getCounty(i);
 			int delegatesInCounty = 0;
 			in.read(rcastc(&delegatesInCounty), sizeof(delegatesInCounty));
 			for (int j = 0; j < delegatesInCounty; j++)
 			{
 				int delegateID;
 				in.read(rcastc(&delegateID), sizeof(delegateID));
-				Citizen* currentDelegate = CountyArray.getCitizen(delegateID);
+				Citizen* currentDelegate = getCitizen(delegateID);
 				int partyID;
 				in.read(rcastc(&partyID), sizeof(partyID));
 				Party* currentParty = getPListData(partyID);
 				CountyDelegate* Delegate = new CountyDelegate(currentDelegate, currentParty);
 				if (!Delegate)
 					throw (errorName = "Memory Allocation failed.");
-				CountyArray.addCDToCounty(Delegate, i);
+				addCDToCounty(Delegate, i);
 			}
 		}
 	}
@@ -241,18 +243,175 @@ namespace votes
 		string errorName;
 		if (year > getElectionYear() - MIN_AGE)
 			throw (errorName = "Year is invalid, in order to vote, one must need to be at least 18 years old");
-		Citizen* citizen = CountyArray.getCitizen(id);
+		Citizen* citizen = getCitizen(id);
 		if (citizen != nullptr)
 			throw (errorName = "Citizen ID already exists");
 		return true;
 	}
 	/////////
+		///COUNTY ARRAY______
+	void App::printAllCounties()const
+	{
+		for (int i = 1; i < CountyArray.size(); i++)
+		{
+			County* current = CountyArray[i];
+			cout << (*current);
+			current->printCountyType();
+		}
+	}
+	void App::printCountyName(int countyNum) const
+	{
+		cout << (*CountyArray[countyNum]).getCountyName() << endl;
+	}
+	void App::printWinnersOfCounty(vector<int>& voteCount, vector<int>& electors, int countyNum, int partiesSize, list <Party*> partylist) const
+	{
+		CountyArray[countyNum]->sortAndPrintWinners(voteCount, electors, partiesSize, partylist);
+	}
+
+	void App::printDelegatesNum(int countyNum) const
+	{
+		cout << (*CountyArray[countyNum]).getdelegatesNum() << endl;
+	}
+	const int App::getDelegatesNum(int countyNum) const
+	{
+		return (*CountyArray[countyNum]).getdelegatesNum();
+	}
+	const int App::getDelegatesArrSize(int countyNum) const
+	{
+		return CountyArray[countyNum]->getDelgatesarrSize();
+	}
+	void App::printAllCitizens()const
+	{
+		for (int i = 1; i < CountyArray.size(); i++)
+			CountyArray[i]->PrintCitizenList();
+	}
+	void App::getCitizensVotes(vector<vector<int>>& votesMatrix, int counties, int parties)const
+	{
+
+		for (int i = 1; i <= counties; i++)
+		{
+			County* current = CountyArray[i];
+			current->getCountyVotes(votesMatrix[i]);
+			for (int j = 0; j <= parties; j++)
+			{
+				votesMatrix[0][j] += votesMatrix[i][j];
+			}
+		}
+	}
+	void App::getElectors(vector<vector<int>>& electorsMatrix, vector<vector<float>>& statsMatrix, int partiesSize)
+	{
+
+		for (int i = 1; i < CountyArray.size(); i++)
+		{
+			County* current = CountyArray[i];
+			current->GetPartiesElectors(statsMatrix[i], electorsMatrix[i], partiesSize);
+			for (int j = 1; j <= partiesSize; j++)
+			{
+				electorsMatrix[0][j] += electorsMatrix[i][j];
+			}
+		}
+	}
+	const int App::getCountySize(int county)const
+	{
+		County* tofind = CountyArray[county];
+		return tofind->getCountySize();
+	}
+	void App::addCitizenToCounty(Citizen* citizen, int countynum)
+	{
+		CountyArray[countynum]->AddCitizen(citizen);
+	}
+	void App::addCDToCounty(CountyDelegate* delegate, int countynum)
+	{
+		CountyArray[countynum]->AddCD(delegate);
+	}
+
+	Citizen* App::getCitizen(int id)
+	{
+		for (int i = 1; i < CountyArray.size(); i++)
+		{
+			County* current = CountyArray[i];
+			Citizen* search = current->searchCitizen(id);
+			if (search)
+				return search;
+		}
+		return nullptr;
+	}
+	void App::printDelegatesOfAParty(int countynum, int partynum) const
+	{
+		County* current_C = CountyArray[countynum];
+		int totalDeligatesinCounty = CountyArray[countynum]->getDelgatesarrSize();
+		int counter = 0;
+		for (int i = 0; i < totalDeligatesinCounty; i++)
+		{
+			CountyDelegate* current = current_C->getDelgate(i);
+			if ((*current).GetPartySerialOfDeligate() == partynum)
+			{
+				counter++;
+				if (counter > 1)
+					cout << ",";
+				if (counter == 1)
+					cout << "The Delegates from this Party in The County " << (*this->CountyArray[countynum]).getCountyName() << " are: ";
+				cout << (*current).getName();
+			}
+		}
+		if (counter > 0)
+			cout << "." << endl;
+	}
+	bool App::searchDelegate(int id) const
+	{
+		for (int k = 1; k < CountyArray.size(); k++)
+		{
+			County* current_C = CountyArray[k];
+			int totalDeligatesinCounty = CountyArray[k]->getDelgatesarrSize();
+			for (int i = 0; i < totalDeligatesinCounty; i++)
+			{
+				CountyDelegate* current = current_C->getDelgate(i);
+				if (current->getID() == id)
+					return true;
+			}
+		}
+		return false;
+	}
+	void App::saveCountyArray(ostream& out) const
+	{
+		int size = CountyArray.size();
+		out.write(rcastcc(&size), sizeof(size));
+		for (int i = 1; i < size; ++i)
+			CountyArray[i]->saveCounty(out);
+	}
+	void App::loadCountyArray(istream& in)
+	{
+		string errorName;
+		int loadedCounites;
+		in.read(rcastc(&loadedCounites), sizeof(loadedCounites));
+		for (int i = 1; i < loadedCounites; ++i)
+		{
+			int type;
+			in.read(rcastc(&type), sizeof(type));
+			County* county = nullptr;
+			if (type == SIMPLE)
+			{
+				county = new SimpleCounty();
+				if (!county)
+					throw (errorName = "Memory Allocation failed.");
+			}
+			else
+			{
+				county = new ComplexCounty();
+				if (!county)
+					throw (errorName = "Memory Allocation failed.");
+			}
+			county->loadCounty(in);
+			CountyArray.push_back(county);
+		}
+	}
+	///
 	// CALCS: 
 
 	void App::initVotesMatrix()
 	{
 		_partiesSize =static_cast<int>(this->partyList.size()-1);
-		_countiesSize = CountyArray.getSize();
+		_countiesSize = getSize();
 		_voteCountMatrix.assign(_countiesSize+1, vector < int >(_partiesSize+1, 0));
 	}
 	void App::initElectorsMatrix()
@@ -279,10 +438,10 @@ namespace votes
 		int i, j, max = 1, partyNum = -1, place = 1, tempDelegatesNum = 0, remainingDelegates;
 		initMatrices();
 		// fill the matrices with the citizen votes 
-		CountyArray.getCitizensVotes(_voteCountMatrix, _countiesSize, _partiesSize);
+		getCitizensVotes(_voteCountMatrix, _countiesSize, _partiesSize);
 		for (i = 1; i <= _countiesSize; i++)
 		{
-			int totalCitizensInCounty = CountyArray.getCountySize(i);
+			int totalCitizensInCounty = getCountySize(i);
 			if (totalCitizensInCounty != 0)
 				_statisticsMatrix[i][0] = static_cast<float>(_voteCountMatrix[i][0]) / static_cast<float>(totalCitizensInCounty);
 			for (j = 1; j <= _partiesSize; j++)
@@ -293,7 +452,7 @@ namespace votes
 		}
 		for (i = 1; i <= _countiesSize; i++)
 		{
-			int countyDelegatesNum = CountyArray.getDelegatesNum(i);
+			int countyDelegatesNum = getDelegatesNum(i);
 			max = 0;
 			tempDelegatesNum = 0;
 			for (j = 1; j <= _partiesSize; j++)
@@ -306,6 +465,7 @@ namespace votes
 			remainingDelegates = countyDelegatesNum - tempDelegatesNum;
 			_delegatesMatrix[i][place] += remainingDelegates;
 		}
-		CountyArray.getElectors(_electorsMatrix, _statisticsMatrix, _partiesSize);
+		getElectors(_electorsMatrix, _statisticsMatrix, _partiesSize);
 	}
+
 }

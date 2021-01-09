@@ -23,45 +23,45 @@ namespace votes
 			if (!county)
 				throw (errorName = "Memory Allocation failed.");
 		}
-		CountyArray.insert(county);
+		CountyArray.push_back(county);
 	}
 	bool RegularApp::AddCitizen(string name, int id, int year, int countynum)
 	{
 		string errorName;
-		if (countynum > CountyArray.getSize() || countynum <= 0)
+		if (countynum > getSize() || countynum <= 0)
 			throw (errorName = "this county doesn't exist.");
 		App::AddCitizen(name, id, year, countynum);
 		Citizen* newCitizen = new Citizen(name, id, year);
 		if (!newCitizen)
 			throw (errorName = "Memory Allocation failed.");
-		CountyArray.addCitizenToCounty(newCitizen, countynum);
+		addCitizenToCounty(newCitizen, countynum);
 		return true;
 	}
 	bool RegularApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		string errorName;
-		if (CountyArray.searchDelegate(id))
+		if (searchDelegate(id))
 			throw (errorName = "Citizen is already a delegate");
-		Citizen* delegate = CountyArray.getCitizen(id);
+		Citizen* delegate = getCitizen(id);
 		if (delegate == nullptr)
 			throw (errorName = "Citizen ID wasn't found");
 		Party* party = getPListData(partynum);
 		if (party == nullptr)
 			throw (errorName = "Party number doesn't exist");
-		if (countynum <= 0 || countynum > CountyArray.getSize())
+		if (countynum <= 0 || countynum > getSize())
 			throw (errorName = "County Number is invalid");
 		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
 		if (!Delegate)
 			throw (errorName = "Memory Allocation failed.");
-		CountyArray.addCDToCounty(Delegate, countynum);
+		addCDToCounty(Delegate, countynum);
 		return true;
 	}
 	void RegularApp::PrintAllCounties()const
 	{
 		string errorName;
-		if (CountyArray.getSize() == 0)
+		if (getSize() == 0)
 			throw (errorName = "you haven't entered any counties.");
-		CountyArray.printAllCounties();
+		printAllCounties();
 	}
 
 	void RegularApp::saveApp(ostream& out)const
@@ -77,13 +77,13 @@ namespace votes
 			int i, j, DeligatesPrinted, max = -1, partyNum = -1;
 		for (i = 1; i <= _countiesSize; i++)
 		{
-			cout << "County name: ";  CountyArray.printCountyName(i);
-			cout << "Amount of Delegates: ";  CountyArray.printDelegatesNum(i);
+			cout << "County name: ";  printCountyName(i);
+			cout << "Amount of Delegates: ";  printDelegatesNum(i);
 			cout << "The total voting precntage in this county is: " << _statisticsMatrix[i][0] * 100 << "%" << endl;
 			for (j = 1; j <= _partiesSize; j++)
 			{
 				DeligatesPrinted = 0;
-				int numdeligates = CountyArray.getDelegatesArrSize(i);
+				int numdeligates = getDelegatesArrSize(i);
 				cout << "The party '" << getPListData(j)->getPartyName() << "' received " <<
 					_statisticsMatrix[i][j] * 100 << "% of the votes, and total of " <<
 					_voteCountMatrix[i][j] << " votes for this county." << endl;
@@ -95,7 +95,7 @@ namespace votes
 						cout << "No chosen Delegates from the party '" << getPListData(j)->getPartyName() << "' for this county " << endl;
 						break;
 					}
-					CountyDelegate* currentDelgate = this->CountyArray.getCounty(i)->getDelgate(k);
+					CountyDelegate* currentDelgate = getCounty(i)->getDelgate(k);
 					if (currentDelgate->GetPartySerialOfDeligate() == j)// if the delegate is from the current party , print him
 					{
 						DeligatesPrinted++;
@@ -111,7 +111,7 @@ namespace votes
 					}
 				}
 			}
-			CountyArray.printWinnersOfCounty(_voteCountMatrix[i], _electorsMatrix[i], i, _partiesSize, partyList);
+			printWinnersOfCounty(_voteCountMatrix[i], _electorsMatrix[i], i, _partiesSize, partyList);
 		}
 		
 		vector <Elector> electorsArray;

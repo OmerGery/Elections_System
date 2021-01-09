@@ -29,9 +29,8 @@ namespace votes
 	{
 	protected:
 		Date _electionday;
-		countyArr CountyArray;
 		list <Party*> partyList;
-
+		DynamicArray <County*>  CountyArray;
 		// Calcing:
 		int _partiesSize;
 		int _countiesSize;
@@ -52,7 +51,32 @@ namespace votes
 		App();
 		App(Date& electionday);
 		virtual ~App();
+		//COUNTYARRARY
+		void addCitizenToCounty(Citizen* citizen, int countynum);
+		void addCDToCounty(CountyDelegate* delegate, int countynum);
 
+		//getters:
+		const int getSize()const { return static_cast<const int>(CountyArray.size() - 1); }
+		Citizen* getCitizen(int id);
+		void getCitizensVotes(vector<vector<int>>& votesMatrix, int counties, int parties)const;
+		void getElectors(vector<vector<int>>& electorsMatrix, vector<vector<float>>& statsMatrix, int partiesSize);
+		const int getDelegatesNum(int countyNum) const;
+		County* getCounty(int i) const { return CountyArray.at(i); }
+		const int getCountySize(int county) const;
+		const int getDelegatesArrSize(int countyNum) const;
+
+		void printCountyName(int countyNum) const;
+		void printWinnersOfCounty(vector<int>& voteCount, vector<int>& electors, int countyNum, int partiesSize, list <Party*> partylist) const;
+		void printDelegatesNum(int countyNum) const;
+		void printDelegatesOfAParty(int countynum, int partynum) const;
+		void printAllCounties()const;
+		void printAllCitizens()const;
+
+		bool searchDelegate(int id) const;
+		void saveCountyArray(ostream& out) const;
+		void loadCountyArray(istream& in);
+		//void insert(County* county) { countyArray.push_back(county); }
+		//__________
 		void AddParty(string partyname, int idCandidate);
 		void Vote(int id, int partyNum);
 		virtual void AddCounty(string name, int delegatesNum, int type) = 0;
