@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Citizen.cpp" />
-    <ClCompile Include="CitizenList.cpp" />
     <ClCompile Include="ComplexCounty.cpp" />
     <ClCompile Include="County.cpp" />
     <ClCompile Include="CountyArr.cpp" />

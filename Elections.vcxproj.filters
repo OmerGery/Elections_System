@@ -21,9 +21,6 @@
     <ClCompile Include="Citizen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CitizenList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="County.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
