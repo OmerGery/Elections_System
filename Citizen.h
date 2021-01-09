@@ -26,7 +26,7 @@ namespace votes
 		Citizen(const Citizen& other) = delete;
 		Citizen& operator=(const Citizen& other) = delete;
 
-		bool vote(Party* party);
+		void vote(Party* party);
 		const string getName() const { return _name; }
 		const int getID() const { return _id; }
 		const int getYear() const { return _year; }

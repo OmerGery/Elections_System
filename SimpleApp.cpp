@@ -17,11 +17,13 @@ namespace votes
 	}
 	void SimpleApp::PrintAllCounties()const
 	{
-		cout << "There are no counties in this type of elections";
+		string errorName;
+		throw (errorName = "There are no counties in this type of elections");
 	}
 	void SimpleApp::AddCounty(string name, int delegatesNum, int type)
 	{
-		cout << "Can't add counties in this type of elections";
+		string errorName;
+		throw (errorName = "Can't add counties in this type of elections.");
 	}
 	bool SimpleApp::AddCitizen(string name, int id, int year, int countynum)
 	{

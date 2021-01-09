@@ -11,19 +11,21 @@ namespace votes
 	}
 
 	Citizen::Citizen(const string& name, int id, int year)
-	{
-		
+	{	// we check the age in the app class.
+		string errorName;
+		if (id < 100000000 || id > 999999999)
+			throw (errorName = "The ID is invalid, must be 9 digits length");
 		_name=name;
 		_id = id;
 		_year = year;
-		_PartyVotedTo = NULL;
+		_PartyVotedTo = nullptr;
 	}	
-	bool Citizen::vote(Party* party)
+	void Citizen::vote(Party* party)
 	{
-		if (_PartyVotedTo!=NULL)
-			return false;
+		string errorName;
+		if (_PartyVotedTo!=nullptr)
+			throw (errorName = "Don't Cheat! this citizen already VOTED!");
 		_PartyVotedTo = party;
-		return true;
 	}
 	ostream& operator<<(ostream& os, const Citizen& citizen)
 	{

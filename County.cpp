@@ -12,6 +12,9 @@ namespace votes
 	int County::countyCounter=0;
 	County::County(const string& countyName, int numdelegates)
 	{
+		string errorName;
+		if (numdelegates <= 0)
+			throw (errorName = "Number of delegate must be a positive number");
 		_countyName = countyName;
 		_numdelegates = numdelegates;
 		_countySerial=++countyCounter;

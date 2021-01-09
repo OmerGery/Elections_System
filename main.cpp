@@ -169,8 +169,6 @@ int main()
                 mainApp->Vote(id, partyNum);
                 break;
             case options::ShowRes:
-                if (loaded)
-                    int x = 1;
                 mainApp->printVotes();
                 break;
             case options::Exit:

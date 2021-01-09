@@ -53,8 +53,8 @@ namespace votes
 		App(Date& electionday);
 		virtual ~App();
 
-		bool AddParty(string partyname, int idCandidate);
-		bool Vote(int id, int partyNum);
+		void AddParty(string partyname, int idCandidate);
+		void Vote(int id, int partyNum);
 		virtual void AddCounty(string name, int delegatesNum, int type) = 0;
 		virtual bool AddCitizen(string name, int id, int year, int countynum) = 0;
 		virtual bool AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;

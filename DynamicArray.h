@@ -375,7 +375,6 @@ namespace votes
 				throw (errorName = "Memory Allocation failed.");
 			for (int i = 0; i < _logical; i++)
 				temp[i] = _array[i];
-
 			delete[] _array;
 			_array = temp;
 		}

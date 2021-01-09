@@ -32,14 +32,12 @@ namespace votes
 	}
 	void App::PrintAllParties() const
 	{
-			list<Party*>::const_iterator it = partyList.begin();
-			advance(it, 1);
-		if (*it==nullptr)
-		{
-			cout << "You haven't entered any parties." << endl;
-			return;
-		}
-		int partiesSize = (*it)->getPartyCounter();
+		string errorName;
+		int partiesSize =static_cast<int>(partyList.size());
+		if (partiesSize<=1)
+			throw (errorName = "You haven't entered any parties.");
+		list<Party*>::const_iterator it = partyList.begin();
+		advance(it, 1);
 		int countiesSize = CountyArray.getSize();
 		for (int i = 1; i <= partiesSize; i++)
 		{
@@ -52,7 +50,7 @@ namespace votes
 	{
 		CountyArray.printAllCitizens();
 	}
-	bool App::AddParty(string partyname, int idCandidate)
+	void App::AddParty(string partyname, int idCandidate)
 	{
 		string errorName;
 		Citizen* leader=CountyArray.getCitizen(idCandidate);
@@ -62,20 +60,17 @@ namespace votes
 		if (!newparty)
 			throw (errorName = "Memory Allocation failed.");
 		partyList.push_back(newparty);
-		return true;
 	}
-	bool App::Vote(int id, int partyNum)
+	void App::Vote(int id, int partyNum)
 	{
 		string errorName;
 		Citizen* citizen = CountyArray.getCitizen(id);
 		if (citizen == nullptr)
-			throw (errorName = "Citizen ID is invalid");
+			throw (errorName = "A Citizen with this ID doesn't exist.");
 		Party* PartyVote = getPListData(partyNum);
 		if (PartyVote == nullptr)
 			throw (errorName = "Party Serial number is invalid");
-		if (citizen->vote(PartyVote) == false)
-			throw (errorName = "This citizen has already voted");
-		return true;
+		citizen->vote(PartyVote);
 	}
 	bool App::printVotes()
 	{
@@ -250,8 +245,6 @@ namespace votes
 	bool App::AddCitizen(string name, int id, int year, int countynum)
 	{
 		string errorName;
-		if (id < 100000000 || id > 999999999)
-			throw (errorName = "The ID is invalid, must be 9 digits length");
 		if (year > getElectionYear() - MIN_AGE)
 			throw (errorName = "Year is invalid, in order to vote, one must need to be at least 18 years old");
 		Citizen* citizen = CountyArray.getCitizen(id);

@@ -10,8 +10,6 @@ namespace votes
 		string errorName;
 		if (type != SIMPLE && type != COMPLEX)
 			throw (errorName = "County Type isn't valid (need to be 0 or 1)");
-		if (delegatesNum <= 0)
-			throw (errorName = "Number of delegate must be a positive number");
 		County* county = nullptr;
 		if (type == SIMPLE)
 		{
@@ -24,12 +22,14 @@ namespace votes
 			county = new ComplexCounty(name, delegatesNum);
 			if (!county)
 				throw (errorName = "Memory Allocation failed.");
-			CountyArray.insert(county);
 		}
+		CountyArray.insert(county);
 	}
 	bool RegularApp::AddCitizen(string name, int id, int year, int countynum)
 	{
 		string errorName;
+		if (countynum > CountyArray.getSize() || countynum <= 0)
+			throw (errorName = "this county doesn't exist.");
 		App::AddCitizen(name, id, year, countynum);
 		Citizen* newCitizen = new Citizen(name, id, year);
 		if (!newCitizen)
@@ -58,11 +58,9 @@ namespace votes
 	}
 	void RegularApp::PrintAllCounties()const
 	{
+		string errorName;
 		if (CountyArray.getSize() == 0)
-		{
-			cout << "You haven't entered any counties." << endl;
-			return;
-		}
+			throw (errorName = "you haven't entered any counties.");
 		CountyArray.printAllCounties();
 	}
 

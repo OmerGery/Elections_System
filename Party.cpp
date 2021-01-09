@@ -14,6 +14,9 @@ namespace votes
 	int Party::partyCounter = 0;
 	Party::Party(const string& partyName, Citizen* leader)
 	{
+		string errorName;
+		if (!leader)
+			throw (errorName = "leader of party doesn't exist.");
 		_partyName=partyName;
 		_partySerial = ++partyCounter;
 		_leader = leader;
