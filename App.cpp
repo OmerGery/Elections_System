@@ -100,6 +100,70 @@ namespace votes
 		loadCitizenVotes(in);
 		loadCountiesDelegates(in);
 	}
+
+	///
+// CALCS: 
+
+	void App::initVotesMatrix()
+	{
+		_partiesSize = static_cast<int>(this->partyList.size() - 1);
+		_countiesSize = getSize();
+		_voteCountMatrix.assign(_countiesSize + 1, vector < int >(_partiesSize + 1, 0));
+	}
+	void App::initElectorsMatrix()
+	{
+		_electorsMatrix.assign(_countiesSize + 1, vector < int >(_partiesSize + 1, 0));
+	}
+	void App::initStatisticsMatrix()
+	{
+		_statisticsMatrix.assign(_countiesSize + 1, vector <float >(_partiesSize + 1, 0));
+	}
+	void App::initDeligatesMatrix()
+	{
+		_delegatesMatrix.assign(_countiesSize + 1, vector < int >(_partiesSize + 1, 0));
+	}
+	void App::initMatrices()
+	{
+		initVotesMatrix();
+		initStatisticsMatrix();
+		initDeligatesMatrix();
+		initElectorsMatrix();
+	}
+	void App::calcVotes()
+	{
+		int i, j, max = 1, partyNum = -1, place = 1, tempDelegatesNum = 0, remainingDelegates;
+		initMatrices();
+		// fill the matrices with the citizen votes 
+		getCitizensVotes(_voteCountMatrix, _countiesSize, _partiesSize);
+		for (i = 1; i <= _countiesSize; i++)
+		{
+			int totalCitizensInCounty = getCountySize(i);
+			if (totalCitizensInCounty != 0)
+				_statisticsMatrix[i][0] = static_cast<float>(_voteCountMatrix[i][0]) / static_cast<float>(totalCitizensInCounty);
+			for (j = 1; j <= _partiesSize; j++)
+			{
+				if (_voteCountMatrix[i][0] != 0)
+					_statisticsMatrix[i][j] = static_cast<float>(_voteCountMatrix[i][j]) / static_cast<float>(_voteCountMatrix[i][0]);
+			}
+		}
+		for (i = 1; i <= _countiesSize; i++)
+		{
+			int countyDelegatesNum = getDelegatesNum(i);
+			max = 0;
+			tempDelegatesNum = 0;
+			for (j = 1; j <= _partiesSize; j++)
+			{
+				_delegatesMatrix[i][j] = static_cast<int>(countyDelegatesNum * _statisticsMatrix[i][j]);
+				if (_delegatesMatrix[i][j] > max)
+					place = j;
+				tempDelegatesNum += _delegatesMatrix[i][j];
+			}
+			remainingDelegates = countyDelegatesNum - tempDelegatesNum;
+			_delegatesMatrix[i][place] += remainingDelegates;
+		}
+		getElectors(_electorsMatrix, _statisticsMatrix, _partiesSize);
+	}
+
 	void App::savePartyLeaders(ostream& out) const
 	{
 		list<Party*>::const_iterator runner = partyList.begin();
@@ -209,6 +273,8 @@ namespace votes
 	}
 	Party* App::getPListData(int index) const
 	{
+		if (index >= partyList.size())
+			return nullptr;
 		list<Party*>::const_iterator it = partyList.begin();
 		advance(it, index);
 		return *it;
@@ -248,8 +314,8 @@ namespace votes
 		if (citizen != nullptr)
 			throw (errorName = "Citizen ID already exists");
 	}
-	/////////
-		///COUNTY ARRAY______
+
+		///County Array funcs:
 	void App::printCountyName(int countyNum) const
 	{
 		cout << (*CountyArray[countyNum]).getCountyName() << endl;
@@ -391,67 +457,4 @@ namespace votes
 			CountyArray.push_back(county);
 		}
 	}
-	///
-	// CALCS: 
-
-	void App::initVotesMatrix()
-	{
-		_partiesSize =static_cast<int>(this->partyList.size()-1);
-		_countiesSize = getSize();
-		_voteCountMatrix.assign(_countiesSize+1, vector < int >(_partiesSize+1, 0));
-	}
-	void App::initElectorsMatrix()
-	{
-		_electorsMatrix.assign(_countiesSize + 1, vector < int >(_partiesSize + 1, 0));
-	}
-	void App::initStatisticsMatrix()
-	{
-		_statisticsMatrix.assign(_countiesSize + 1, vector <float >(_partiesSize + 1, 0));
-	}
-	void App::initDeligatesMatrix()
-	{
-		_delegatesMatrix.assign(_countiesSize+1, vector < int >(_partiesSize+1, 0));
-	}
-	void App::initMatrices()
-	{
-		initVotesMatrix();
-		initStatisticsMatrix();
-		initDeligatesMatrix();
-		initElectorsMatrix();
-	}
-	void App::calcVotes()
-	{
-		int i, j, max = 1, partyNum = -1, place = 1, tempDelegatesNum = 0, remainingDelegates;
-		initMatrices();
-		// fill the matrices with the citizen votes 
-		getCitizensVotes(_voteCountMatrix, _countiesSize, _partiesSize);
-		for (i = 1; i <= _countiesSize; i++)
-		{
-			int totalCitizensInCounty = getCountySize(i);
-			if (totalCitizensInCounty != 0)
-				_statisticsMatrix[i][0] = static_cast<float>(_voteCountMatrix[i][0]) / static_cast<float>(totalCitizensInCounty);
-			for (j = 1; j <= _partiesSize; j++)
-			{
-				if (_voteCountMatrix[i][0] != 0)
-					_statisticsMatrix[i][j] = static_cast<float>(_voteCountMatrix[i][j]) / static_cast<float>(_voteCountMatrix[i][0]);
-			}
-		}
-		for (i = 1; i <= _countiesSize; i++)
-		{
-			int countyDelegatesNum = getDelegatesNum(i);
-			max = 0;
-			tempDelegatesNum = 0;
-			for (j = 1; j <= _partiesSize; j++)
-			{
-				_delegatesMatrix[i][j] = static_cast<int>(countyDelegatesNum * _statisticsMatrix[i][j]);
-				if (_delegatesMatrix[i][j] > max)
-					place = j;
-				tempDelegatesNum += _delegatesMatrix[i][j];
-			}
-			remainingDelegates = countyDelegatesNum - tempDelegatesNum;
-			_delegatesMatrix[i][place] += remainingDelegates;
-		}
-		getElectors(_electorsMatrix, _statisticsMatrix, _partiesSize);
-	}
-
 }

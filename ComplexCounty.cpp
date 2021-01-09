@@ -21,9 +21,8 @@ namespace votes
 		remainingDelegates = _numdelegates - tempElectorsNum;
 		countyElectors[place] += remainingDelegates;
 	}
-	void ComplexCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, list <Party*> partylist)const
+	void ComplexCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, list <Party*> partylist)const 
 	{
-
 		int size = partiesSize+1;
 		vector <Elector> electorsArray;
 		electorsArray.resize(partiesSize + 1);
