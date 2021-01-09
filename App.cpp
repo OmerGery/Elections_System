@@ -35,11 +35,14 @@ namespace votes
 		if (partiesSize<=1)
 			throw (errorName = "You haven't entered any parties.");
 		int countiesSize = CountyArray.getSize();
-		for (int i = 1; i < partiesSize; i++) 
+		list<Party*>::const_iterator itr = partyList.begin();
+		itr++;
+		list<Party*>::const_iterator end = partyList.end();	
+		for (int i = 1; itr != end; ++itr,i++)
 		{
-			PrintaParty(i);
-			for(int j=1;j<=countiesSize;j++)
-			CountyArray.printDelegatesOfAParty(j,i);
+			cout << *(*itr);
+			for (int j = 1; j <= countiesSize; j++)
+				CountyArray.printDelegatesOfAParty(j, i);
 		}
 	}
 	void App::PrintAllCitizens()const
@@ -196,11 +199,7 @@ namespace votes
 		}
 	}
 	//Party:
-	void App::PrintaParty(int partyserial) const
-	{
-		Party* party = getPListData(partyserial);
-		cout << *party;
-	}
+
 	void  App::PrintLeader(int partySerial) const
 	{
 		cout << getPListData(partySerial)->getLeader()->getName() << endl;
@@ -252,7 +251,7 @@ namespace votes
 
 	void App::initVotesMatrix()
 	{
-		_partiesSize = getPListData(1)->getPartyCounter();
+		_partiesSize =static_cast<int>(this->partyList.size()-1);
 		_countiesSize = CountyArray.getSize();
 		_voteCountMatrix.assign(_countiesSize+1, vector < int >(_partiesSize+1, 0));
 	}

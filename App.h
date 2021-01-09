@@ -76,7 +76,6 @@ namespace votes
 		//party:
 
 		Party* getPListData(int index) const;
-		void PrintaParty(int partyserial) const;
 		void PrintLeader(int partySerial) const;
 
 		void savePartyList(ostream& out) const;

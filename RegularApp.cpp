@@ -74,7 +74,7 @@ namespace votes
 	void RegularApp::printVotes()
 	{
 		App::printVotes();
-		int i, j, DeligatesPrinted, max = -1, partyNum = -1;
+			int i, j, DeligatesPrinted, max = -1, partyNum = -1;
 		for (i = 1; i <= _countiesSize; i++)
 		{
 			cout << "County name: ";  CountyArray.printCountyName(i);

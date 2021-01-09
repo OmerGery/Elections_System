@@ -126,7 +126,7 @@ namespace votes
 	}
 	void County::saveCitizensList(ostream& out) const
 	{
-		int size = _citizenAllowed.size();
+		int size = static_cast<int>(_citizenAllowed.size());
 		out.write(rcastcc(&size), sizeof(size));
 		list<Citizen*>::const_iterator itr = _citizenAllowed.begin();
 		list<Citizen*>::const_iterator end = _citizenAllowed.end();

@@ -44,7 +44,7 @@ namespace votes
 		int getCountySerial() const { return _countySerial; }
 		const int getdelegatesNum() const { return this->_numdelegates; }
 		const int getDelgatesarrSize()const { return static_cast<const int>(CDArr.size()); }
-		const int getCountySize()const { return _citizenAllowed.size(); };
+		const int getCountySize()const { return static_cast<const int>(_citizenAllowed.size()); };
 		Citizen* getCitizenByIndex(int index)const;
 		void getCountyVotes(vector<int> &votearr);
 		virtual void GetPartiesElectors(vector<float>& statisticsArray, vector<int>& countyElectors, int partiesSize)const = 0;

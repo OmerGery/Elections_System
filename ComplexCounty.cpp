@@ -24,17 +24,17 @@ namespace votes
 	void ComplexCounty::sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, list <Party*> partylist)const
 	{
 
-		int size = partiesSize + 1;
+		int size = partiesSize+1;
 		vector <Elector> electorsArray;
 		electorsArray.resize(partiesSize + 1);
 		electorsArray[0].sumElectors = -1;
-		list<Party*>::const_iterator it = partylist.begin();
-		advance(it, 1);
-		for (int i = 1; i <= partiesSize; i++)
+		list<Party*>::const_iterator runner = partylist.begin();
+		list<Party*>::const_iterator end = partylist.end();
+		runner++;
+		for (int i=1; runner != end; ++runner,i++)
 		{
 			electorsArray[i].sumElectors = Electors[i];
-			electorsArray[i].party = *it;
-			advance(it, 1);
+			electorsArray[i].party = *runner;
 		}
 
 		bubbleSort(electorsArray,size);
