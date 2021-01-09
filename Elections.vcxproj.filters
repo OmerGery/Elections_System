@@ -77,9 +77,6 @@
     <ClInclude Include="CountyDelegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CountyDelegateArr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Date.h">
       <Filter>Header Files</Filter>
     </ClInclude>
