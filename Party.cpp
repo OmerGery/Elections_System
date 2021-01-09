@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Party.h"
-#include "CitizenList.h"
+ 
 #include "County.h"
 #include "CountyArr.h"
 #include "CountyDelegate.h"

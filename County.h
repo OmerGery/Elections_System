@@ -1,7 +1,6 @@
 #pragma once
 #include "Party.h"
 #include "Citizen.h"
-#include "CitizenList.h"
 #include "CountyDelegate.h"
 #include "Sort.h"
 #include "DynamicArray.h"

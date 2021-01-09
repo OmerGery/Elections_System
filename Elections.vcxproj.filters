@@ -62,9 +62,6 @@
     <ClInclude Include="Citizen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CitizenList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="County.h">
       <Filter>Header Files</Filter>
     </ClInclude>

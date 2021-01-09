@@ -156,7 +156,6 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Citizen.h" />
-    <ClInclude Include="CitizenList.h" />
     <ClInclude Include="ComplexCounty.h" />
     <ClInclude Include="County.h" />
     <ClInclude Include="CountyArr.h" />
