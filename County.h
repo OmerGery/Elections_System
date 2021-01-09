@@ -2,7 +2,6 @@
 #include "Party.h"
 #include "CitizenList.h"
 #include "Citizen.h"
-#include "CountyDelegateArr.h"
 #include "CountyDelegate.h"
 #include "Sort.h"
 #include "DynamicArray.h"
@@ -56,6 +55,6 @@ namespace votes
 		void loadCounty(istream& in);
 
 		CountyDelegate* getDel(int place)const { return CDArr.at(place); }
-		void insert(CountyDelegate* cd) { CDArr.push_back(cd); };
+		//void insert(CountyDelegate* cd) { CDArr.push_back(cd); };
 	};
 }
