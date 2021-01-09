@@ -21,7 +21,7 @@ namespace votes
 	}
 	CountyDelegate* County::getDelgate(int delgatePlace)const
 	{
-		return CDArr.getDel(delgatePlace);
+		return CDArr.at(delgatePlace);
 	}
 	ostream& operator<<(ostream& os, const County& county)
 	{
@@ -42,7 +42,7 @@ namespace votes
 	}
 	void County::AddCD(CountyDelegate* delegate)
 	{
-		CDArr.insert(delegate);
+		CDArr.push_back(delegate);
 	}
 	Citizen* County::searchCitizen(int id)const
 	{
