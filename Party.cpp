@@ -21,10 +21,6 @@ namespace votes
 		_partySerial = ++partyCounter;
 		_leader = leader;
 	}
-	Party::~Party()
-	{		
-
-	}
 	ostream& operator<<(ostream& os, const Party& party)
 	{
 		os << "Party Number:"<< party._partySerial << " Party Name:'" << party._partyName << "' Party Leader:" << party._leader->getName() << endl;

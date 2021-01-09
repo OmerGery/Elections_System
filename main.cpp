@@ -2,7 +2,6 @@
 #include "Date.h"
 #include "Citizen.h"
 #include "Party.h"
- 
 #include "County.h"
 #include "CountyArr.h"
 #include "CountyDelegate.h"
@@ -29,7 +28,6 @@ int main()
     bool exit=false, prexit=false;
     App* mainApp = nullptr;
     Date date;
-    int loaded = 0;
     while (!prexit)
     {
         try {

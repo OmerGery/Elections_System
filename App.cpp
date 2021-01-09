@@ -21,8 +21,14 @@ namespace votes
 	}
 	App::~App()
 	{
-		CountyArray[0]->resetCounter();
-		CountyArray.clear();
+		CountyArray.at(0)->resetCounter();
+		for (int i = 1; i < CountyArray.size(); i++)
+			delete CountyArray.at(i);
+		list<Party*>::const_iterator itr = partyList.begin();
+		itr++;
+		list<Party*>::const_iterator end = partyList.end();
+		for (; itr != end; ++itr)
+			delete* itr;
 	}
 	void App::PrintAllParties() const
 	{
@@ -43,7 +49,8 @@ namespace votes
 	}
 	void App::PrintAllCitizens()const
 	{
-		printAllCitizens();
+			for (int i = 1; i < CountyArray.size(); i++)
+				CountyArray[i]->PrintCitizenList();
 	}
 	void App::AddParty(string partyname, int idCandidate)
 	{
@@ -243,15 +250,6 @@ namespace votes
 	}
 	/////////
 		///COUNTY ARRAY______
-	void App::printAllCounties()const
-	{
-		for (int i = 1; i < CountyArray.size(); i++)
-		{
-			County* current = CountyArray[i];
-			cout << (*current);
-			current->printCountyType();
-		}
-	}
 	void App::printCountyName(int countyNum) const
 	{
 		cout << (*CountyArray[countyNum]).getCountyName() << endl;
@@ -272,11 +270,6 @@ namespace votes
 	const int App::getDelegatesArrSize(int countyNum) const
 	{
 		return CountyArray[countyNum]->getDelgatesarrSize();
-	}
-	void App::printAllCitizens()const
-	{
-		for (int i = 1; i < CountyArray.size(); i++)
-			CountyArray[i]->PrintCitizenList();
 	}
 	void App::getCitizensVotes(vector<vector<int>>& votesMatrix, int counties, int parties)const
 	{

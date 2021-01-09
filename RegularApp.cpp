@@ -59,7 +59,12 @@ namespace votes
 		string errorName;
 		if (getSize() == 0)
 			throw (errorName = "you haven't entered any counties.");
-		printAllCounties();
+		for (int i = 1; i < CountyArray.size(); i++)
+		{
+			County* current = CountyArray[i];
+			cout << (*current);
+			current->printCountyType();
+		}
 	}
 
 	void RegularApp::saveApp(ostream& out)const

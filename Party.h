@@ -16,7 +16,6 @@ namespace votes
 		//ctors/dtors:
 		Party() { _leader = nullptr; _partySerial = 0; }
 		Party(const string& partyName, Citizen* leader);
-		~Party();
 		// we don't use a "Party" by-val initing, but we make sure no code will be using default operator '=' or 'copy ctor' by cancelling them. 
 		Party& operator=(const Party& other) = delete;
 		Party(const Party& other) = delete;

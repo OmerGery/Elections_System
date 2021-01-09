@@ -29,6 +29,12 @@ namespace votes
 	}
 	County::~County()
 	{
+		for (int i = 0; i < CDArr.size(); i++)
+			delete CDArr.at(i);
+		list<Citizen*>::const_iterator itr = _citizenAllowed.begin();
+		list<Citizen*>::const_iterator end = _citizenAllowed.end();
+		for (; itr != end; ++itr)
+			delete(*itr);
 	}
 	County::County()
 	{
