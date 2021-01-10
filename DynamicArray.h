@@ -145,7 +145,6 @@ namespace votes
 			}
 		};
 
-		//------------------------------------------------------------------------------------------
 		class const_iterator
 		{
 		private:
@@ -175,7 +174,6 @@ namespace votes
 				return *this;
 			}
 
-			// comparison with another iterator
 			bool operator==(const const_iterator& other) const
 			{
 				return (_dynamicarr == other._dynamicarr) && (_i == other._i);
@@ -185,7 +183,6 @@ namespace votes
 				return !(*this == other);
 			}
 
-			// smart-pointer iterator methods
 			const T& operator*()
 			{
 				return _dynamicarr->_array[_i];
@@ -195,7 +192,6 @@ namespace votes
 				return &_dynamicarr->_array[_i];
 			}
 
-			// increment-decrement iterator methods
 			const_iterator& operator++()
 			{
 				++_i;
@@ -221,7 +217,6 @@ namespace votes
 		};
 
 
-		//------------------------------------------------------------------------------------------
 
 		class reverse_iterator
 		{
@@ -234,12 +229,8 @@ namespace votes
 			using value_type = T;
 			using pointer = T*;
 			using reference = T&;
-
 			reverse_iterator(DynamicArray& array, int i) : _dynamicarr(&array), _i(i) {}
 			reverse_iterator(const reverse_iterator& other) : _dynamicarr(other._dynamicarr), _i(other._i) {}
-
-
-
 			const reverse_iterator& operator=(const reverse_iterator& other)
 			{
 				_dynamicarr = other._dynamicarr;
@@ -247,7 +238,6 @@ namespace votes
 				return *this;
 			}
 
-			// comparison with another iterator
 			bool operator==(const reverse_iterator& other) const
 			{
 				return (_dynamicarr == other._dynamicarr) && (_i == other._i);
@@ -257,7 +247,6 @@ namespace votes
 				return !(*this == other);
 			}
 
-			// smart-pointer iterator methods
 			T& operator*()
 			{
 				return _dynamicarr->_array[_i];
@@ -266,7 +255,6 @@ namespace votes
 				return &_dynamicarr->_array[_i];
 			}
 
-			// increment-decrement iterator methods
 			reverse_iterator& operator++()
 			{
 				--_i;
@@ -292,7 +280,6 @@ namespace votes
 
 		};
 
-		//------------------------------------------------------------------------------------------
 
 		void print() const
 		{
