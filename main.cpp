@@ -3,7 +3,6 @@
 #include "Citizen.h"
 #include "Party.h"
 #include "County.h"
-#include "CountyArr.h"
 #include "CountyDelegate.h"
 #include "App.h"
 #include "SimpleApp.h"
