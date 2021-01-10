@@ -25,11 +25,12 @@ namespace votes
 		const Citizen* getLeader() const { return _leader; }
 		const int getPartySerial() const { return _partySerial; }
 		const int getPartyCounter() const { return partyCounter; }
-		
+		//setters
 		void resetCounter() { partyCounter = 0; }
 		void setLeader(Citizen* leader) { _leader = leader; }
+		//
 		friend ostream& operator<<(ostream& os, const Party& party);
-
+		//save/load
 		void saveParty(ostream& out) const;
 		void loadParty(istream& in);
 	};

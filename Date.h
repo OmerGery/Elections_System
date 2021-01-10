@@ -20,12 +20,12 @@ namespace votes
 		//ctors:
 		Date(int day,int month ,int year);
 		Date();
-
+		//getters
 		int getDay() const { return _day; }
 		int getMonth() const { return _month; }
 		int getYear() const { return _year; }
 		friend ostream& operator<<(ostream& os, const Date& date);
-		
+		//save/load
 		void loadDate(istream& in);
 		void saveDate(ostream& out) const;
 	};

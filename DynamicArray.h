@@ -3,9 +3,6 @@
 #include <fstream>
 #include <string>
 using namespace std;
-#define rcastcc reinterpret_cast<const char*>
-#define rcastc reinterpret_cast<char*>
-
 namespace votes
 {
 	template <class T>
@@ -18,8 +15,10 @@ namespace votes
 
 
 	public:
-		DynamicArray(int size = 2) : _logical(0), _physical(size)
+		DynamicArray(int size = 2)
 		{
+			_logical = 0;
+			_physical = size;
 			string errorName;
 			if (size > 0)
 			{
@@ -32,8 +31,9 @@ namespace votes
 
 		}
 
-		DynamicArray(const DynamicArray& other) : _array(nullptr)
+		DynamicArray(const DynamicArray& other)
 		{
+			_array = nullptr;
 			*this = other;
 		}
 		~DynamicArray()
@@ -74,11 +74,26 @@ namespace votes
 			_array[_logical++] = value;
 		}
 
-		const T& front()    const { return _array[0]; }
-		int      size()     const { return _logical; }
-		int      capacity() const { return _physical; }
-		bool     empty()    const { return _logical == 0; }
-		void     clear() { _logical = 0; }
+		const T& front()const 
+		{
+			return _array[0];
+		}
+		int size() const 
+		{ 
+			return _logical; 
+		}
+		int capacity() const 
+		{
+			return _physical; 
+		}
+		bool empty()const 
+		{
+			return _logical == 0; 
+		}
+		void clear() 
+		{
+			_logical = 0; 
+		}
 
 		class iterator
 		{
@@ -279,8 +294,6 @@ namespace votes
 			}
 
 		};
-
-
 		void print() const
 		{
 			for (int i = 0; i < _logical; i++)
@@ -297,7 +310,6 @@ namespace votes
 		{
 			if (_logical == _physical)
 				resize();
-
 			iterator itrEnd = end();
 			iterator itrCurrent = itrEnd, itrPrev = --itrEnd;
 			while (itrCurrent != pos)
@@ -305,18 +317,14 @@ namespace votes
 				*itrCurrent = *itrPrev;
 				itrCurrent = itrPrev--;
 			}
-
 			iterator p = pos;
 			*p = val;
 			++_logical;
 		}
-
 		const iterator& erase(const iterator& iter)
 		{
-
 			iterator itrbeg = begin();
 			iterator itrnext = ++begin();
-
 			while (itrbeg != iter && itrbeg != end())
 			{
 				itrbeg = itrnext++;
@@ -358,8 +366,6 @@ namespace votes
 			itrfirst--;
 			return (itrfirst);
 		}
-
-
 	private:
 		void resize() {
 			string errorName;

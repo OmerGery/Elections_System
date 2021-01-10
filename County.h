@@ -53,7 +53,7 @@ namespace votes
 		virtual void sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, list <Party*> partylist)const = 0;
 		void PrintCitizenList() const;
 		virtual void printCountyType() const = 0;
-
+		//savers/loaders
 		void saveCitizensList(ostream& out) const;
 		void loadCitizensList(istream& in);
 		virtual void saveCounty(ostream& out) const=0;

@@ -32,7 +32,7 @@ namespace votes
 		const int getYear() const { return _year; }
 		const Party* getVote()const { return _PartyVotedTo; } ;
 		friend ostream& operator<<(ostream& os, const Citizen& citizen);
-
+		//savers/loaders
 		void loadCitizen(istream& in);
 		void saveCitizen(ostream& out) const;
 	};

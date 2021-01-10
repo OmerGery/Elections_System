@@ -12,14 +12,14 @@ namespace votes
 		//ctors:
 		SimpleApp(Date electionday, int delegatesNum); 
 		SimpleApp(Date electionday) :App(electionday) {}// CTOR to make an "empty simple app"
-
+		//insert
 		virtual void AddCounty(string name, int delegatesNum, int type) override;
 		virtual void AddCitizen(string name, int id, int year, int countynum) override;
 		virtual void AddCitizenAsDelegate(int id, int partynum, int countynum) override;
-
+		//printers
 		virtual void PrintAllCounties() const override;
 		virtual void printVotes() override;
-
+		//save
 		virtual void saveApp(ostream& out) const override;
 	};
 }

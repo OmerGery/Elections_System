@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 namespace votes
-{
+{ // this module helps with a global,general sort/swap functions,consts and structs.
 	static const int SIMPLE = 1;
 	static const int COMPLEX = 0;
 	struct Elector
