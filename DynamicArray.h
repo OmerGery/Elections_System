@@ -23,12 +23,9 @@ namespace votes
 			if (size > 0)
 			{
 				_array = new T[size];
-					if (!_array)
-						throw (errorName = "Memory Allocation failed.");
 			}
 			else
 				_array = nullptr;
-
 		}
 
 		DynamicArray(const DynamicArray& other)
@@ -50,8 +47,6 @@ namespace votes
 				_physical = other._physical;
 				delete[] _array;
 				_array = new T[_physical];
-				if (!_array)
-					throw (errorName = "Memory Allocation failed.");
 				for (int i = 0; i < _logical; i++)
 					_array[i] = other._array[i];
 			}
@@ -78,49 +73,48 @@ namespace votes
 		{
 			return _array[0];
 		}
+		int capacity() const
+		{
+			return _physical;
+		}
 		int size() const 
 		{ 
 			return _logical; 
-		}
-		int capacity() const 
-		{
-			return _physical; 
-		}
-		bool empty()const 
-		{
-			return _logical == 0; 
 		}
 		void clear() 
 		{
 			_logical = 0; 
 		}
-
+		bool empty()const
+		{
+			return _logical == 0;
+		}
 		class iterator
 		{
 		private:
-			DynamicArray* _dynamicarr;
+			DynamicArray* _arr;
 			int	_i;
 		public:
-			using iterator_category = std::bidirectional_iterator_tag;
-			using different_type = std::ptrdiff_t;
+			using iterator_category = bidirectional_iterator_tag;
+			using different_type = ptrdiff_t;
 			using value_type = T;
 			using pointer = T*;
 			using reference = T&;
 
-			iterator(DynamicArray& array, int i) : _dynamicarr(&array), _i(i) {}
-			iterator(const iterator& other) : _dynamicarr(other._dynamicarr), _i(other._i) {}
+			iterator(DynamicArray& array, int i) : _arr(&array), _i(i) {}
+			iterator(const iterator& other) : _arr(other._arr), _i(other._i) {}
 			friend class const_iterator;
 
 			const iterator& operator=(const iterator& other)
 			{
-				_dynamicarr = other._dynamicarr;
+				_arr = other._arr;
 				_i = other._i;
 				return *this;
 			}
 
 			bool operator==(const iterator& other) const
 			{
-				return (_dynamicarr == other._dynamicarr) && (_i == other._i);
+				return (_arr == other._arr) && (_i == other._i);
 			}
 			bool operator!=(const iterator& other) const
 			{
@@ -129,11 +123,11 @@ namespace votes
 
 			T& operator*()
 			{
-				return _dynamicarr->_array[_i];
+				return _arr->_array[_i];
 			}
 			T* operator->()
 			{
-				return &_dynamicarr->_array[_i];
+				return &_arr->_array[_i];
 			}
 
 			iterator& operator++()
@@ -163,35 +157,35 @@ namespace votes
 		class const_iterator
 		{
 		private:
-			const DynamicArray* _dynamicarr;
+			const DynamicArray* _arr;
 			int	_i;
 		public:
-			using iterator_category = std::bidirectional_iterator_tag;
-			using different_type = std::ptrdiff_t;
+			using iterator_category = bidirectional_iterator_tag;
+			using different_type = ptrdiff_t;
 			using value_type = const T;
 			using pointer = T*;
 			using reference = const T&;
 
-			const_iterator(const DynamicArray& array, int i) : _dynamicarr(&array), _i(i) {}
-			const_iterator(const const_iterator& other) : _dynamicarr(other._dynamicarr), _i(other._i) {}
-			const_iterator(const iterator& other) : _dynamicarr(other._da), _i(other._i) {}
+			const_iterator(const DynamicArray& array, int i) : _arr(&array), _i(i) {}
+			const_iterator(const const_iterator& other) : _arr(other._arr), _i(other._i) {}
+			const_iterator(const iterator& other) : _arr(other._da), _i(other._i) {}
 
 			const const_iterator& operator=(const iterator& other)
 			{
-				_dynamicarr = other._dynamicarr;
+				_arr = other._arr;
 				_i = other._i;
 				return *this;
 			}
 			const const_iterator& operator=(const const_iterator& other)
 			{
-				_dynamicarr = other._dynamicarr;
+				_arr = other._arr;
 				_i = other._i;
 				return *this;
 			}
 
 			bool operator==(const const_iterator& other) const
 			{
-				return (_dynamicarr == other._dynamicarr) && (_i == other._i);
+				return (_arr == other._arr) && (_i == other._i);
 			}
 			bool operator!=(const const_iterator& other) const
 			{
@@ -200,11 +194,11 @@ namespace votes
 
 			const T& operator*()
 			{
-				return _dynamicarr->_array[_i];
+				return _arr->_array[_i];
 			}
 			T* operator->()
 			{
-				return &_dynamicarr->_array[_i];
+				return &_arr->_array[_i];
 			}
 
 			const_iterator& operator++()
@@ -230,60 +224,40 @@ namespace votes
 				return temp;
 			}
 		};
-
-
-
 		class reverse_iterator
 		{
 		private:
-			DynamicArray* _dynamicarr;
+			DynamicArray* _arr;
 			int	_i;
 		public:
-			using iterator_category = std::bidirectional_iterator_tag;
-			using different_type = std::ptrdiff_t;
+			using iterator_category = bidirectional_iterator_tag;
+			using different_type = ptrdiff_t;
 			using value_type = T;
 			using pointer = T*;
 			using reference = T&;
-			reverse_iterator(DynamicArray& array, int i) : _dynamicarr(&array), _i(i) {}
-			reverse_iterator(const reverse_iterator& other) : _dynamicarr(other._dynamicarr), _i(other._i) {}
+			reverse_iterator(DynamicArray& array, int i) : _arr(&array), _i(i) {}
+			reverse_iterator(const reverse_iterator& other) : _arr(other._arr), _i(other._i) {}
 			const reverse_iterator& operator=(const reverse_iterator& other)
 			{
-				_dynamicarr = other._dynamicarr;
+				_arr = other._arr;
 				_i = other._i;
 				return *this;
 			}
-
-			bool operator==(const reverse_iterator& other) const
-			{
-				return (_dynamicarr == other._dynamicarr) && (_i == other._i);
-			}
-			bool operator!=(const reverse_iterator& other) const
-			{
-				return !(*this == other);
-			}
-
 			T& operator*()
 			{
-				return _dynamicarr->_array[_i];
+				return _arr->_array[_i];
 			}
 			T* operator->() {
-				return &_dynamicarr->_array[_i];
-			}
-
-			reverse_iterator& operator++()
-			{
-				--_i;
-				return *this;
-			}
-			reverse_iterator operator++(int)
-			{
-				reverse_iterator temp(*this);
-				--_i;
-				return temp;
+				return &_arr->_array[_i];
 			}
 			reverse_iterator& operator--()
 			{
 				++_i;
+				return *this;
+			}
+			reverse_iterator& operator++()
+			{
+				--_i;
 				return *this;
 			}
 			reverse_iterator operator--(int)
@@ -292,20 +266,21 @@ namespace votes
 				++_i;
 				return temp;
 			}
-
+			reverse_iterator operator++(int)
+			{
+				reverse_iterator temp(*this);
+				--_i;
+				return temp;
+			}
+			bool operator==(const reverse_iterator& other) const
+			{
+				return (_arr == other._arr) && (_i == other._i);
+			}
+			bool operator!=(const reverse_iterator& other) const
+			{
+				return !(*this == other);
+			}
 		};
-		void print() const
-		{
-			for (int i = 0; i < _logical; i++)
-				cout << _array[i] << " ";
-			cout << endl;
-		}
-		friend ostream& operator<<(ostream& os, const DynamicArray& arr)
-		{
-			for (int i = 0; i < arr.size(); i++)
-				os << i << "." << arr[i] << endl;
-			return os;
-		}
 		void insert(const iterator& pos, const T& val)
 		{
 			if (_logical == _physical)
@@ -321,21 +296,34 @@ namespace votes
 			*p = val;
 			++_logical;
 		}
+		void print() const
+		{
+			for (int i = 0; i < _logical; i++)
+				cout << _array[i] << " ";
+			cout << endl;
+		}
+		friend ostream& operator<<(ostream& os, const DynamicArray& arr)
+		{
+			for (int i = 0; i < arr.size(); i++)
+				os << i << "." << arr[i] << endl;
+			return os;
+		}
+		
 		const iterator& erase(const iterator& iter)
 		{
-			iterator itrbeg = begin();
-			iterator itrnext = ++begin();
-			while (itrbeg != iter && itrbeg != end())
+			iterator iBegin = begin();
+			iterator after = ++begin();
+			while (iBegin != iter && iBegin != end())
 			{
-				itrbeg = itrnext++;
+				iBegin = after++;
 			}
-			if (itrbeg == iter)
+			if (iBegin == iter)
 			{
-				while (itrnext != end())
+				while (after != end())
 				{
-					*itrbeg = *itrnext;
-					itrbeg++;
-					itrnext++;
+					*iBegin = *after;
+					iBegin++;
+					after++;
 				}
 				_logical--;
 			}
@@ -343,9 +331,9 @@ namespace votes
 			{
 				return begin();
 			}
-			itrbeg = iter;
-			itrbeg--;
-			return (itrbeg);
+			iBegin = iter;
+			iBegin--;
+			return (iBegin);
 		}
 		const iterator& erase(const iterator& first, const iterator& last)
 		{
@@ -371,8 +359,6 @@ namespace votes
 			string errorName;
 			_physical *= 2;
 			T* temp = new T[_physical];
-			if (!temp)
-				throw (errorName = "Memory Allocation failed.");
 			for (int i = 0; i < _logical; i++)
 				temp[i] = _array[i];
 			delete[] _array;

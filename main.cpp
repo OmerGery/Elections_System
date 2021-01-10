@@ -20,12 +20,13 @@ enum preOptions {
 }preoption;
 int main()
 { 
+    
     ifstream infile;
     ofstream outfile;
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
     string name, fname, errorName;
     int option, delegatesNum, id, day, month, year, countyNum, partyNum, type;
-    bool exit=false, prexit=false;
+    bool _exit=false, prexit=false;
     App* mainApp = nullptr;
     Date date;
     while (!prexit)
@@ -35,7 +36,7 @@ int main()
             cout << "Choose an option" << endl;
             cin >> option;
             switch (option)
-            {
+            {   
             case preOptions::NewRound:
                 cout << "Please enter the type of elections (0 for regular and 1 for simple)" << endl;
                 cin >> type;
@@ -53,14 +54,10 @@ int main()
                     cout << "Enter number of delegates" << endl;
                     cin >> delegatesNum;
                     mainApp = new SimpleApp(date, delegatesNum);
-                    if(!mainApp)
-                        throw (errorName = "Memory Allocation failed.");
                 }
                 else//type == COMPLEX
                 {
                     mainApp = new RegularApp(date);
-                    if (!mainApp)
-                        throw (errorName = "Memory Allocation Of App failed.");
                 }
                 prexit = true;
                 break;
@@ -75,14 +72,10 @@ int main()
                 if (type == SIMPLE) //during runtime we select which app will be constructed (using polymorphism)
                 {
                     mainApp = new SimpleApp(date);
-                    if (!mainApp)
-                        throw (errorName = "Memory Allocation Of App failed.");
                 }
                 else//type == COMPLEX
                 {
                     mainApp = new RegularApp(date);
-                    if (!mainApp)
-                        throw (errorName = "Memory Allocation Of App failed.");
                 }
                 mainApp->loadApp(infile);
                 infile.close();
@@ -91,19 +84,26 @@ int main()
             case preOptions::PreExit:
                 cout << "You have exited the program. " << endl;
                 prexit = true;
-                exit = true;
+                _exit = true;
                 break;
             default:
                 cout << "Please select an option between 1-3." << endl;
                 break;
             }
         }
-        catch (string error)
+       
+        catch (string& error)
         {
             cout << error << endl;
         }
+        catch (bad_alloc& allocationerror)
+        {//if anywhere in the program there is a Memory allocatin problem - we go straight to this scope and shut down the program.
+
+            cout << "Memory Allocation failed." << allocationerror.what();
+            exit(1);
+        }
     }
-        while (!exit)
+        while (!_exit)
         {
             try {
             cout << endl << "1 - Add a County" << endl << "2 - Add a Citizen" << endl << "3 - Add a Party" << endl
@@ -172,7 +172,7 @@ int main()
             case options::Exit:
                 cout << "You have exited the program. " << endl;
                 delete mainApp;
-                exit = true;
+                _exit = true;
                 break;
             case options::Save:
                 cout << "Please enter the file name you want to save into" << endl;
@@ -193,14 +193,10 @@ int main()
                 if (type == SIMPLE)
                 {
                     mainApp = new SimpleApp(date);
-                    if (!mainApp)
-                        throw (errorName = "Memory Allocation Of App failed.");
                 }
                 else
                 {
                     mainApp = new RegularApp(date);
-                           if(!mainApp)
-                        throw (errorName = "Memory Allocation Of App failed.");
                 }
                 mainApp->loadApp(infile);
                 infile.close();

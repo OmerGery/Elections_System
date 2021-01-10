@@ -7,7 +7,6 @@
 #include "App.h"
 #include <vector>
 #include <iostream>
- 
 using namespace std;
 namespace votes
 {
@@ -58,9 +57,7 @@ namespace votes
 		Citizen* leader=getCitizen(idCandidate);
 		if (leader == nullptr)
 			throw (errorName = "This Party leader ID doesn't match any Citizen's ID");
-		Party* newparty=new Party(partyname, leader);
-		if (!newparty)
-			throw (errorName = "Memory Allocation failed.");
+		Party* newparty = new Party(partyname, leader);
 		partyList.push_back(newparty);
 	}
 	void App::Vote(int id, int partyNum)
@@ -259,8 +256,6 @@ namespace votes
 				in.read(rcastc(&partyID), sizeof(partyID));
 				Party* currentParty = getPListData(partyID);
 				CountyDelegate* Delegate = new CountyDelegate(currentDelegate, currentParty);
-				if (!Delegate)
-					throw (errorName = "Memory Allocation failed.");
 				addCDToCounty(Delegate, i);
 			}
 		}
@@ -299,8 +294,6 @@ namespace votes
 		for (int i = 0; i < loadSize; i++)
 		{
 			Party* toadd = new Party();
-			if (!toadd)
-				throw (errorName = "Memory Allocation failed.");
 			toadd->loadParty(in);
 			partyList.push_back(toadd);
 		}
@@ -444,14 +437,10 @@ namespace votes
 			if (type == SIMPLE)
 			{
 				county = new SimpleCounty();
-				if (!county)
-					throw (errorName = "Memory Allocation failed.");
 			}
 			else
 			{
 				county = new ComplexCounty();
-				if (!county)
-					throw (errorName = "Memory Allocation failed.");
 			}
 			county->loadCounty(in);
 			CountyArray.push_back(county);

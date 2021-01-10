@@ -147,8 +147,6 @@ namespace votes
 		for (int i = 0; i < loadSize; i++)
 		{
 			Citizen* toadd = new Citizen();
-			if (!toadd)
-				throw (errorName = "Memory Allocation failed.");
 			toadd->loadCitizen(in);
 			AddCitizen(toadd);
 		}

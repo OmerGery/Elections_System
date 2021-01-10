@@ -11,8 +11,6 @@ namespace votes
 		if (delegatesNum <= 0)
 			throw (errorName = "number of delegates must be positive");
 		County* county = new ComplexCounty(defaultName, delegatesNum);
-		if (!county)
-			throw (errorName = "Memory Allocation failed.");
 		CountyArray.push_back(county);
 	}
 	void SimpleApp::PrintAllCounties()const
@@ -30,8 +28,6 @@ namespace votes
 		string errorName;
 		App::AddCitizen(name, id, year, countynum);
 		Citizen* newCitizen = new Citizen(name, id, year);
-		if (!newCitizen)
-			throw (errorName = "Memory Allocation failed.");
 		addCitizenToCounty(newCitizen, 1);
 	}
 	void SimpleApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
@@ -46,8 +42,6 @@ namespace votes
 		if (party == nullptr)
 			throw (errorName = "Party number doesn't exist");
 		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
-		if (!Delegate)
-			throw (errorName = "Memory Allocation failed.");
 		addCDToCounty(Delegate, 1);
 	}
 
