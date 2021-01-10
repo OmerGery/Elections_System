@@ -91,7 +91,6 @@ int main()
                 break;
             }
         }
-       
         catch (string& error)
         {
             cout << error << endl;
@@ -209,6 +208,12 @@ int main()
         catch (string error)
         {
             cout << error << endl;
+        }
+        catch (bad_alloc& allocationerror)
+        {//if anywhere in the program there is a Memory allocatin problem - we go straight to this scope and shut down the program.
+
+            cout << "Memory Allocation failed." << allocationerror.what();
+            exit(1);
         }
     }
         return 0;
