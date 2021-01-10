@@ -1,7 +1,14 @@
 #include "ComplexCounty.h"
 #include <iterator>
+#include <algorithm>
 namespace votes
 {
+	bool electors__sorter(Elector const& a, Elector const& b)
+	{
+		if (a.sumElectors >= b.sumElectors)
+			return false;
+		else return true;
+	}
 	void ComplexCounty::GetPartiesElectors(vector<float> &statisticsArray, vector<int> &countyElectors, int partiesSize)const
 	{
 		int place = 0, tempElectorsNum = 0, remainingDelegates = 0;
@@ -36,7 +43,7 @@ namespace votes
 			electorsArray[i].party = *runner;
 		}
 
-		bubbleSort(electorsArray,size);
+		sort(electorsArray.begin()+1, electorsArray.end(), electors__sorter);
 		for (int i = partiesSize; i > 0; i--)
 			cout << "#" << partiesSize - i + 1 << ". " << electorsArray[i].party->getLeader()->getName() << " Has got: "
 			<< electorsArray[i].sumElectors << " Electors and his party got " <<

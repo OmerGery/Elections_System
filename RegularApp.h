@@ -17,6 +17,8 @@ namespace votes
 		void printVotes() override;
 		//save
 		virtual void saveApp(ostream& out)const override;
+		//sort
+	//	bool electors_sorter(Elector const& a, Elector const& b);
 	};
 
 }

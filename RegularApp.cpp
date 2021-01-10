@@ -1,10 +1,16 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "RegularApp.h"
 #include <iostream>
- 
+#include <algorithm>
 using namespace std;
 namespace votes
 {
+	bool electors_sorter(Elector const& a, Elector const& b)
+	{
+		if (a.sumElectors >= b.sumElectors)
+			return false;
+		else return true;
+	}
 	void RegularApp::AddCounty(string name, int delegatesNum, int type)
 	{
 		string errorName;
@@ -117,7 +123,7 @@ namespace votes
 			electorsArray[j].sumElectors = _electorsMatrix[0][j];
 			electorsArray[j].party = getPListData(j);
 		}
-		bubbleSort(electorsArray, _partiesSize + 1);
+		sort(electorsArray.begin()+1,electorsArray.end(), electors_sorter);
 		cout << endl << "The final election results are: " << endl;
 
 		for (int i = _partiesSize; i > 0; i--)

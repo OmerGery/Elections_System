@@ -1,10 +1,16 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "SimpleApp.h"
 #include <iostream>
- 
+#include <algorithm>
 using namespace std;
 namespace votes
 {
+	bool votes_sorter(voteData const& a, voteData const& b)
+	{
+		if (a.numVotes >= b.numVotes)
+			return false;
+		else return true;
+	}
 	SimpleApp::SimpleApp(Date electionday, int delegatesNum):App(electionday)
 	{
 		string errorName;
@@ -66,7 +72,7 @@ namespace votes
 			voteDataArr[j].precentage =_statisticsMatrix[1][j]*100;
 			voteDataArr[j].numVotes = _voteCountMatrix[0][j];
 		}
-		bubbleSort(voteDataArr, _partiesSize + 1);
+		sort(voteDataArr.begin() + 1, voteDataArr.end(), votes_sorter);
 		cout << "The final election results are: " << endl;
 		for (int i = _partiesSize; i > 0; i--)
 		{

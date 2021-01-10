@@ -2,7 +2,6 @@
 #include "Party.h"
 #include "Citizen.h"
 #include "CountyDelegate.h"
-#include "Sort.h"
 #include "DynamicArray.h"
 #include <vector>
 #include <string>
@@ -11,6 +10,20 @@
 using namespace std;
 namespace votes
 {
+	static const int SIMPLE = 1;
+	static const int COMPLEX = 0;
+	struct Elector
+	{
+		int sumElectors;
+		Party* party;
+	};
+	struct voteData
+	{
+		int sumDelegates;
+		Party* party;
+		int numVotes;
+		float precentage;
+	};
 	class County
 	{
 	protected:
