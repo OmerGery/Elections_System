@@ -6,10 +6,6 @@
 using namespace std;
 namespace votes
 {
-	Citizen::~Citizen()
-	{
-	}
-
 	Citizen::Citizen(const string& name, int id, int year)
 	{	// we check the age in the app class.
 		string errorName;

@@ -1,5 +1,4 @@
 #include "SimpleCounty.h"
-
 namespace votes
 {
 	void SimpleCounty::GetPartiesElectors(vector<float>& statisticsArray, vector<int>& countyElectors, int partiesSize)const
