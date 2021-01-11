@@ -90,7 +90,7 @@ int main()
                 break;
             }
         }
-        catch (string& error)
+        catch (const string& error)
         {
             cout << error << endl;
         }
