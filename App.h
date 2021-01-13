@@ -63,7 +63,8 @@ namespace votes
 		//ctors/dtors:
 		App(Date& electionday);
 		virtual ~App();
-		
+		App(const App& other) = delete;
+		App& operator=(const App& other) = delete;
 		//Public Interface That the user can use.
 		//getters:
 		const int getSize()const { return static_cast<const int>(CountyArray.size() - 1); }

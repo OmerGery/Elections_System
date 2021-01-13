@@ -12,6 +12,8 @@ namespace votes
 		//ctors:
 		SimpleApp(Date electionday, int delegatesNum); 
 		SimpleApp(Date electionday) :App(electionday) {}// CTOR to make an "empty simple app"
+		SimpleApp(const SimpleApp& other) = delete;
+		SimpleApp& operator=(const SimpleApp& other) = delete;
 		//insert
 		virtual void AddCounty(string name, int delegatesNum, int type) override;
 		virtual void AddCitizen(string name, int id, int year, int countynum) override;

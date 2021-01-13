@@ -8,6 +8,8 @@ namespace votes
 	public:
 		//ctor:
 		RegularApp(Date electionday) :App(electionday) {};
+		RegularApp(const RegularApp& other) = delete;
+		RegularApp& operator=(const RegularApp& other) = delete;
 		//insert
 		virtual void AddCounty(string name, int delegatesNum, int type) override;
 		virtual void AddCitizen(string name, int id, int year, int countynum) override;
@@ -17,8 +19,6 @@ namespace votes
 		void printVotes() override;
 		//save
 		virtual void saveApp(ostream& out)const override;
-		//sort
-	//	bool electors_sorter(Elector const& a, Elector const& b);
 	};
 
 }
