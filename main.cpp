@@ -19,7 +19,6 @@ enum preOptions {
 }preoption;
 int main()
 { 
-    
     ifstream infile;
     ofstream outfile;
     // WE ASSUME THAT EACH STRING(=name of county/citizen) CONTAINS ONLY ONE WORD(= no space in entered within a name) . 
@@ -177,6 +176,8 @@ int main()
                 cin >> fname;
                 outfile.open(fname, ios::binary | ios::out);
                 mainApp->saveApp(outfile);
+                if (!outfile.is_open())
+                    throw (errorName = "Saving didn't work.");
                 outfile.close();
                 break;
             case options::Load:
