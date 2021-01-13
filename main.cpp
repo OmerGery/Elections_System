@@ -177,6 +177,7 @@ int main()
                 outfile.open(fname, ios::binary | ios::out);
                 if (!outfile.is_open())
                     throw (errorName = "Saving didn't work.");
+                else
                 mainApp->saveApp(outfile);
                 outfile.close();
                 break;
