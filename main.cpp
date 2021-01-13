@@ -175,9 +175,9 @@ int main()
                 cout << "Please enter the file name you want to save into" << endl;
                 cin >> fname;
                 outfile.open(fname, ios::binary | ios::out);
-                mainApp->saveApp(outfile);
                 if (!outfile.is_open())
                     throw (errorName = "Saving didn't work.");
+                mainApp->saveApp(outfile);
                 outfile.close();
                 break;
             case options::Load:
