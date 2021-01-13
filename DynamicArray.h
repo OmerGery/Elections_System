@@ -35,6 +35,7 @@ namespace votes
 		}
 		~DynamicArray()
 		{
+			clear();
 			delete[] _array;
 		}
 
