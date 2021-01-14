@@ -7,7 +7,7 @@ namespace votes
 	{
 	public:
 		//ctors:
-		ComplexCounty(const string countyName, int numdelegates) : County(countyName, numdelegates) {}
+		ComplexCounty(const string& countyName, int numdelegates) : County(countyName, numdelegates) {}
 		ComplexCounty() {}
 		ComplexCounty(const ComplexCounty& other) = delete;
 		ComplexCounty& operator=(const ComplexCounty& other) = delete;

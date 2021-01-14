@@ -15,8 +15,8 @@ namespace votes
 		SimpleApp(const SimpleApp& other) = delete;
 		SimpleApp& operator=(const SimpleApp& other) = delete;
 		//insert
-		virtual void AddCounty(string name, int delegatesNum, int type) override;
-		virtual void AddCitizen(string name, int id, int year, int countynum) override;
+		virtual void AddCounty(const string& name, int delegatesNum, int type) override;
+		virtual void AddCitizen(const string& name, int id, int year, int countynum) override;
 		virtual void AddCitizenAsDelegate(int id, int partynum, int countynum) override;
 		//printers
 		virtual void PrintAllCounties() const override;

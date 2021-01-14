@@ -1,13 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "County.h"
 #include <iostream>
-
-
 using namespace std;
-
 namespace votes
 {
-	
 	int County::countyCounter=0;
 	County::County(const string& countyName, int numdelegates)
 	{
@@ -80,9 +76,10 @@ namespace votes
 		loadCitizensList(in);
 	}
 	//citizenlist:
-	void County::AddCitizen(Citizen* toadd)
+	void County::AddCitizen(const string& name, int id, int year)
 	{
-		_citizenAllowed.push_back(toadd);
+		Citizen* newCitizen = new Citizen(name, id, year);
+		_citizenAllowed.push_back(newCitizen);
 	}
 	Citizen* County::getCitizenByIndex(int index) const
 	{
@@ -90,7 +87,7 @@ namespace votes
 		advance(it, index);
 		return *it;
 	}
-	void County::PrintList(string countyName) const
+	void County::PrintList(const string& countyName) const
 	{
 		list<Citizen*>::const_iterator itr = _citizenAllowed.begin();
 		list<Citizen*>::const_iterator end = _citizenAllowed.end();
@@ -149,7 +146,7 @@ namespace votes
 		{
 			Citizen* toadd = new Citizen();
 			toadd->loadCitizen(in);
-			AddCitizen(toadd);
+			_citizenAllowed.push_back(toadd);
 		}
 	}
 }

@@ -11,5 +11,4 @@
 #include <fstream>
 using namespace std;
 using namespace votes;
-
 void startMenu();

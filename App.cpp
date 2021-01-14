@@ -50,7 +50,7 @@ namespace votes
 			for (int i = 1; i < CountyArray.size(); i++)
 				CountyArray[i]->PrintCitizenList();
 	}
-	void App::AddParty(string partyname, int idCandidate)
+	void App::AddParty(const string& partyname, int idCandidate)
 	{
 		string errorName;
 		Citizen* leader=getCitizen(idCandidate);
@@ -296,7 +296,7 @@ namespace votes
 			partyList.push_back(toadd);
 		}
 	}
-	void App::AddCitizen(string name, int id, int year, int countynum)
+	void App::AddCitizen(const string& name, int id, int year, int countynum)
 	{
 		string errorName;
 		if (year > getElectionYear() - MIN_AGE)
@@ -357,10 +357,6 @@ namespace votes
 	{
 		County* tofind = CountyArray[county];
 		return tofind->getCountySize();
-	}
-	void App::addCitizenToCounty(Citizen* citizen, int countynum)
-	{
-		CountyArray[countynum]->AddCitizen(citizen);
 	}
 
 	Citizen* App::getCitizen(int id)

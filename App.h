@@ -26,7 +26,7 @@ namespace votes
 	protected:
 		Date _electionday;
 		list <Party*> partyList;
-		DynamicArray <County*>  CountyArray;
+		DynamicArray <County*>  CountyArray	;
 
 		// Calcing vars:
 		int _partiesSize;
@@ -43,7 +43,6 @@ namespace votes
 		void initMatrices();
 		void calcVotes();
 		
-		void addCitizenToCounty(Citizen* citizen, int countynum);
 		bool searchDelegate(int id) const;
 		
 		//savers/loaders:
@@ -84,10 +83,12 @@ namespace votes
 		void printDelegatesOfAParty(int countynum, int partynum) const;
 		void PrintLeader(int partySerial) const;
 
+
+		//
+		virtual void AddCounty(const string& name, int delegatesNum, int type)=0;
+		virtual void AddCitizen(const string& name, int id, int year, int countynum)=0;
 		//user menu funcs:
-		virtual void AddCounty(string name, int delegatesNum, int type) = 0;
-		virtual void AddCitizen(string name, int id, int year, int countynum) = 0;
-		void AddParty(string partyname, int idCandidate);
+		void AddParty(const string& partyname, int idCandidate);
 		virtual void AddCitizenAsDelegate(int id, int partynum, int countynum) = 0;
 		void Vote(int id, int partyNum);
 		virtual void PrintAllCounties() const = 0;

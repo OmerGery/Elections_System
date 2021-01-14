@@ -11,30 +11,25 @@ namespace votes
 			return false;
 		else return true;
 	}
-	void RegularApp::AddCounty(string name, int delegatesNum, int type)
+	void RegularApp::AddCounty(const string& name, int delegatesNum, int type)
 	{
 		string errorName;
 		if (type != SIMPLE && type != COMPLEX)
 			throw (errorName = "County Type isn't valid (need to be 0 or 1)");
 		County* county = nullptr;
 		if (type == SIMPLE)
-		{
 			county = new SimpleCounty(name, delegatesNum);
-		}
 		else
-		{
 			county = new ComplexCounty(name, delegatesNum);
-		}
 		CountyArray.push_back(county);
 	}
-	void RegularApp::AddCitizen(string name, int id, int year, int countynum)
+	void RegularApp::AddCitizen(const string& name, int id, int year, int countynum)
 	{
 		string errorName;
 		if (countynum > getSize() || countynum <= 0)
 			throw (errorName = "this county doesn't exist.");
 		App::AddCitizen(name, id, year, countynum);
-		Citizen* newCitizen = new Citizen(name, id, year);
-		addCitizenToCounty(newCitizen, countynum);
+		CountyArray[countynum]->AddCitizen(name,id,year);
 	}
 	void RegularApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{

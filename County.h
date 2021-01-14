@@ -42,7 +42,7 @@ namespace votes
 		County(const County& other) = delete;
 		County& operator=(const County& other) = delete;
 		//
-		void AddCitizen(Citizen* citizen);
+		void AddCitizen(const string& name, int id, int year);
 		void AddCD(Citizen* delegate,Party* party);
 		friend ostream& operator<<(ostream& os, const County& county);
 		Citizen* searchCitizen(int id)const;
@@ -62,7 +62,7 @@ namespace votes
 		virtual void GetPartiesElectors(vector<float>& statisticsArray, vector<int>& countyElectors, int partiesSize)const = 0;
 		CountyDelegate* getDel(int place)const { return CDArr.at(place); }
 		//printers:
-		void PrintList(string countyName) const;
+		void PrintList(const string& countyName) const;
 		virtual void sortAndPrintWinners(vector<int>& voteCount, vector<int>& Electors, int partiesSize, list <Party*> partylist)const = 0;
 		void PrintCitizenList() const;
 		virtual void printCountyType() const = 0;

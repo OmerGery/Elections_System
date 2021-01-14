@@ -24,17 +24,16 @@ namespace votes
 		string errorName;
 		throw (errorName = "There are no counties in this type of elections");
 	}
-	void SimpleApp::AddCounty(string name, int delegatesNum, int type)
+	void SimpleApp::AddCounty(const string& name, int delegatesNum, int type)
 	{
 		string errorName;
 		throw (errorName = "Can't add counties in this type of elections.");
 	}
-	void SimpleApp::AddCitizen(string name, int id, int year, int countynum)
+	void SimpleApp::AddCitizen(const string& name, int id, int year, int countynum)
 	{
 		string errorName;
 		App::AddCitizen(name, id, year, countynum);
-		Citizen* newCitizen = new Citizen(name, id, year);
-		addCitizenToCounty(newCitizen, 1);
+		CountyArray[1]->AddCitizen(name, id, year);
 	}
 	void SimpleApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
