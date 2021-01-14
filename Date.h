@@ -20,7 +20,7 @@ namespace votes
 		//ctors:
 		Date(int day,int month ,int year);
 		Date();
-		// no memory allocation - default copy ctor and operator= are used.
+		// no memory allocation in this class . we use the default Copy ctor and default operator= .
 		//getters
 		int getDay() const { return _day; }
 		int getMonth() const { return _month; }

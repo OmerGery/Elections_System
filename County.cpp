@@ -41,9 +41,10 @@ namespace votes
 		_numdelegates =-1;
 		_countySerial =-1;
 	}
-	void County::AddCD(CountyDelegate* delegate)
+	void County::AddCD(Citizen* delegate,Party* party)
 	{
-		CDArr.push_back(delegate);
+		CountyDelegate* CurrDelegate = new CountyDelegate(delegate, party);
+		CDArr.push_back(CurrDelegate);
 	}
 	Citizen* County::searchCitizen(int id)const
 	{

@@ -44,7 +44,6 @@ namespace votes
 		void calcVotes();
 		
 		void addCitizenToCounty(Citizen* citizen, int countynum);
-		void addCDToCounty(CountyDelegate* delegate, int countynum);
 		bool searchDelegate(int id) const;
 		
 		//savers/loaders:

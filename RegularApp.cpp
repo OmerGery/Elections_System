@@ -49,8 +49,7 @@ namespace votes
 			throw (errorName = "Party number doesn't exist");
 		if (countynum <= 0 || countynum > getSize())
 			throw (errorName = "County Number is invalid");
-		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
-		addCDToCounty(Delegate, countynum);
+		CountyArray[countynum]->AddCD(delegate, party);
 	}
 	void RegularApp::PrintAllCounties()const
 	{

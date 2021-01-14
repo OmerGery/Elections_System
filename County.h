@@ -43,7 +43,7 @@ namespace votes
 		County& operator=(const County& other) = delete;
 		//
 		void AddCitizen(Citizen* citizen);
-		void AddCD(CountyDelegate* delegate);
+		void AddCD(Citizen* delegate,Party* party);
 		friend ostream& operator<<(ostream& os, const County& county);
 		Citizen* searchCitizen(int id)const;
 		Citizen* findCitizen(int id) const;

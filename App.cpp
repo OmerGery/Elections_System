@@ -254,8 +254,7 @@ namespace votes
 				int partyID;
 				in.read(rcastc(&partyID), sizeof(partyID));
 				Party* currentParty = getPListData(partyID);
-				CountyDelegate* Delegate = new CountyDelegate(currentDelegate, currentParty);
-				addCDToCounty(Delegate, i);
+				CountyArray[i]->AddCD(currentDelegate, currentParty);
 			}
 		}
 	}
@@ -307,7 +306,6 @@ namespace votes
 			throw (errorName = "Citizen ID already exists");
 	}
 
-		///County Array funcs:
 	void App::printCountyName(int countyNum) const
 	{
 		cout << (*CountyArray[countyNum]).getCountyName() << endl;
@@ -363,10 +361,6 @@ namespace votes
 	void App::addCitizenToCounty(Citizen* citizen, int countynum)
 	{
 		CountyArray[countynum]->AddCitizen(citizen);
-	}
-	void App::addCDToCounty(CountyDelegate* delegate, int countynum)
-	{
-		CountyArray[countynum]->AddCD(delegate);
 	}
 
 	Citizen* App::getCitizen(int id)

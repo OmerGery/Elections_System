@@ -47,8 +47,7 @@ namespace votes
 		Party* party = getPListData(partynum);
 		if (party == nullptr)
 			throw (errorName = "Party number doesn't exist");
-		CountyDelegate* Delegate = new CountyDelegate(delegate, party);
-		addCDToCounty(Delegate, 1);
+		CountyArray[1]->AddCD(delegate, party);
 	}
 
 	void SimpleApp::saveApp(ostream& out)const
