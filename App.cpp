@@ -391,8 +391,9 @@ namespace votes
 		if (counter > 0)
 			cout << "." << endl;
 	}
-	bool App::searchDelegate(int id) const
+	void App::checkIfDelegate(int id) const
 	{
+		string errorName;
 		for (int k = 1; k < CountyArray.size(); k++)
 		{
 			County* current_C = CountyArray[k];
@@ -401,10 +402,9 @@ namespace votes
 			{
 				CountyDelegate* current = current_C->getDelgate(i);
 				if (current->getID() == id)
-					return true;
+					throw (errorName = "Citizen is already a delegate");
 			}
 		}
-		return false;
 	}
 	void App::saveCountyArray(ostream& out) const
 	{

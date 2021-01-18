@@ -34,8 +34,7 @@ namespace votes
 	void RegularApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		string errorName;
-		if (searchDelegate(id))
-			throw (errorName = "Citizen is already a delegate");
+		checkIfDelegate(id);//this func will throw exception if this citizen is already a delegate.
 		Citizen* delegate = getCitizen(id);
 		if (delegate == nullptr)
 			throw (errorName = "Citizen ID wasn't found");

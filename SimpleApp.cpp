@@ -38,8 +38,7 @@ namespace votes
 	void SimpleApp::AddCitizenAsDelegate(int id, int partynum, int countynum)
 	{
 		string errorName;
-		if (searchDelegate(id))
-			throw (errorName = "Citizen is already a delegate");
+		checkIfDelegate(id);
 		Citizen* delegate = getCitizen(id);
 		if (delegate == nullptr)
 			throw (errorName = "Citizen ID wasn't found");

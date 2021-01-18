@@ -43,7 +43,7 @@ namespace votes
 		void initMatrices();
 		void calcVotes();
 		
-		bool searchDelegate(int id) const;
+		void checkIfDelegate(int id) const;
 		
 		//savers/loaders:
 		void saveCountyArray(ostream& out) const;
