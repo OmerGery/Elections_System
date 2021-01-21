@@ -88,7 +88,9 @@ namespace votes
 		}
 		bool empty()const
 		{
-			return _logical == 0;
+			if (_logical == 0)
+				return true;
+			else return false;
 		}
 		class iterator
 		{
@@ -115,11 +117,15 @@ namespace votes
 
 			bool operator==(const iterator& other) const
 			{
-				return (_arr == other._arr) && (_i == other._i);
+				if ((_arr == other._arr) && (_i == other._i))
+					return true;
+				else return false;
 			}
 			bool operator!=(const iterator& other) const
 			{
-				return !(*this == other);
+				if (!(*this == other))
+					return true;
+				else return false;;
 			}
 
 			T& operator*()
@@ -186,11 +192,15 @@ namespace votes
 
 			bool operator==(const const_iterator& other) const
 			{
-				return (_arr == other._arr) && (_i == other._i);
+				if ((_arr == other._arr) && (_i == other._i))
+					return true;
+				else return false;
 			}
 			bool operator!=(const const_iterator& other) const
 			{
-				return !(*this == other);
+				if (!(*this == other))
+					return true;
+				else return false;
 			}
 
 			const T& operator*()
@@ -275,11 +285,15 @@ namespace votes
 			}
 			bool operator==(const reverse_iterator& other) const
 			{
-				return (_arr == other._arr) && (_i == other._i);
+				if (_arr == other._arr && _i == other._i)
+					return true;
+				else return false;
 			}
 			bool operator!=(const reverse_iterator& other) const
 			{
-				return !(*this == other);
+				if (!(*this == other))
+					return true;
+				else return false;
 			}
 		};
 		void insert(const iterator& pos, const T& val)
